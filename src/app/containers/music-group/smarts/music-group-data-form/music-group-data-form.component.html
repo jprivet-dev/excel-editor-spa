@@ -1,0 +1,128 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="nomDuGroupeInput" class="form-label required">Nom du groupe</label>
+    <input
+      type="text"
+      class="form-control"
+      id="nomDuGroupeInput"
+      formControlName="nomDuGroupe"
+      [class.is-invalid]="nomDuGroupeIsInvalid()"
+      required
+    />
+    <div *ngIf="nomDuGroupeIsInvalid()" class="invalid-feedback">
+      <div *ngIf="nomDuGroupe.errors?.required">
+        Le nom du groupe est requis.
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="origineInput" class="form-label">Origine</label>
+    <input
+      type="text"
+      class="form-control"
+      id="origineInput"
+      formControlName="origine"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="villeInput" class="form-label">Ville</label>
+    <input
+      type="text"
+      class="form-control"
+      id="villeInput"
+      formControlName="ville"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="anneeDebutInput" class="form-label">Année début</label>
+    <input
+      type="text"
+      class="form-control"
+      id="anneeDebutInput"
+      formControlName="anneeDebut"
+      [class.is-invalid]="anneeDebutIsInvalid()"
+    />
+    <div *ngIf="anneeDebutIsInvalid()" class="invalid-feedback">
+      <div *ngIf="anneeDebut.errors?.required">
+        L'année début est requise.
+      </div>
+      <div *ngIf="anneeDebut.errors?.pattern">
+        L'année début doit être valide (ex: 1998).
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="anneeSeparationInput" class="form-label">Année séparation</label>
+    <input
+      type="text"
+      class="form-control"
+      id="anneeSeparationInput"
+      formControlName="anneeSeparation"
+      [class.is-invalid]="anneeSeparationIsInvalid()"
+    />
+    <div *ngIf="anneeSeparationIsInvalid()" class="invalid-feedback">
+      <div *ngIf="anneeSeparation.errors?.pattern">
+        L'année séparation doit être valide (ex: 1998).
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="fondateursInput" class="form-label">Fondateurs</label>
+    <input
+      type="text"
+      class="form-control"
+      id="fondateursInput"
+      formControlName="fondateurs"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="membresInput" class="form-label">Membres</label>
+    <input
+      type="number"
+      class="form-control"
+      id="membresInput"
+      formControlName="membres"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="courantMusicalInput" class="form-label">Courant musical</label>
+    <input
+      type="text"
+      class="form-control"
+      id="courantMusicalInput"
+      formControlName="courantMusical"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="presentationTextarea" class="form-label">Présentation</label>
+    <textarea
+      class="form-control"
+      id="presentationTextarea"
+      rows="3"
+      formControlName="presentation"
+    ></textarea>
+  </div>
+
+  <div class="alert alert-danger mb-3" role="alert" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="text-end">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!form.valid"
+    >
+      <span *ngIf="updateMode">Modifier le groupe</span>
+      <span *ngIf="!updateMode">Ajouter un groupe</span>
+    </button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+<div class="row mb-4">
+  <div class="col-9">
+    <input
+      class="form-control"
+      type="file"
+      id="fileUpload"
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      #fileUpload
+      [class.is-invalid]="invalidMessage"
+      (change)="onFileSelected($event)"
+    />
+    <div id="fileUploadFeedback" class="invalid-feedback">
+      {{ invalidMessage }}
+    </div>
+  </div>
+  <div class="col-3">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="disabled"
+      (click)="onSubmit()"
+    >
+      Télécharger le fichier Excel
+    </button>
+  </div>
+</div>

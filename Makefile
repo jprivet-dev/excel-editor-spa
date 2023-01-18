@@ -16,7 +16,8 @@ DOCKER_COMP = $(DOCKER_COMP_BASE)
 NODE_CONT = $(DOCKER_COMP) exec node
 
 # Executables
-NG = $(NODE_CONT) ng
+NPM		= $(NODE_CONT) npm
+NG 		= $(NODE_CONT) ng
 
 ## — ✨ 🚀 THE ANGULAR DOCKER MAKEFILE 🚀 ✨ ——————————————————————————————————
 
@@ -83,10 +84,19 @@ stop_all: ## Stop all projects running containers without removing them
 
 ## — ANGULAR 🛡 ———————————————————————————————————————————————————————————————
 
+.PHONY: npm
+npm: ## Run npm, pass the parameter "c=" to run a given command, example: make ng c=--version
+	@$(eval c ?=)
+	$(NPM) $(c)
+
 .PHONY: ng
-ng: ## Run ng, pass the parameter "c=" to run a given command, example: make ng c=--version
+ng: ## Run ng, pass the parameter "c=" to run a given command, example: make ng c=version
 	@$(eval c ?=)
 	$(NG) $(c)
+
+.PHONY: install_latest_cli
+install_latest_cli: ## Install the latest version of Angular CLI
+	$(NPM) install --save-dev @angular/cli@latest
 
 .PHONY: bash
 bash: ## Connect to the Node container (current user).

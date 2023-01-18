@@ -2,8 +2,9 @@ version: "3.5"
 
 services:
   node:
-    container_name: spa_node
-    build: ./.docker/node/
+    build:
+      context: .
+      target: app_node
     volumes:
       - .:/usr/src/app
       - /usr/node_modules

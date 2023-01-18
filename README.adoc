@@ -63,16 +63,19 @@ Study of an API (Symfony) and a SPA (Angular), to load data in CSV/Excel format,
 
 This project was generated with https://github.com/angular/angular-cli[Angular CLI] version 14.0.4.
 
-. `$ git clone git@github.com:jprivet-dev/test-symfony-angular-excel.git`
-. `$ cd spa`
-. `$ make start`
+. `$ git clone {git_ssh_current}`.
+. `$ cd {git_project_current}`.
+. `$ make build`: Build (the first time) or rebuild fresh images if necessary.
+. `$ make start`: Create and start containers (alias: `$ make up`).
 . Open http://localhost:4200
+. `$ make stop`: Stop and remove containers, networks (alias: `$ make down`).
 
 {back_to_top}
 
 == Resources & Inspiration
 
-[ TODO ]
+* Angular Authentication With JWT: https://blog.angular-university.io/angular-jwt-authentication/
+* JWT debugger: https://jwt.io/
 
 {back_to_top}
 

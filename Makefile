@@ -1,63 +1,22 @@
-MAKE_S = $(MAKE) -s
+# Executables (local)
+HAS_DOCKER_COMP_PLUGIN := $(shell docker compose version 2> /dev/null)
+ifdef HAS_DOCKER_COMP_PLUGIN
+	DOCKER_COMP_BASE = docker compose
+else
+	DOCKER_COMP_BASE = docker-compose
+endif
 
+DOCKER_COMP = $(DOCKER_COMP_BASE)
+
+MAKE_S = $(MAKE) -s
 USER_ID = $(shell id -u)
 GROUP_ID = $(shell id -g)
 
-## PROJECT
-
-.PHONY: start
-start: docker_start ## Start the current project.
-
-start_one: docker_stop_all docker_start  ## Stop all projects running containers & Start current project.
-
-.PHONY: stop
-stop: docker_stop ## Stop the current project.
-
-.PHONY: bash
-bash: ## App bash access (current user).
-	docker-compose exec --user $(USER_ID):$(GROUP_ID) node bash
-
-bash@root: ## App bash access (root).
-	docker-compose exec --user 0 node bash
-
-## DOCKER
-
-# --remove-orphans: Remove containers for services not defined in the Compose file.
-docker_start: ## Build, (re)create, start, and attache to containers for a service.
-	docker-compose up --remove-orphans
-
-# --remove-orphans: Remove containers for services not defined in the Compose file.
-# -d: Detached mode: Run containers in the background, print new container names.
-docker_start_d: ## Build, (re)create, start, and attache to containers for a service (detached mode).
-	docker-compose up --remove-orphans -d
-
-# --build: Build images before starting containers.
-docker_build: ## Same `docker_start` command + Build images before starting containers.
-	docker-compose up --build
-
-# --build: Build images before starting containers.
-# -d: Detached mode: Run containers in the background, print new container names.
-docker_build_d: ## Same `docker_start` command + Build images before starting containers (detached mode).
-	docker-compose up --build -d
-
-docker_stop: ## Stop running containers without removing them.
-	docker-compose stop
-
-docker_stop_all: ## Stop all projects running containers without removing them.
-	docker stop $$(docker ps -a -q)
-
-# --remove-orphans: Remove containers for services not defined in the Compose file.
-docker_down: ## Stop containers and remove containers, networks, volumes, and images created by up.
-	docker-compose down --remove-orphans
-
-## MAKEFILE
+## — ✨ 🛡️ THE ANGULAR DOCKER MAKEFILE 🛡️ ✨ ——————————————————————————————————
 
 .DEFAULT_GOAL := help
 .PHONY: help
-help: ## Print self-documented Makefile.
-	@echo "------------------------"
-	@echo "SELF-DOCUMENTED MAKEFILE"
-	@echo "------------------------"
+help: ## Print self-documented Makefile
 	@grep -E '(^[.a-zA-Z_-]+[^:]+:.*##.*?$$)|(^#{2})' $(MAKEFILE_LIST) \
 	| awk 'BEGIN {FS = "## "}; \
 		{ \
@@ -78,3 +37,49 @@ help: ## Print self-documented Makefile.
 				; \
 		}'
 	@echo
+
+## — DOCKER 🐳 ————————————————————————————————————————————————————————————————
+
+.PHONY: build
+build: ## Build the first time or rebuild fresh images if necessary
+	$(DOCKER_COMP) build --pull --no-cache
+
+.PHONY: up
+up: ## Create and start containers
+	$(DOCKER_COMP) up --remove-orphans
+
+.PHONY: detach
+detach: ## Create and start containers in detached mode (no logs)
+	$(DOCKER_COMP) up --remove-orphans --detach
+
+.PHONY: down
+down: ## Stop and remove containers, networks
+	$(DOCKER_COMP) down --remove-orphans
+
+.PHONY: stop_all
+stop_all: ## Stop all projects running containers without removing them
+	docker stop $$(docker ps -a -q)
+
+.PHONY: logs
+logs: ## Show live logs
+	$(DOCKER_COMP) logs --tail=0 --follow
+
+##
+
+.PHONY: install
+install: build start ## Build & Start
+
+.PHONY: start
+start: up ## 'up' alias
+
+.PHONY: stop
+stop: down ## 'down' alias
+
+## — ANGULAR 🛡️ ———————————————————————————————————————————————————————————————
+
+.PHONY: bash
+bash: ## App bash access (current user).
+	$(DOCKER_COMP) exec --user $(USER_ID):$(GROUP_ID) node bash
+
+bash@root: ## App bash access (root).
+	$(DOCKER_COMP) exec --user 0 node bash

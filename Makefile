@@ -94,8 +94,18 @@ ng: ## Run ng, pass the parameter "c=" to run a given command, example: make ng 
 	@$(eval c ?=)
 	$(NG) $(c)
 
-.PHONY: install_latest_cli
-install_latest_cli: ## Install the latest version of Angular CLI
+.PHONY: lint
+lint: ## Run ng lint
+	$(NG) lint
+
+.PHONY: test
+test: ## Run ng test
+	$(NG) test
+
+##
+
+.PHONY: latest_cli
+latest_cli: ## Install the latest version of Angular CLI
 	$(NPM) install --save-dev @angular/cli@latest
 
 .PHONY: bash

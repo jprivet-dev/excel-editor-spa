@@ -1,3 +1,7 @@
+MAKE_S 		= $(MAKE) -s
+USER_ID 	= $(shell id -u)
+GROUP_ID 	= $(shell id -g)
+
 # Executables (local)
 HAS_DOCKER_COMP_PLUGIN := $(shell docker compose version 2> /dev/null)
 ifdef HAS_DOCKER_COMP_PLUGIN
@@ -8,11 +12,13 @@ endif
 
 DOCKER_COMP = $(DOCKER_COMP_BASE)
 
-MAKE_S = $(MAKE) -s
-USER_ID = $(shell id -u)
-GROUP_ID = $(shell id -g)
+# Docker containers
+NODE_CONT = $(DOCKER_COMP) exec node
 
-## — ✨ 🛡️ THE ANGULAR DOCKER MAKEFILE 🛡️ ✨ ——————————————————————————————————
+# Executables
+NG = $(NODE_CONT) ng
+
+## — ✨ 🚀 THE ANGULAR DOCKER MAKEFILE 🚀 ✨ ——————————————————————————————————
 
 .DEFAULT_GOAL := help
 .PHONY: help
@@ -56,10 +62,6 @@ detach: ## Create and start containers in detached mode (no logs)
 down: ## Stop and remove containers, networks
 	$(DOCKER_COMP) down --remove-orphans
 
-.PHONY: stop_all
-stop_all: ## Stop all projects running containers without removing them
-	docker stop $$(docker ps -a -q)
-
 .PHONY: logs
 logs: ## Show live logs
 	$(DOCKER_COMP) logs --tail=0 --follow
@@ -67,7 +69,7 @@ logs: ## Show live logs
 ##
 
 .PHONY: install
-install: build start ## Build & Start
+install: build up ## Build & Start
 
 .PHONY: start
 start: up ## 'up' alias
@@ -75,11 +77,20 @@ start: up ## 'up' alias
 .PHONY: stop
 stop: down ## 'down' alias
 
-## — ANGULAR 🛡️ ———————————————————————————————————————————————————————————————
+.PHONY: stop_all
+stop_all: ## Stop all projects running containers without removing them
+	docker stop $$(docker ps -a -q)
+
+## — ANGULAR 🛡 ———————————————————————————————————————————————————————————————
+
+.PHONY: ng
+ng: ## Run ng, pass the parameter "c=" to run a given command, example: make ng c=--version
+	@$(eval c ?=)
+	$(NG) $(c)
 
 .PHONY: bash
-bash: ## App bash access (current user).
+bash: ## Connect to the Node container (current user).
 	$(DOCKER_COMP) exec --user $(USER_ID):$(GROUP_ID) node bash
 
-bash@root: ## App bash access (root).
+bash@root: ## Connect to the Node container (root).
 	$(DOCKER_COMP) exec --user 0 node bash

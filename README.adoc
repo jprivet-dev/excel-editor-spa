@@ -72,6 +72,76 @@ This project was generated with https://github.com/angular/angular-cli[Angular C
 
 {back_to_top}
 
+== PHPStorm configuration
+
+IMPORTANT: The following configuration are provided for *PHPStorm 2022.3.1*
+
+=== Eslint & Prettier
+
+==== Configure a remote Node.js interpreter [[configure-a-remote-node-js-interpreter]]
+
+. Go in *Settings > Languages & Frameworks > Node.js*.
+. In *Node interpreter*, click on *...* and *Add Remote...*.
+. In the *Configure Node.js Remote Interpreter* window, choose *excel-editor-spa-node:latest* and click on *OK*.
+. In the *Settings* window, click on *OK*.
+
+image::doc/img/phpstorm-settings-node-remote-interpreter.png[]
+
+image::doc/img/phpstorm-settings-node.png[]
+
+{back_to_top}
+
+==== Configure ESLint
+
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/eslint.html
+
+CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
+
+Configure in *Settings > Languages & Frameworks > JavaScript > Code Quality Tools > ESLint* :
+
+image::doc/img/phpstorm-settings-eslint.png[]
+
+After the configuration, you can see the ESLint alerts in your code. For example:
+
+image::doc/img/phpstorm-settings-eslint-error.png[]
+
+{back_to_top}
+
+==== Configure Prettier
+
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
+
+CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
+
+Configure in *Settings > Languages & Frameworks > JavaScript > Prettier* :
+
+image::doc/img/phpstorm-settings-prettier.png[]
+
+{back_to_top}
+
+==== Reformat with Prettier
+
+After the configuration, you can reformat your code :
+
+* With the shortcut *Ctrl+Alt+Maj+P*.
+* From the contextual menu (*Right click > Reformat with Prettier*).
+
+image::doc/img/phpstorm-settings-prettier-contextual-menu.png[]
+
+TIP: It's possible to reformat on save.
+
+To reformat on save, Go in *Settings > Languages & Frameworks > JavaScript > Prettier*, and check *On save* option:
+
+image::doc/img/phpstorm-settings-prettier-on-save.png[]
+
+If you click on *All actions on save...*, you will see the list of all activated actions:
+
+image::doc/img/phpstorm-settings-tools-actions-on-save.png[]
+
+TIP: I also use the *Optimize import* option. This removes unused imports and organizes import statements in the current file. See https://www.jetbrains.com/help/phpstorm/creating-and-optimizing-imports.html#optimize-imports.
+
+{back_to_top}
+
 == Resources & Inspiration
 
 * Angular Authentication With JWT: https://blog.angular-university.io/angular-jwt-authentication/

@@ -2,9 +2,7 @@ version: "3.5"
 
 services:
   node:
-    build:
-      context: .
-      target: app_node
+    build: ./.docker/node/
     volumes:
       - .:/usr/src/app
       - /usr/node_modules

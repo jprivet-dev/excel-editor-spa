@@ -15,7 +15,7 @@ WORKDIR /usr/src/app
 # Install global Angular CLI
 # @see https://stackoverflow.com/questions/44525746/global-angular-cli-version-greater-than-local-version
 # @see https://www.npmjs.com/package/@angular/cli
-RUN npm install -g @angular/cli@^15.1.1
+RUN npm install -g @angular/cli@^14.2.10
 
 COPY . .
 

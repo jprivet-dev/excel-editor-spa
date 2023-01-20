@@ -144,10 +144,21 @@ TIP: I also use the *Optimize import* option. This removes unused imports and or
 
 == Resources & Inspiration
 
+=== JWT & Authentication
+
 * Angular Authentication With JWT: https://blog.angular-university.io/angular-jwt-authentication/
 * Angular Authentication: Using Route Guards
 : https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3
 * JWT debugger: https://jwt.io/
+
+=== Architecture
+
+* https://dev-academy.com/angular-architecture-best-practices/
+* https://www.simform.com/blog/angular-best-practices/
+* https://medium.com/dev-jam/5-tips-best-practices-to-organize-your-angular-project-e900db08702e
+https://angular.io/guide/styleguide#lift
+* https://stackoverflow.com/questions/70924931/angular-structure-best-practices-coremodule
+* https://michelestieven.medium.com/organizing-angular-applications-f0510761d65a
 
 {back_to_top}
 

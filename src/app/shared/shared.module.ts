@@ -1,19 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MusicGroupFileUploadFormComponent } from './presentationals/music-group-file-upload-form/music-group-file-upload-form.component';
-import { ToastsComponent } from './smarts/toasts/toasts.component';
-import {
-  NgbDatepickerModule,
-  NgbToastModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { MusicGroupFileUploadFormComponent } from './presentationals/music-group-file-upload-form/music-group-file-upload-form.component';
 
 @NgModule({
-  declarations: [MusicGroupFileUploadFormComponent, ToastsComponent],
-  imports: [CommonModule, NgbToastModule, NgbDatepickerModule],
+  declarations: [MusicGroupFileUploadFormComponent],
+  imports: [CommonModule, NgbDatepickerModule],
   exports: [
     MusicGroupFileUploadFormComponent,
-    ToastsComponent,
     NgbDatepickerModule,
     ReactiveFormsModule,
   ],

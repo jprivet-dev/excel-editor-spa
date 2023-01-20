@@ -7,11 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MusicGroupDataService } from '@shared/services/music-group-data.service';
-import { Subscription } from 'rxjs';
-import { ToastService } from '@shared/services/toast.service';
+import { ToastService } from '@core/toasts/toast.service';
+import { MusicGroupDataService } from '@services/music-group-data.service';
 import { MusicGroupData } from '@shared/music-group-data.model';
 import { emptyToNull } from '@shared/utils';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-music-group-data-form',

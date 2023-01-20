@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
 import { MusicGroupFileUpload } from '@shared/music-group-file-upload.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class MusicGroupUploadService {
     formData.append('file', file);
 
     return this.http.post<MusicGroupFileUpload>(
-      'https://localhost/api/music-groups/upload',
+      `${environment.apiUrl}/upload`,
       formData
     );
   }

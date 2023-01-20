@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
 import { MusicGroupData } from '@shared/music-group-data.model';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,7 @@ export class MusicGroupDataService {
   constructor(private http: HttpClient) {}
 
   read(): Observable<MusicGroupData[]> {
-    return this.http.get<MusicGroupData[]>(
-      'https://localhost/api/music-groups/data'
-    );
+    return this.http.get<MusicGroupData[]>(`${environment.apiUrl}/data`);
   }
 
   load(): Observable<MusicGroupData[]> {
@@ -24,7 +23,7 @@ export class MusicGroupDataService {
 
   delete(data: MusicGroupData): Observable<null> {
     return this.http
-      .delete<null>(`https://localhost/api/music-groups/data/${data.id}`)
+      .delete<null>(`${environment.apiUrl}/data/${data.id}`)
       .pipe(
         tap(() =>
           this.dataSubject.next(
@@ -36,7 +35,7 @@ export class MusicGroupDataService {
 
   create(formData: any): Observable<MusicGroupData> {
     return this.http
-      .post<MusicGroupData>(`https://localhost/api/music-groups/data`, formData)
+      .post<MusicGroupData>(`${environment.apiUrl}/data`, formData)
       .pipe(
         tap((data) => this.dataSubject.next([...this.dataSubject.value, data]))
       );
@@ -44,10 +43,7 @@ export class MusicGroupDataService {
 
   update(id: number, formData: any): Observable<MusicGroupData> {
     return this.http
-      .put<MusicGroupData>(
-        `https://localhost/api/music-groups/data/${id}`,
-        formData
-      )
+      .put<MusicGroupData>(`${environment.apiUrl}/data/${id}`, formData)
       .pipe(
         tap((data) =>
           this.dataSubject.next(

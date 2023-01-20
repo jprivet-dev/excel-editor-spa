@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataModalComponent } from './data-modal.component';
 
-describe('MusicGroupDataModalComponent', () => {
+describe('DataModalComponent', () => {
   let component: DataModalComponent;
   let fixture: ComponentFixture<DataModalComponent>;
 

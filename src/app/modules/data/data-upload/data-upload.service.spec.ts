@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DataUploadService } from './data-upload.service';
 
-describe('MusicGroupUploadService', () => {
+describe('DataUploadService', () => {
   let service: DataUploadService;
 
   beforeEach(() => {

@@ -7,7 +7,7 @@ import { DataTable } from './data-table.model';
 import { DataTableService } from './data-table.service';
 
 @Component({
-  selector: 'app-music-group-data',
+  selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
 })

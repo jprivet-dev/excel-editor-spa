@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoggedInGuard } from '@app/logged-in.guard';
-import { LoggedOutGuard } from '@app/logged-out.guard';
+import { LoggedInGuard } from '@core/auth/logged-in.guard';
+import { LoggedOutGuard } from '@core/auth/logged-out.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'music-groups', pathMatch: 'full' },
+  { path: '', redirectTo: 'data', pathMatch: 'full' },
   {
-    path: 'music-groups',
+    path: 'data',
     canActivate: [LoggedInGuard],
     loadChildren: () =>
       import('@modules/data/data.module').then((m) => m.DataModule),
@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('@modules/login/login.module').then((m) => m.LoginModule),
   },
-  { path: '**', redirectTo: 'music-groups' },
+  { path: '**', redirectTo: 'data' },
 ];
 
 @NgModule({

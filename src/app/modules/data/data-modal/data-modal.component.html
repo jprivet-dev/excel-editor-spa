@@ -11,9 +11,6 @@
   ></button>
 </div>
 <div class="modal-body">
-  <app-music-group-data-form
-    [data]="data"
-    (submitEvent)="close()"
-  ></app-music-group-data-form>
+  <app-data-form [data]="data" (submitEvent)="close()"></app-data-form>
 </div>
 <div class="modal-footer"></div>

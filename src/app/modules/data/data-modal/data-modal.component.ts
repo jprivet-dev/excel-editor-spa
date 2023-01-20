@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTable } from '../data-table/data-table.model';
 
 @Component({
-  selector: 'app-music-group-data-modal',
+  selector: 'app-data-modal',
   templateUrl: './data-modal.component.html',
   styleUrls: ['./data-modal.component.scss'],
 })

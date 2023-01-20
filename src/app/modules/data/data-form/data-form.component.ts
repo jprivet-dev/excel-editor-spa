@@ -14,7 +14,7 @@ import { DataTable } from '../data-table/data-table.model';
 import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
-  selector: 'app-music-group-data-form',
+  selector: 'app-data-form',
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.scss'],
 })

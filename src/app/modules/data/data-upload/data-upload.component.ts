@@ -6,7 +6,7 @@ import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
 
 @Component({
-  selector: 'app-music-group-upload',
+  selector: 'app-data-upload',
   templateUrl: './data-upload.component.html',
   styleUrls: ['./data-upload.component.scss'],
 })

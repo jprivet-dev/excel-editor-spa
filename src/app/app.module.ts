@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from '@app/app.component';
-import { JwtInterceptor } from '@app/jwt.interceptor';
+import { JwtInterceptor } from '@core/auth/jwt.interceptor';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,10 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    HttpClientModule,
   ],
   providers: [
     {

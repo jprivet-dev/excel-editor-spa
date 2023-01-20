@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-music-group-file-upload-form',
+  selector: 'app-data-upload-form',
   templateUrl: './data-upload-form.component.html',
   styleUrls: ['./data-upload-form.component.scss'],
 })

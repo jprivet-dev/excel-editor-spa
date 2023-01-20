@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataFormComponent } from './data-form.component';
 
-describe('MusicGroupDataFormComponent', () => {
+describe('DataFormComponent', () => {
   let component: DataFormComponent;
   let fixture: ComponentFixture<DataFormComponent>;
 

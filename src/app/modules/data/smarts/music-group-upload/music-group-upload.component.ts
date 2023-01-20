@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { MusicGroupDataService } from '../music-group-data/music-group-data.service';
+import { DataTableService } from '../data-table/data-table.service';
 import { MusicGroupUploadService } from './music-group-upload.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class MusicGroupUploadComponent implements OnInit, OnDestroy {
 
   constructor(
     private uploadService: MusicGroupUploadService,
-    private dataService: MusicGroupDataService,
+    private dataService: DataTableService,
     private toastService: ToastService
   ) {}
 

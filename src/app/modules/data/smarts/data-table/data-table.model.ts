@@ -1,4 +1,4 @@
-export interface MusicGroupData {
+export interface DataTable {
   id: number;
   nomDuGroupe: string;
   origine: string;

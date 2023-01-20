@@ -2,26 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { MusicGroupData } from './music-group-data.model';
+import { DataTable } from './data-table.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MusicGroupDataService {
-  private dataSubject = new BehaviorSubject<MusicGroupData[]>([]);
+export class DataTableService {
+  private dataSubject = new BehaviorSubject<DataTable[]>([]);
   readonly data$ = this.dataSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  read(): Observable<MusicGroupData[]> {
-    return this.http.get<MusicGroupData[]>(`${environment.apiUrl}/data`);
+  read(): Observable<DataTable[]> {
+    return this.http.get<DataTable[]>(`${environment.apiUrl}/data`);
   }
 
-  load(): Observable<MusicGroupData[]> {
+  load(): Observable<DataTable[]> {
     return this.read().pipe(tap((response) => this.dataSubject.next(response)));
   }
 
-  delete(data: MusicGroupData): Observable<null> {
+  delete(data: DataTable): Observable<null> {
     return this.http
       .delete<null>(`${environment.apiUrl}/data/${data.id}`)
       .pipe(
@@ -33,17 +33,17 @@ export class MusicGroupDataService {
       );
   }
 
-  create(formData: any): Observable<MusicGroupData> {
+  create(formData: any): Observable<DataTable> {
     return this.http
-      .post<MusicGroupData>(`${environment.apiUrl}/data`, formData)
+      .post<DataTable>(`${environment.apiUrl}/data`, formData)
       .pipe(
         tap((data) => this.dataSubject.next([...this.dataSubject.value, data]))
       );
   }
 
-  update(id: number, formData: any): Observable<MusicGroupData> {
+  update(id: number, formData: any): Observable<DataTable> {
     return this.http
-      .put<MusicGroupData>(`${environment.apiUrl}/data/${id}`, formData)
+      .put<DataTable>(`${environment.apiUrl}/data/${id}`, formData)
       .pipe(
         tap((data) =>
           this.dataSubject.next(

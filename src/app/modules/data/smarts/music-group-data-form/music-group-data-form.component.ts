@@ -10,8 +10,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '@core/toasts/toast.service';
 import { emptyToNull } from '@shared/utils';
 import { Subscription } from 'rxjs';
-import { MusicGroupData } from '../music-group-data/music-group-data.model';
-import { MusicGroupDataService } from '../music-group-data/music-group-data.service';
+import { DataTable } from '../data-table/data-table.model';
+import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
   selector: 'app-music-group-data-form',
@@ -21,7 +21,7 @@ import { MusicGroupDataService } from '../music-group-data/music-group-data.serv
 export class MusicGroupDataFormComponent implements OnInit, OnDestroy {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
-  @Input() data!: MusicGroupData;
+  @Input() data!: DataTable;
   @Output() submitEvent = new EventEmitter();
   errorMessage: string = '';
   updateMode: boolean = false;
@@ -42,7 +42,7 @@ export class MusicGroupDataFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: MusicGroupDataService,
+    private dataService: DataTableService,
     private toastService: ToastService
   ) {}
 

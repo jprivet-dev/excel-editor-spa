@@ -3,20 +3,20 @@ import { ToastService } from '@core/toasts/toast.service';
 import { MusicGroupDataModalComponent } from '@modules/data/smarts/music-group-data-modal/music-group-data-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { MusicGroupData } from './music-group-data.model';
-import { MusicGroupDataService } from './music-group-data.service';
+import { DataTable } from './data-table.model';
+import { DataTableService } from './data-table.service';
 
 @Component({
   selector: 'app-music-group-data',
-  templateUrl: './music-group-data.component.html',
-  styleUrls: ['./music-group-data.component.scss'],
+  templateUrl: './data-table.component.html',
+  styleUrls: ['./data-table.component.scss'],
 })
-export class MusicGroupDataComponent implements OnDestroy {
+export class DataTableComponent implements OnDestroy {
   readonly data$ = this.dataService.data$;
   private deleteSubscription: Subscription = new Subscription();
 
   constructor(
-    private dataService: MusicGroupDataService,
+    private dataService: DataTableService,
     private toastService: ToastService,
     private modalService: NgbModal
   ) {}
@@ -29,7 +29,7 @@ export class MusicGroupDataComponent implements OnDestroy {
     return membres > 0 ? membres.toString() : '';
   }
 
-  delete(data: MusicGroupData): void {
+  delete(data: DataTable): void {
     if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
       this.deleteSubscription = this.dataService.delete(data).subscribe(() => {
         this.toastService.success(
@@ -39,7 +39,7 @@ export class MusicGroupDataComponent implements OnDestroy {
     }
   }
 
-  update(data: MusicGroupData): void {
+  update(data: DataTable): void {
     const modalRef = this.modalService.open(MusicGroupDataModalComponent);
     modalRef.componentInstance.data = data;
   }

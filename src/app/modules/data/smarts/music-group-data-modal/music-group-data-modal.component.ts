@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { MusicGroupData } from '../music-group-data/music-group-data.model';
+import { DataTable } from '../data-table/data-table.model';
 
 @Component({
   selector: 'app-music-group-data-modal',
@@ -10,7 +10,7 @@ import { MusicGroupData } from '../music-group-data/music-group-data.model';
 export class MusicGroupDataModalComponent implements OnInit {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
-  @Input() data!: MusicGroupData;
+  @Input() data!: DataTable;
   updateMode: boolean = false;
 
   constructor(private activeModal: NgbActiveModal) {}

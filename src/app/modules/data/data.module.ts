@@ -4,15 +4,15 @@ import { MusicGroupDataFormComponent } from '@modules/data/smarts/music-group-da
 import { SharedModule } from '@shared/shared.module';
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
+import { DataTableComponent } from './smarts/data-table/data-table.component';
 import { MusicGroupDataModalComponent } from './smarts/music-group-data-modal/music-group-data-modal.component';
-import { MusicGroupDataComponent } from './smarts/music-group-data/music-group-data.component';
 import { MusicGroupUploadComponent } from './smarts/music-group-upload/music-group-upload.component';
 
 @NgModule({
   declarations: [
     DataComponent,
     MusicGroupUploadComponent,
-    MusicGroupDataComponent,
+    DataTableComponent,
     MusicGroupDataFormComponent,
     MusicGroupDataModalComponent,
   ],

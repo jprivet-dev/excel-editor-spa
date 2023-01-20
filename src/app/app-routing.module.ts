@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'music-groups',
     canActivate: [LoggedInGuard],
     loadChildren: () =>
-      import('@containers/music-group/music-group.module').then(
+      import('@modules/music-group/music-group.module').then(
         (m) => m.MusicGroupModule
       ),
   },

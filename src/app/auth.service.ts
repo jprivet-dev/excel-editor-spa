@@ -8,6 +8,8 @@ import { Observable, shareReplay, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  private ID_TOKEN = 'id_token';
+
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<User> {
@@ -23,11 +25,11 @@ export class AuthService {
   }
 
   private setToken(user: User) {
-    localStorage.setItem('id_token', user.token);
+    localStorage.setItem(this.ID_TOKEN, user.token);
   }
 
   private removeToken() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem(this.ID_TOKEN);
   }
 
   // @see https://stackoverflow.com/a/60758392/13480534
@@ -57,6 +59,6 @@ export class AuthService {
   }
 
   getToken(): string {
-    return localStorage.getItem('id_token') as string;
+    return localStorage.getItem(this.ID_TOKEN) as string;
   }
 }

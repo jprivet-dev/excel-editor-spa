@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { MusicGroupDataService } from './music-group-data.service';
 
 describe('MusicGroupDataService', () => {

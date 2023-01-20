@@ -24,7 +24,6 @@
       "@core/*": ["src/app/core/*"],
       "@environments/*": ["src/environments/*"],
       "@modules/*": ["src/app/modules/*"],
-      "@services/*": ["src/app/services/*"],
       "@shared/*": ["src/app/shared/*"]
     }
   },

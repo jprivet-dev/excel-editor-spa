@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { MusicGroupFileUpload } from '@shared/music-group-file-upload.model';
 import { Observable } from 'rxjs';
+import { MusicGroupFileUpload } from './music-group-file-upload.model';
 
 @Injectable({
   providedIn: 'root',

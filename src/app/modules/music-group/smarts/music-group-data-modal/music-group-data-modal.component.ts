@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { MusicGroupData } from '@shared/music-group-data.model';
+import { MusicGroupData } from '../music-group-data/music-group-data.model';
 
 @Component({
   selector: 'app-music-group-data-modal',

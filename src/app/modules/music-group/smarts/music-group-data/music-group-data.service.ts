@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { MusicGroupData } from '@shared/music-group-data.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { MusicGroupData } from './music-group-data.model';
 
 @Injectable({
   providedIn: 'root',

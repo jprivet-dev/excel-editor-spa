@@ -2,9 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
 import { MusicGroupDataModalComponent } from '@modules/music-group/smarts/music-group-data-modal/music-group-data-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MusicGroupDataService } from '@services/music-group-data.service';
-import { MusicGroupData } from '@shared/music-group-data.model';
 import { Subscription } from 'rxjs';
+import { MusicGroupData } from './music-group-data.model';
+import { MusicGroupDataService } from './music-group-data.service';
 
 @Component({
   selector: 'app-music-group-data',

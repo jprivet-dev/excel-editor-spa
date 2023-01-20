@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
-import { MusicGroupDataService } from '@services/music-group-data.service';
-import { MusicGroupUploadService } from '@services/music-group-upload.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { MusicGroupDataService } from '../music-group-data/music-group-data.service';
+import { MusicGroupUploadService } from './music-group-upload.service';
 
 @Component({
   selector: 'app-music-group-upload',

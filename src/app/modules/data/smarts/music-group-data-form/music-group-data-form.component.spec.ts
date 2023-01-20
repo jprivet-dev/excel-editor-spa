@@ -8,9 +8,8 @@ describe('MusicGroupDataFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MusicGroupDataFormComponent ]
-    })
-    .compileComponents();
+      declarations: [MusicGroupDataFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MusicGroupDataFormComponent);
     component = fixture.componentInstance;

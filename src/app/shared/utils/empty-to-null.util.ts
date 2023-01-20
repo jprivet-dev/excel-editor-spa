@@ -4,4 +4,4 @@ export const emptyToNull = (value: any): any => {
   );
 
   return value;
-}
+};

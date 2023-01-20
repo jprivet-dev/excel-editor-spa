@@ -8,9 +8,8 @@ describe('MusicGroupFileUploadFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MusicGroupFileUploadFormComponent ]
-    })
-    .compileComponents();
+      declarations: [MusicGroupFileUploadFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MusicGroupFileUploadFormComponent);
     component = fixture.componentInstance;

@@ -8,9 +8,8 @@ describe('MusicGroupDataModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MusicGroupDataModalComponent ]
-    })
-    .compileComponents();
+      declarations: [MusicGroupDataModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MusicGroupDataModalComponent);
     component = fixture.componentInstance;

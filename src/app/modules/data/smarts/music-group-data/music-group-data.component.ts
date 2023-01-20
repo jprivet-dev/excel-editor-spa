@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
-import { MusicGroupDataModalComponent } from '@modules/music-group/smarts/music-group-data-modal/music-group-data-modal.component';
+import { MusicGroupDataModalComponent } from '@modules/data/smarts/music-group-data-modal/music-group-data-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { MusicGroupData } from './music-group-data.model';

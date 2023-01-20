@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MusicGroupComponent } from './music-group.component';
+import { DataComponent } from './data.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MusicGroupComponent,
+    component: DataComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MusicGroupRoutingModule {}
+export class DataRoutingModule {}

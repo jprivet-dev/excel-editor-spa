@@ -9,10 +9,10 @@ import {
 
 @Component({
   selector: 'app-music-group-file-upload-form',
-  templateUrl: './music-group-file-upload-form.component.html',
-  styleUrls: ['./music-group-file-upload-form.component.scss'],
+  templateUrl: './data-upload-form.component.html',
+  styleUrls: ['./data-upload-form.component.scss'],
 })
-export class MusicGroupFileUploadFormComponent {
+export class DataUploadFormComponent {
   @ViewChild('fileUpload') fileUpload!: ElementRef;
   @Input() invalidMessage: string | null = null;
   @Output() fileSelectedEvent = new EventEmitter<File>();

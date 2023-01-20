@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
-import { MusicGroupDataModalComponent } from '@modules/data/smarts/music-group-data-modal/music-group-data-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { DataModalComponent } from '../data-modal/data-modal.component';
 import { DataTable } from './data-table.model';
 import { DataTableService } from './data-table.service';
 
@@ -40,12 +40,12 @@ export class DataTableComponent implements OnDestroy {
   }
 
   update(data: DataTable): void {
-    const modalRef = this.modalService.open(MusicGroupDataModalComponent);
+    const modalRef = this.modalService.open(DataModalComponent);
     modalRef.componentInstance.data = data;
   }
 
   open(): void {
-    const modalRef = this.modalService.open(MusicGroupDataModalComponent);
+    const modalRef = this.modalService.open(DataModalComponent);
   }
 
   ngOnDestroy(): void {

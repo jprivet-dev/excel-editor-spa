@@ -15,10 +15,10 @@ import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
   selector: 'app-music-group-data-form',
-  templateUrl: './music-group-data-form.component.html',
-  styleUrls: ['./music-group-data-form.component.scss'],
+  templateUrl: './data-form.component.html',
+  styleUrls: ['./data-form.component.scss'],
 })
-export class MusicGroupDataFormComponent implements OnInit, OnDestroy {
+export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
   @Input() data!: DataTable;

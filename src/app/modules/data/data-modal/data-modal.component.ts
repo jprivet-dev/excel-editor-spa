@@ -4,10 +4,10 @@ import { DataTable } from '../data-table/data-table.model';
 
 @Component({
   selector: 'app-music-group-data-modal',
-  templateUrl: './music-group-data-modal.component.html',
-  styleUrls: ['./music-group-data-modal.component.scss'],
+  templateUrl: './data-modal.component.html',
+  styleUrls: ['./data-modal.component.scss'],
 })
-export class MusicGroupDataModalComponent implements OnInit {
+export class DataModalComponent implements OnInit {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
   @Input() data!: DataTable;

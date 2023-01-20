@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { MusicGroupUploadService } from './music-group-upload.service';
+import { DataUploadService } from './data-upload.service';
 
 describe('MusicGroupUploadService', () => {
-  let service: MusicGroupUploadService;
+  let service: DataUploadService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MusicGroupUploadService);
+    service = TestBed.inject(DataUploadService);
   });
 
   it('should be created', () => {

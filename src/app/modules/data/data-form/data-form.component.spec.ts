@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MusicGroupDataFormComponent } from './music-group-data-form.component';
+import { DataFormComponent } from './data-form.component';
 
 describe('MusicGroupDataFormComponent', () => {
-  let component: MusicGroupDataFormComponent;
-  let fixture: ComponentFixture<MusicGroupDataFormComponent>;
+  let component: DataFormComponent;
+  let fixture: ComponentFixture<DataFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MusicGroupDataFormComponent],
+      declarations: [DataFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MusicGroupDataFormComponent);
+    fixture = TestBed.createComponent(DataFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

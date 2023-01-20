@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MusicGroupUploadComponent } from './music-group-upload.component';
+import { DataUploadComponent } from './data-upload.component';
 
 describe('MusicGroupUploadComponent', () => {
-  let component: MusicGroupUploadComponent;
-  let fixture: ComponentFixture<MusicGroupUploadComponent>;
+  let component: DataUploadComponent;
+  let fixture: ComponentFixture<DataUploadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MusicGroupUploadComponent],
+      declarations: [DataUploadComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MusicGroupUploadComponent);
+    fixture = TestBed.createComponent(DataUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

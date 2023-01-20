@@ -3,14 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
-import { MusicGroupUploadService } from './music-group-upload.service';
+import { DataUploadService } from './data-upload.service';
 
 @Component({
   selector: 'app-music-group-upload',
-  templateUrl: './music-group-upload.component.html',
-  styleUrls: ['./music-group-upload.component.scss'],
+  templateUrl: './data-upload.component.html',
+  styleUrls: ['./data-upload.component.scss'],
 })
-export class MusicGroupUploadComponent implements OnInit, OnDestroy {
+export class DataUploadComponent implements OnInit, OnDestroy {
   private invalidMessageSubject = new BehaviorSubject<string | null>(null);
   readonly invalidMessage$ = this.invalidMessageSubject.asObservable();
 
@@ -18,7 +18,7 @@ export class MusicGroupUploadComponent implements OnInit, OnDestroy {
   private dataLoadSubscription: Subscription = new Subscription();
 
   constructor(
-    private uploadService: MusicGroupUploadService,
+    private uploadService: DataUploadService,
     private dataService: DataTableService,
     private toastService: ToastService
   ) {}

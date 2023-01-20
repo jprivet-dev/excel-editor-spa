@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MusicGroupDataModalComponent } from './music-group-data-modal.component';
+import { DataModalComponent } from './data-modal.component';
 
 describe('MusicGroupDataModalComponent', () => {
-  let component: MusicGroupDataModalComponent;
-  let fixture: ComponentFixture<MusicGroupDataModalComponent>;
+  let component: DataModalComponent;
+  let fixture: ComponentFixture<DataModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MusicGroupDataModalComponent],
+      declarations: [DataModalComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MusicGroupDataModalComponent);
+    fixture = TestBed.createComponent(DataModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

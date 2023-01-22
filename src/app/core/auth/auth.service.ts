@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { User } from './user';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { User } from './user';
 })
 export class AuthService {
   private ID_TOKEN = 'id_token';
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -26,10 +28,12 @@ export class AuthService {
 
   private setToken(user: User) {
     localStorage.setItem(this.ID_TOKEN, user.token);
+    this.loggedInSubject.next(true);
   }
 
   private removeToken() {
     localStorage.removeItem(this.ID_TOKEN);
+    this.loggedInSubject.next(false);
   }
 
   // @see https://stackoverflow.com/a/60758392/13480534

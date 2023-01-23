@@ -210,6 +210,20 @@ TIP: I also use the *Optimize import* option. This removes unused imports and or
 
 {back_to_top}
 
+== Codacy configuration
+
+=== Code coverage
+
+[NOTE]
+====
+* https://github.com/codacy/codacy-coverage-reporter
+* https://github.com/karma-runner/karma-coverage
+====
+
+TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
+
+{back_to_top}
+
 == Resources & Inspiration
 
 === JWT & Authentication

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Define the API token CODACY_PROJECT_TOKEN.
+# @see https://app.codacy.com/gh/jprivet-dev/excel-editor-spa/settings/coverage
+export CODACY_PROJECT_TOKEN=1234abcd

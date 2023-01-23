@@ -52,5 +52,7 @@ module.exports = function (config) {
         ],
       },
     },
+    // Avoid following error: "Disconnected , because no message in 30000 ms."
+    browserNoActivityTimeout: 120000,
   });
 };

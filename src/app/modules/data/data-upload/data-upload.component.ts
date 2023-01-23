@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ToastService } from '@core/toasts/toast.service';
+import { ToastService } from '@core/toasts';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';

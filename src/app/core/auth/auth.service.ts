@@ -3,16 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { User } from './user';
+import { URL, User } from './models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private ID_TOKEN = 'id_token';
-
-  URL_DOMAIN = '/';
-  URL_LOGIN = '/login';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -25,7 +22,7 @@ export class AuthService {
       .pipe(
         tap((user) => {
           this.setToken(user);
-          this.router.navigate([this.URL_DOMAIN]);
+          this.router.navigate([URL.Domain]);
         }),
         shareReplay()
       );
@@ -54,7 +51,7 @@ export class AuthService {
 
   logout(): void {
     this.removeToken();
-    this.router.navigate([this.URL_LOGIN]);
+    this.router.navigate([URL.Login]);
   }
 
   isLoggedIn(): boolean {

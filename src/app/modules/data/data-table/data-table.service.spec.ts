@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { DataTableService } from './data-table.service';
 
@@ -5,7 +6,9 @@ describe('DataTableService', () => {
   let service: DataTableService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
     service = TestBed.inject(DataTableService);
   });
 

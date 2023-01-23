@@ -90,12 +90,12 @@ remove_containers: ## Remove all containers
 ## — ANGULAR 🛡 ———————————————————————————————————————————————————————————————
 
 .PHONY: npm
-npm: ## Run npm, pass the parameter "c=" to run a given command, example: make ng c=--version
+npm: ## Run npm, pass the parameter "c=" to run a given command (example: make ng c=--version)
 	@$(eval c ?=)
 	$(NPM) $(c)
 
 .PHONY: ng
-ng: ## Run ng, pass the parameter "c=" to run a given command, example: make ng c=version
+ng: ## Run ng, pass the parameter "c=" to run a given command (example: make ng c=version)
 	@$(eval c ?=)
 	$(NG) $(c)
 
@@ -104,8 +104,9 @@ lint: ## Run ng lint
 	$(NG) lint
 
 .PHONY: test
-test: ## Run ng test
-	$(NG) test
+test: ## Run ng test, pass the parameter "c=" to run a given command (example: make test c="--include=src/app/core/auth/auth.service.spec.ts")
+	@$(eval c ?=)
+	$(NG) test $(c)
 
 ##
 

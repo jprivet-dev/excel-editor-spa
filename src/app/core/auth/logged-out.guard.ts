@@ -14,6 +14,9 @@ export class LoggedOutGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree {
-    return this.auth.isLoggedOut() || this.router.createUrlTree(['/']);
+    return (
+      this.auth.isLoggedOut() ||
+      this.router.createUrlTree([this.auth.URL_DOMAIN])
+    );
   }
 }

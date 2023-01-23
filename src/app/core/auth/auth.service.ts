@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
-import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { User } from './user';
 
 @Injectable({
@@ -9,10 +10,11 @@ import { User } from './user';
 })
 export class AuthService {
   private ID_TOKEN = 'id_token';
-  private loggedInSubject = new BehaviorSubject<boolean>(false);
-  loggedIn$ = this.loggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  URL_DOMAIN = '/';
+  URL_LOGIN = '/login';
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string): Observable<User> {
     return this.http
@@ -21,19 +23,20 @@ export class AuthService {
         password,
       })
       .pipe(
-        tap((user) => this.setToken(user)),
+        tap((user) => {
+          this.setToken(user);
+          this.router.navigate([this.URL_DOMAIN]);
+        }),
         shareReplay()
       );
   }
 
-  private setToken(user: User) {
+  private setToken(user: User): void {
     localStorage.setItem(this.ID_TOKEN, user.token);
-    this.loggedInSubject.next(true);
   }
 
-  private removeToken() {
+  private removeToken(): void {
     localStorage.removeItem(this.ID_TOKEN);
-    this.loggedInSubject.next(false);
   }
 
   // @see https://stackoverflow.com/a/60758392/13480534
@@ -51,6 +54,7 @@ export class AuthService {
 
   logout(): void {
     this.removeToken();
+    this.router.navigate([this.URL_LOGIN]);
   }
 
   isLoggedIn(): boolean {

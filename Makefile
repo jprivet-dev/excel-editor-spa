@@ -108,6 +108,10 @@ test: ## Run ng test, pass the parameter "c=" to run a given command (example: m
 	@$(eval c ?=)
 	$(NG) test $(c)
 
+.PHONY: coverage
+coverage: ## Generate a coverage report
+	$(NG) test --no-watch --code-coverage
+
 ##
 
 .PHONY: latest_cli

@@ -234,8 +234,6 @@ The file `scripts/CODACY_PROJECT_TOKEN.sh` is ignored by Git and imported by `sc
 
 The file `scripts/reporter.sh` generates code coverage and uploads the coverage reports on Codacy.
 
-
-
 {back_to_top}
 
 == Resources & Inspiration

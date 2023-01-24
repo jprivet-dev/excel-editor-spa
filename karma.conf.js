@@ -11,6 +11,8 @@ module.exports = function (config) {
       require("karma-jasmine-html-reporter"),
       require("karma-coverage"),
       require("@angular-devkit/build-angular/plugins/karma"),
+      // @see https://stackoverflow.com/questions/17120182/karma-test-runner-detailed-test-report-in-console
+      require("karma-verbose-reporter"),
     ],
     client: {
       jasmine: {
@@ -25,17 +27,36 @@ module.exports = function (config) {
       suppressAll: true, // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require("path").join(__dirname, "./coverage/app"),
+      dir: require("path").join(__dirname, "./coverage"),
       subdir: ".",
-      reporters: [{ type: "html" }, { type: "text-summary" }],
+      reporters: [
+        { type: "html", subdir: "html" },
+        { type: "text-summary", subdir: "text" },
+        { type: "lcov", subdir: "lcov" },
+      ],
     },
-    reporters: ["progress", "kjhtml"],
+    reporters: ["verbose", "progress", "kjhtml"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ["Chrome"],
+    browsers: ["ChromeHeadless"],
     singleRun: false,
     restartOnFileChange: true,
+    customLaunchers: {
+      // @see https://ievgen.de/2020/11/06/running-angular-unit-tests-in-docker-container/
+      // @see https://stackoverflow.com/questions/51658212/run-angular-tests-scripts-from-docker
+      ChromeHeadless: {
+        base: "Chrome",
+        flags: [
+          "--no-sandbox",
+          "--disable-gpu",
+          "--headless",
+          "--remote-debugging-port=9222",
+        ],
+      },
+    },
+    // Avoid following error: "Disconnected , because no message in 30000 ms."
+    browserNoActivityTimeout: 120000,
   });
 };

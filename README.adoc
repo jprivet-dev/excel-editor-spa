@@ -222,6 +222,20 @@ TIP: I also use the *Optimize import* option. This removes unused imports and or
 
 TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
 
+Duplicate `CODACY_PROJECT_TOKEN.sh`:
+
+```
+$ cp scripts/CODACY_PROJECT_TOKEN.sh.dist scripts/CODACY_PROJECT_TOKEN.sh
+```
+
+And define the API token `CODACY_PROJECT_TOKEN` (see https://app.codacy.com/gh/jprivet-dev/excel-editor-spa/settings/coverage).
+
+The file `scripts/CODACY_PROJECT_TOKEN.sh` is ignored by Git and imported by `scripts/reporter.sh`.
+
+The file `scripts/reporter.sh` generates code coverage and uploads the coverage reports on Codacy.
+
+
+
 {back_to_top}
 
 == Resources & Inspiration

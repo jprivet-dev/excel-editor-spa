@@ -3,6 +3,7 @@ import { ToastService } from '@core/toasts';
 import { Observable, of } from 'rxjs';
 import { DataTable } from '../data-table/data-table.model';
 import { DataTableService } from '../data-table/data-table.service';
+import { DataUploadFormComponent } from './data-upload-form.component';
 import { DataUploadComponent } from './data-upload.component';
 import { DataUploadService } from './data-upload.service';
 
@@ -20,7 +21,7 @@ describe('DataUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataUploadComponent],
+      declarations: [DataUploadComponent, DataUploadFormComponent],
       providers: [
         { provide: DataUploadService, useClass: DataUploadServiceStub },
         { provide: DataTableService, useClass: DataTableServiceStub },

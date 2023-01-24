@@ -5,8 +5,8 @@ set -e +o pipefail
 # Usage:
 # $ . scripts/reporter.sh
 
-function git_status_count() {
-  git status --porcelain | grep '^[^? ]' | wc -l 2>/dev/null
+function git_status_modified_count() {
+  git status --porcelain | grep '^M' | wc -l 2>/dev/null
 }
 
 printf "##############################\n"
@@ -35,18 +35,19 @@ printf "> Generate code coverage:\n"
 
 docker compose exec node ng test --no-watch --code-coverage
 
-if [ "$(git_status_count)" == 0 ]; then
-  printf "ERROR! No files to commit !\n"
-  return
-fi
-
-git add "${LCOV_INFO_FILE}"
-git commit -m "tests(codacy): save coverage reports in lcov format"
-
 if [ ! -f ${LCOV_INFO_FILE} ]; then
   printf "ERROR! The file '%s' does not exist.\n" "${LCOV_INFO_FILE}"
   return
 fi
+
+git add "${LCOV_INFO_FILE}"
+
+if [ "$(git_status_modified_count)" == 0 ]; then
+  printf "ERROR! No files to commit !\n"
+  return
+fi
+
+git commit -m "tests(codacy): save coverage reports in lcov format"
 
 printf "> Upload the coverage reports '%s'\n" "${LCOV_INFO_FILE}"
 bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r "${LCOV_INFO_FILE}"

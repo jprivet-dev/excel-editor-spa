@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { URL, User } from './models';
+import { Credentials, LoginCheck, URL } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,23 +13,20 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string): Observable<User> {
+  login(credentials: Credentials): Observable<LoginCheck> {
     return this.http
-      .post<User>(`${environment.apiUrl}/login_check`, {
-        username,
-        password,
-      })
+      .post<LoginCheck>(`${environment.apiUrl}/login_check`, credentials)
       .pipe(
-        tap((user) => {
-          this.setToken(user);
+        tap((loginCheck) => {
+          this.setToken(loginCheck.token);
           this.router.navigate([URL.Domain]);
         }),
         shareReplay()
       );
   }
 
-  private setToken(user: User): void {
-    localStorage.setItem(this.ID_TOKEN, user.token);
+  private setToken(token: string): void {
+    localStorage.setItem(this.ID_TOKEN, token);
   }
 
   private removeToken(): void {

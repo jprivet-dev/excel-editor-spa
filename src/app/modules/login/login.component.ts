@@ -26,7 +26,7 @@ export class LoginComponent {
     const values = this.form.value;
 
     if (values.username && values.password) {
-      this.auth.login(values.username, values.password).subscribe(() => {
+      this.auth.login(values).subscribe(() => {
         console.log('User is logged in');
         this.router.navigate(['/']);
       });

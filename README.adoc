@@ -239,12 +239,13 @@ The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Inst
 
 == Resources & Inspiration
 
-=== JWT & Authentication
+=== JWT, Authentication & Permissions
 
 * Angular Authentication With JWT: https://blog.angular-university.io/angular-jwt-authentication/
 * Angular Authentication: Using Route Guards
 : https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3
 * JWT debugger: https://jwt.io/
+* Angular permissions based on roles | Part 1. Roles, permissions and Permission Manager: https://medium.com/@rjlopezdev/angular-permissions-based-on-roles-part-1-roles-permissions-and-permission-manager-f3dde1bc82bb
 
 === Architecture
 

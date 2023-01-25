@@ -6,7 +6,7 @@ set -e +o pipefail
 # $ . scripts/reporter.sh
 
 function git_status_modified_count() {
-  git status --porcelain | grep '^M' | wc -l 2>/dev/null
+  git status --porcelain | grep '^[MA]' | wc -l 2>/dev/null
 }
 
 printf "##############################\n"
@@ -15,7 +15,7 @@ printf "##############################\n"
 
 CODACY_PROJECT_COVERAGE_TAB=https://app.codacy.com/gh/jprivet-dev/excel-editor-spa/settings/coverage
 CODACY_PROJECT_TOKEN_FILE=./scripts/CODACY_PROJECT_TOKEN.sh
-LCOV_INFO_FILE=./coverage/lcov/lcov.info
+COVERAGE_FILE=./coverage/lcov/lcov.info
 
 if [ -f "${CODACY_PROJECT_TOKEN_FILE}" ]; then
   source "${CODACY_PROJECT_TOKEN_FILE}"
@@ -33,23 +33,23 @@ fi
 printf "> API token CODACY_PROJECT_TOKEN = %s\n" "${CODACY_PROJECT_TOKEN}"
 printf "> Generate code coverage:\n"
 
-docker compose exec node ng test --no-watch --code-coverage
+make lcov
 
-if [ ! -f ${LCOV_INFO_FILE} ]; then
-  printf "ERROR! The file '%s' does not exist.\n" "${LCOV_INFO_FILE}"
+if [ ! -f ${COVERAGE_FILE} ]; then
+  printf "ERROR! The file '%s' does not exist.\n" "${COVERAGE_FILE}"
   return
 fi
 
-git add "${LCOV_INFO_FILE}"
+git add "${COVERAGE_FILE}"
 
 if [ "$(git_status_modified_count)" == 0 ]; then
-  printf "ERROR! No files to commit !\n"
+  printf "ERROR! No files to commit.\n"
   return
 fi
 
-git commit -m "tests(codacy): save coverage reports in lcov format"
+git commit -m "tests(codacy): save coverage reports in clover format"
 
-printf "> Upload the coverage reports '%s'\n" "${LCOV_INFO_FILE}"
-bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r "${LCOV_INFO_FILE}"
+printf "> Upload the coverage reports '%s'\n" "${COVERAGE_FILE}"
+bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r "${COVERAGE_FILE}"
 
 printf "> Update remote refs with '$ git push'.\n"

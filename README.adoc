@@ -39,7 +39,7 @@ endif::[]
 :codacy_project_settings_coverage: https://app.codacy.com/gh/{git_username}/{git_project_api}/settings/coverage
 
 // Releases
-:project_release: v0.0.0-beta.1
+:project_release: v0.0.0-beta.2
 
 [#{back_to_top_target}]
 = {main_title}

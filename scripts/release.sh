@@ -3,7 +3,7 @@
 # Usage:
 # $ . scripts/release.sh
 
-files="README.adoc package.json"
+files="README.adoc package.json package-lock.json"
 
 type gx &>/dev/null &&
 	git release "${files}" ||

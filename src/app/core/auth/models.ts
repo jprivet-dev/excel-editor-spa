@@ -7,7 +7,11 @@ export interface LoginCheck {
   token: string;
 }
 
-export interface User {}
+export interface User {
+  email: string;
+  username: string;
+  roles: [];
+}
 
 export enum URL {
   Domain = '/',

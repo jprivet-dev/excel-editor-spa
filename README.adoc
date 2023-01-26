@@ -241,6 +241,7 @@ The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Inst
 
 === JWT, Authentication & Permissions
 
+* Communicating with backend services using HTTP: https://angular.io/guide/http
 * Angular Authentication With JWT: https://blog.angular-university.io/angular-jwt-authentication/
 * Angular Authentication: Using Route Guards
 : https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3

@@ -10,7 +10,7 @@ export interface LoginCheck {
 export interface User {
   email: string;
   username: string;
-  roles: [];
+  roles: Roles[];
 }
 
 export type Roles = 'ROLE_USER' | 'ROLE_ADMIN';

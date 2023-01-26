@@ -2,8 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@core/auth/auth.service';
 import { JwtInterceptor } from '@core/auth/jwt.interceptor';
-
-class AuthServiceStub implements Partial<AuthService> {}
+import { AuthServiceStub } from './unit-test.helper';
 
 describe('JwtInterceptor', () => {
   let interceptor: JwtInterceptor;

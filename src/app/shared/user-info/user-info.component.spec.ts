@@ -1,14 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserService } from '@core/auth';
-import { User } from '@core/auth/models';
-import { Observable, of } from 'rxjs';
+import { UserService, UserServiceStub } from '@core/auth';
 import { UserInfoComponent } from './user-info.component';
-
-class UserServiceStub implements Partial<UserService> {
-  getCurrentUser(): Observable<User> {
-    return of();
-  }
-}
 
 describe('UserInfoComponent', () => {
   let component: UserInfoComponent;

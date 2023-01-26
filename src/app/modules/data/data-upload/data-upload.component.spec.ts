@@ -1,19 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService } from '@core/toasts';
-import { Observable, of } from 'rxjs';
-import { DataTable } from '../data-table/data-table.model';
+import { ToastService, ToastServiceStub } from '@core/toasts';
 import { DataTableService } from '../data-table/data-table.service';
+import { DataTableServiceStub } from '../data-table/unit-test.helper';
 import { DataUploadFormComponent } from './data-upload-form.component';
 import { DataUploadComponent } from './data-upload.component';
 import { DataUploadService } from './data-upload.service';
-
-class DataUploadServiceStub implements Partial<DataUploadService> {}
-class DataTableServiceStub implements Partial<DataTableService> {
-  load(): Observable<DataTable[]> {
-    return of([]);
-  }
-}
-class ToastServiceStub implements Partial<ToastService> {}
+import { DataUploadServiceStub } from './unit-test.helper';
 
 describe('DataUploadComponent', () => {
   let component: DataUploadComponent;

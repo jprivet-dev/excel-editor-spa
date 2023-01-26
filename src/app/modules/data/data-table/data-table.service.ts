@@ -43,7 +43,7 @@ export class DataTableService {
 
   update(id: number, formData: any): Observable<DataTable> {
     return this.http
-      .put<DataTable>(`${environment.apiUrl}/data/${id}`, formData)
+      .patch<DataTable>(`${environment.apiUrl}/data/${id}`, formData)
       .pipe(
         tap((data) =>
           this.dataSubject.next(

@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ToastService } from '@core/toasts';
+import { ToastService, ToastServiceStub } from '@core/toasts';
 import { DataTableService } from '../data-table/data-table.service';
+import { DataTableServiceStub } from '../data-table/unit-test.helper';
 import { DataFormComponent } from './data-form.component';
-
-class DataTableServiceStub implements Partial<DataTableService> {}
-class ToastServiceStub implements Partial<ToastService> {}
 
 describe('DataFormComponent', () => {
   let component: DataFormComponent;

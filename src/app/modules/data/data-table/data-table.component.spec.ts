@@ -1,10 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService } from '@core/toasts';
+import { ToastService, ToastServiceStub } from '@core/toasts';
 import { DataTableComponent } from './data-table.component';
 import { DataTableService } from './data-table.service';
-
-class DataTableServiceStub implements Partial<DataTableService> {}
-class ToastServiceStub implements Partial<ToastService> {}
+import { DataTableServiceStub } from './unit-test.helper';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent;

@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class UserInfoComponent implements OnInit, OnDestroy {
   private subscribe = new Subscription();
-  currentUser$ = this.userService.user$;
+  user$ = this.userService.user$;
 
   constructor(private userService: UserService) {}
 

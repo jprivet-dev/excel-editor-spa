@@ -1,4 +1,4 @@
-<div class="mb-2 text-end">
+<div class="mb-2 text-end" *appIsGranted="'ROLE_ADMIN'">
   <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
       <th scope="col">Membres</th>
       <th scope="col">Courant musical</th>
       <th scope="col">Présentation</th>
-      <th scope="col">Actions</th>
+      <th scope="col" *appIsGranted="'ROLE_ADMIN'">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -44,7 +44,7 @@
       <td>{{ membres(d.membres) }}</td>
       <td>{{ d.courantMusical }}</td>
       <td>{{ d.presentation }}</td>
-      <td>
+      <td *appIsGranted="'ROLE_ADMIN'">
         <div class="d-flex">
           <button
             type="button"
@@ -90,7 +90,7 @@
   </tbody>
 </table>
 
-<div class="mb-2 text-end">
+<div class="mb-2 text-end" *appIsGranted="'ROLE_ADMIN'">
   <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
     <svg
       xmlns="http://www.w3.org/2000/svg"

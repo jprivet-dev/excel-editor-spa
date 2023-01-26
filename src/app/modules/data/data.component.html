@@ -1,8 +1,10 @@
-<div class="container mt-3">
-  <app-data-upload></app-data-upload>
-</div>
-<div class="container-fluid mt-3">
-  <app-data-table></app-data-table>
-  <app-user-info></app-user-info>
-  <app-button-logout></app-button-logout>
-</div>
+<ng-container *ngIf="user$ | async">
+  <div class="container mt-3" *appIsGranted="'ROLE_ADMIN'">
+    <app-data-upload></app-data-upload>
+  </div>
+  <div class="container-fluid mt-3">
+    <app-data-table></app-data-table>
+    <app-user-info></app-user-info>
+    <app-button-logout></app-button-logout>
+  </div>
+</ng-container>

@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
-import { IsGrantedDirective } from './auth';
 import { ToastsComponent } from './toasts';
 
-const components = [ToastsComponent, IsGrantedDirective];
+const components = [ToastsComponent];
 const modules = [NgbToastModule, NgbModule];
 
 @NgModule({

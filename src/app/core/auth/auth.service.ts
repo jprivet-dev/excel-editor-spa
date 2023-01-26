@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { Credentials, LoginCheck, URL } from './models';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,11 @@ import { Credentials, LoginCheck, URL } from './models';
 export class AuthService {
   private ID_TOKEN = 'id_token';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   login(credentials: Credentials): Observable<LoginCheck> {
     return this.http
@@ -47,6 +52,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.userService.clearUser();
     this.removeToken();
     this.router.navigate([URL.Login]);
   }

@@ -45,6 +45,7 @@ export class DataUploadComponent implements OnInit, OnDestroy {
   }
 
   private loadData() {
+    // TODO: do not use subscription
     this.dataLoadSubscription = this.dataService.load().subscribe();
   }
 

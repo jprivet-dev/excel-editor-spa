@@ -13,6 +13,8 @@ export interface User {
   roles: [];
 }
 
+export type Roles = 'ROLE_USER' | 'ROLE_ADMIN';
+
 export enum URL {
   Domain = '/',
   Login = '/login',

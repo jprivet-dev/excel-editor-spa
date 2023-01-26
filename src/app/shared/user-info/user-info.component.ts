@@ -8,13 +8,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./user-info.component.scss'],
 })
 export class UserInfoComponent implements OnInit, OnDestroy {
-  subscribe = new Subscription();
-  currentUser$ = this.userService.currentUser$;
+  private subscribe = new Subscription();
+  currentUser$ = this.userService.user$;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.subscribe.add(this.userService.getCurrentUser().subscribe());
+    this.subscribe.add(this.userService.retrieveUser().subscribe());
   }
 
   ngOnDestroy() {

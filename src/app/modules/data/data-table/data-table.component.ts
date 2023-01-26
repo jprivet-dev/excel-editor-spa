@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -11,9 +11,11 @@ import { DataTableService } from './data-table.service';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
 })
-export class DataTableComponent implements OnDestroy {
+export class DataTableComponent implements OnInit, OnDestroy {
   readonly data$ = this.dataService.data$;
+
   private deleteSubscription: Subscription = new Subscription();
+  private dataLoadSubscription: Subscription = new Subscription();
 
   constructor(
     private dataService: DataTableService,
@@ -21,6 +23,12 @@ export class DataTableComponent implements OnDestroy {
     private modalService: NgbModal
   ) {}
 
+  ngOnInit() {
+    // TODO: do not use subscription
+    this.dataLoadSubscription = this.dataService.load().subscribe();
+  }
+
+  // TODO: to remove
   year(date: string): string {
     return date ? date : '';
   }
@@ -50,5 +58,6 @@ export class DataTableComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.deleteSubscription.unsubscribe();
+    this.dataLoadSubscription.unsubscribe();
   }
 }

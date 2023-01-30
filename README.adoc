@@ -18,7 +18,7 @@ endif::[]
 :back_to_top_label: ⬆ Back to top
 :back_to_top: <<{back_to_top_target},{back_to_top_label}>>
 
-:main_title: Excel Editor (SPA with Angular)
+:main_title: Excel Editor (Part 1/3 - SPA with Angular)
 :git_project_base: excel-editor
 :git_project_api: {git_project_base}-api
 :git_project_spa: {git_project_base}-spa
@@ -52,12 +52,14 @@ toc::[]
 
 == Presentation
 
-Study of an API (Symfony) and a SPA (Angular), to load data in CSV/Excel format, with consultation and modification of this data online.
+Study of a {git_url_spa}[SPA (Angular)] and an {git_url_api}[API (Symfony)], with management of Excel files (uploading, reading and modification of data, depending to the authenticated user).
+
+image::doc/img/excel-editor-architecture-diagram.png[]
 
 |===
-| API (Symfony/Docker) | {git_url_api}
-| SPA (Angular/Docker) | {git_url_spa}
-| Insomnia - design, debug and test the API (https://insomnia.rest/) | {git_url_insomnia}
+| Part 1/3 - SPA with https://angular.io/[Angular] | {git_url_spa}
+| Part 2/3 - API with https://symfony.com/[Symfony] | {git_url_api}
+| Part 3/3 - Debug with https://insomnia.rest/[Insomnia] | {git_url_insomnia}
 |===
 
 {back_to_top}

@@ -1,23 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '@core/auth';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { AuthService } from '@core/auth';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss'],
 })
-export class UserInfoComponent implements OnInit, OnDestroy {
-  private subscribe = new Subscription();
-  readonly user$ = this.userService.user$;
-
-  constructor(private userService: UserService) {}
-
-  ngOnInit(): void {
-    this.subscribe.add(this.userService.retrieveUser().subscribe());
-  }
-
-  ngOnDestroy() {
-    this.subscribe.unsubscribe();
-  }
+export class UserInfoComponent {
+  readonly user$ = this.auth.user$;
+  constructor(private auth: AuthService) {}
 }

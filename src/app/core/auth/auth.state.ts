@@ -14,15 +14,19 @@ export class AuthState {
   private errorSubject = new ReplaySubject<Error>(1);
   readonly error$ = this.errorSubject.asObservable();
 
-  applyIsAuthenticated(): void {
+  authenticated(): void {
     this.isAuthenticatedSubject.next(true);
   }
 
-  applyIsNotAuthenticated(): void {
+  notAuthenticated(): void {
     this.isAuthenticatedSubject.next(false);
   }
 
   setError(error: Error): void {
     this.errorSubject.next(error);
+  }
+
+  clear(): void {
+    this.notAuthenticated();
   }
 }

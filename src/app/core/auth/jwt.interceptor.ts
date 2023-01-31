@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (this.auth.isLoggedIn()) {
       const clone = request.clone({
-        setHeaders: { Authorization: `Bearer ${this.auth.getToken()}` },
+        setHeaders: { Authorization: `Bearer ${this.auth.getCurrentToken()}` },
       });
       return next.handle(clone);
     }

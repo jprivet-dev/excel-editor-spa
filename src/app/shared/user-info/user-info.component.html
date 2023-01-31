@@ -1,1 +1,1 @@
-Username: {{ (user$ | async)?.username }}
+Username: {{ (user$ | async | json) }}

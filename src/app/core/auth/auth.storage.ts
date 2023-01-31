@@ -19,4 +19,8 @@ export class AuthStorage {
   removeToken(): void {
     localStorage.removeItem(this.ID_TOKEN);
   }
+
+  clear(): void {
+    this.removeToken();
+  }
 }

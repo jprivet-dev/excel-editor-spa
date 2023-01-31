@@ -4,6 +4,6 @@ export * from './jwt.interceptor';
 export * from './logged-in.guard';
 export * from './logged-out.guard';
 export * from './models';
-export * from './token.utils';
+export * from './auth.utils';
 export * from './unit-test.helper';
 export * from './user.service';

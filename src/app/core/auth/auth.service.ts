@@ -5,17 +5,18 @@ import { environment } from '@environments/environment';
 import {
   catchError,
   concatMap,
+  filter,
   map,
   Observable,
   of,
+  shareReplay,
   tap,
   throwError,
 } from 'rxjs';
 import { AuthState } from './auth.state';
 import { AuthStorage } from './auth.storage';
-import { Credentials, LoginCheck, URL, User } from './models';
-import { tokenIsExpired } from './token.utils';
-import { UserService } from './user.service';
+import { tokenIsExpired } from './auth.utils';
+import { Credentials, LoginCheck, Roles, URL, User } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -28,15 +29,15 @@ export class AuthService {
   readonly user$ = this.isAuthenticated$.pipe(
     concatMap((isAuthenticated) =>
       isAuthenticated ? this.getUser() : of(null)
-    )
+    ),
+    shareReplay(1)
   );
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private storage: AuthStorage,
-    private state: AuthState,
-    private userService: UserService
+    private state: AuthState
   ) {
     if (this.isValidToken()) {
       this.state.authenticated();
@@ -54,7 +55,6 @@ export class AuthService {
   }
 
   logout(): void {
-    this.userService.clearUser();
     this.storage.clear();
     this.state.clear();
     this.redirectTo(URL.Login);
@@ -70,6 +70,14 @@ export class AuthService {
 
   getCurrentToken(): string {
     return this.storage.getToken();
+  }
+
+  hasRole(role: Roles): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => (user ? user.roles : [])),
+      map((roles: Roles[]) => roles.includes(role as never)),
+      filter((hasRole) => hasRole)
+    );
   }
 
   private isValidToken(): boolean {

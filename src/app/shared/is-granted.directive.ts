@@ -2,32 +2,30 @@ import {
   Directive,
   EmbeddedViewRef,
   Input,
+  OnDestroy,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { Roles, UserService } from '@core/auth';
-import { filter, map, tap } from 'rxjs';
+import { AuthService, Roles } from '@core/auth';
+import { Subscription, tap } from 'rxjs';
 
 @Directive({
   selector: '[appIsGranted]',
 })
-export class IsGrantedDirective {
+export class IsGrantedDirective implements OnDestroy {
+  private subscription!: Subscription;
   private viewRef: EmbeddedViewRef<any> | null = null;
 
   constructor(
     private viewContainerRef: ViewContainerRef,
     readonly templateRef: TemplateRef<any>,
-    private userService: UserService
+    private auth: AuthService
   ) {}
 
   @Input() set appIsGranted(role: Roles) {
-    this.userService
-      .retrieveUser()
-      .pipe(
-        map((user) => this.userService.hasRole(role)),
-        filter((hasRole) => hasRole),
-        tap((isGranted) => this.updateView())
-      )
+    this.subscription = this.auth
+      .hasRole(role)
+      .pipe(tap((isGranted) => this.updateView()))
       .subscribe();
   }
 
@@ -41,5 +39,9 @@ export class IsGrantedDirective {
     if (this.templateRef) {
       this.viewRef = this.viewContainerRef.createEmbeddedView(this.templateRef);
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

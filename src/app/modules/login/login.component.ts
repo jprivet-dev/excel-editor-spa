@@ -10,6 +10,7 @@ import { AuthService } from '@core/auth';
 })
 export class LoginComponent {
   form: FormGroup;
+  readonly error$ = this.auth.error$;
 
   constructor(
     private fb: FormBuilder,

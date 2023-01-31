@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { DataTable } from './data-table.model';
 
 @Injectable({
@@ -37,6 +37,7 @@ export class DataTableService {
     return this.http
       .post<DataTable>(`${environment.apiUrl}/data`, formData)
       .pipe(
+        catchError((error: any) => throwError(error)),
         tap((data) => this.dataSubject.next([...this.dataSubject.value, data]))
       );
   }
@@ -45,6 +46,7 @@ export class DataTableService {
     return this.http
       .patch<DataTable>(`${environment.apiUrl}/data/${id}`, formData)
       .pipe(
+        catchError((error: any) => throwError(error)),
         tap((data) =>
           this.dataSubject.next(
             this.dataSubject.value.map((d) => {

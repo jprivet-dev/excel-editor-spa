@@ -1,20 +1,27 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { AuthState } from './auth.state';
+import { AuthStorage } from './auth.storage';
 import { Credentials, LoginCheck, URL } from './models';
+import { tokenIsExpired } from './token.utils';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private ID_TOKEN = 'id_token';
+  readonly isAuthenticated$ = this.state.isAuthenticated$;
+  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
+  readonly error$ = this.state.error$;
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private storage: AuthStorage,
+    private state: AuthState,
     private userService: UserService
   ) {}
 
@@ -22,44 +29,26 @@ export class AuthService {
     return this.http
       .post<LoginCheck>(`${environment.apiUrl}/login_check`, credentials)
       .pipe(
+        catchError((e) => this.handleError(e)),
         tap((loginCheck) => {
-          this.setToken(loginCheck.token);
+          this.storage.setToken(loginCheck.token);
+          this.state.applyIsAuthenticated();
           this.router.navigate([URL.Domain]);
         }),
         shareReplay()
       );
   }
 
-  private setToken(token: string): void {
-    localStorage.setItem(this.ID_TOKEN, token);
-  }
-
-  private removeToken(): void {
-    localStorage.removeItem(this.ID_TOKEN);
-  }
-
-  // @see https://stackoverflow.com/a/60758392/13480534
-  private isExpired(token: string): boolean {
-    const result = token.split('.');
-
-    if (result.length === 3) {
-      const exp = JSON.parse(atob(result[1])).exp;
-      const now = Math.floor(new Date().getTime() / 1000);
-      return now >= exp;
-    }
-
-    return false;
-  }
-
   logout(): void {
     this.userService.clearUser();
-    this.removeToken();
+    this.storage.removeToken();
+    this.state.applyIsNotAuthenticated();
     this.router.navigate([URL.Login]);
   }
 
   isLoggedIn(): boolean {
     const token = this.getToken();
-    return token ? !this.isExpired(token) : false;
+    return token ? !tokenIsExpired(token) : false;
   }
 
   isLoggedOut(): boolean {
@@ -67,6 +56,11 @@ export class AuthService {
   }
 
   getToken(): string {
-    return localStorage.getItem(this.ID_TOKEN) as string;
+    return this.storage.getToken();
+  }
+
+  private handleError(e: HttpErrorResponse): Observable<any> {
+    this.state.setError(e.error);
+    return throwError(e);
   }
 }

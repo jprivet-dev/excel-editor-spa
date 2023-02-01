@@ -294,6 +294,12 @@ https://angular.io/guide/styleguide#lift
 
 {back_to_top}
 
+=== Material
+
+* Installation: https://material.angular.io/guide/getting-started
+
+{back_to_top}
+
 == Comments, suggestions?
 
 Feel free to make comments/suggestions to me in the {git_url_current}/issues[Git issues section].

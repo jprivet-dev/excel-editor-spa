@@ -1,5 +1,5 @@
 // @see https://stackoverflow.com/a/60758392/13480534
-import { Roles, User } from './models';
+import { Roles, User } from './auth.models';
 
 export function tokenIsExpired(token: string): boolean {
   const result = token.split('.');

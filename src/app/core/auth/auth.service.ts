@@ -1,22 +1,22 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@environments/environment';
 import {
   catchError,
-  concatMap,
   filter,
   map,
   Observable,
   of,
   shareReplay,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
+import { AuthClient } from './auth.client';
+import { Credentials, Roles, URL } from './auth.models';
 import { AuthState } from './auth.state';
 import { AuthStorage } from './auth.storage';
 import { tokenIsExpired } from './auth.utils';
-import { Credentials, LoginCheck, Roles, URL, User } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,18 +24,25 @@ import { Credentials, LoginCheck, Roles, URL, User } from './models';
 export class AuthService {
   readonly isAuthenticated$ = this.state.isAuthenticated$;
   readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
+
   readonly error$ = this.state.error$;
 
   readonly user$ = this.isAuthenticated$.pipe(
-    concatMap((isAuthenticated) =>
-      isAuthenticated ? this.getUser() : of(null)
+    switchMap((isAuthenticated) =>
+      isAuthenticated ? this.client.getUser() : of(null)
     ),
     shareReplay(1)
   );
 
+  readonly token$ = this.isAuthenticated$.pipe(
+    map((isAuthenticated) =>
+      isAuthenticated && this.isValidToken() ? this.getToken() : null
+    )
+  );
+
   constructor(
-    private http: HttpClient,
     private router: Router,
+    private client: AuthClient,
     private storage: AuthStorage,
     private state: AuthState
   ) {
@@ -45,11 +52,12 @@ export class AuthService {
   }
 
   login(credentials: Credentials): Observable<string> {
-    return this.getToken(credentials).pipe(
+    return this.client.getToken(credentials).pipe(
+      catchError((e) => this.handleError(e)),
       tap((token) => {
         this.storage.setToken(token);
         this.state.authenticated();
-        this.redirectTo(URL.Domain);
+        this.router.navigate([URL.Domain]);
       })
     );
   }
@@ -57,18 +65,10 @@ export class AuthService {
   logout(): void {
     this.storage.clear();
     this.state.clear();
-    this.redirectTo(URL.Login);
+    this.router.navigate([URL.Login]);
   }
 
-  isLoggedIn(): boolean {
-    return this.isValidToken();
-  }
-
-  isLoggedOut(): boolean {
-    return !this.isLoggedIn();
-  }
-
-  getCurrentToken(): string {
+  getToken(): string {
     return this.storage.getToken();
   }
 
@@ -81,27 +81,8 @@ export class AuthService {
   }
 
   private isValidToken(): boolean {
-    const token = this.getCurrentToken();
+    const token = this.getToken();
     return token ? !tokenIsExpired(token) : false;
-  }
-
-  private getToken(credentials: Credentials): Observable<string> {
-    return this.http
-      .post<LoginCheck>(`${environment.apiUrl}/login_check`, credentials)
-      .pipe(
-        catchError((e) => this.handleError(e)),
-        map((loginCheck) => loginCheck.token)
-      );
-  }
-
-  private getUser(): Observable<User> {
-    return this.http
-      .get<User>(`${environment.apiUrl}/user`)
-      .pipe(catchError((e) => this.handleError(e)));
-  }
-
-  private redirectTo(url: URL): void {
-    this.router.navigate([url]);
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {

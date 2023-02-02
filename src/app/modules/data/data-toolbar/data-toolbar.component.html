@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <span>Excel Editor</span>
+  <span class="spacer"></span>
+  <span class="mr">
+    Bonjour {{ (user$ | async)?.username }}
+  </span>
+  <button mat-mini-fab class="mr" title="Télécharger un fichier Excel">
+    <mat-icon>upload</mat-icon>
+  </button>
+  <button mat-mini-fab class="mr" title="Se déconnecter" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

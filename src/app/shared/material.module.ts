@@ -6,6 +6,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const modules = [
   MatButtonModule,
@@ -15,6 +16,7 @@ const modules = [
   MatIconModule,
   MatInputModule,
   MatProgressBarModule,
+  MatToolbarModule,
 ];
 
 @NgModule({

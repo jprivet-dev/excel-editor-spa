@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '@core/auth';
 import { Subscription } from 'rxjs';
 
@@ -11,14 +10,11 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnDestroy {
   private subscription!: Subscription;
-  form: FormGroup;
+  public form: FormGroup;
+  readonly isLoading$ = this.auth.isLoading$;
   readonly error$ = this.auth.error$;
 
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],

@@ -5,14 +5,25 @@ import { BehaviorSubject, map, ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthState {
+  private isLoadingSubject = new BehaviorSubject<boolean>(false);
+  readonly isLoading$ = this.isLoadingSubject.asObservable();
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   readonly isNotAuthenticated$ = this.isAuthenticated$.pipe(
     map((isAuthenticated) => !isAuthenticated)
   );
 
-  private errorSubject = new ReplaySubject<Error>(1);
+  private errorSubject = new ReplaySubject<Error | null>(1);
   readonly error$ = this.errorSubject.asObservable();
+
+  startLoading(): void {
+    this.isLoadingSubject.next(true);
+  }
+
+  stopLoading(): void {
+    this.isLoadingSubject.next(false);
+  }
 
   authenticated(): void {
     this.isAuthenticatedSubject.next(true);
@@ -26,7 +37,7 @@ export class AuthState {
     this.errorSubject.next(error);
   }
 
-  clear(): void {
-    this.notAuthenticated();
+  clearError(): void {
+    this.errorSubject.next(null);
   }
 }

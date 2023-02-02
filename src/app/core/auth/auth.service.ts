@@ -22,10 +22,10 @@ import { tokenIsExpired } from './auth.utils';
   providedIn: 'root',
 })
 export class AuthService {
+  readonly isLoading$ = this.state.isLoading$;
+  readonly error$ = this.state.error$;
   readonly isAuthenticated$ = this.state.isAuthenticated$;
   readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
-
-  readonly error$ = this.state.error$;
 
   readonly user$ = this.isAuthenticated$.pipe(
     switchMap((isAuthenticated) =>
@@ -36,7 +36,7 @@ export class AuthService {
 
   readonly token$ = this.isAuthenticated$.pipe(
     map((isAuthenticated) =>
-      isAuthenticated && this.isValidToken() ? this.getToken() : null
+      isAuthenticated && this.isValidToken() ? this.storage.getToken() : null
     )
   );
 
@@ -46,30 +46,23 @@ export class AuthService {
     private storage: AuthStorage,
     private state: AuthState
   ) {
-    if (this.isValidToken()) {
-      this.state.authenticated();
-    }
+    this.isValidToken() && this.state.authenticated();
   }
 
   login(credentials: Credentials): Observable<string> {
+    this.loading();
     return this.client.getToken(credentials).pipe(
       catchError((e) => this.handleError(e)),
       tap((token) => {
-        this.storage.setToken(token);
-        this.state.authenticated();
+        this.success(token);
         this.router.navigate([URL.Domain]);
       })
     );
   }
 
   logout(): void {
-    this.storage.clear();
-    this.state.clear();
+    this.disconnect();
     this.router.navigate([URL.Login]);
-  }
-
-  getToken(): string {
-    return this.storage.getToken();
   }
 
   hasRole(role: Roles): Observable<boolean> {
@@ -81,12 +74,34 @@ export class AuthService {
   }
 
   private isValidToken(): boolean {
-    const token = this.getToken();
+    const token = this.storage.getToken();
     return token ? !tokenIsExpired(token) : false;
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {
-    this.state.setError(e.error);
+    this.error(e);
     return throwError(e);
+  }
+
+  private loading() {
+    this.state.startLoading();
+    this.state.clearError();
+  }
+
+  private success(token: string) {
+    this.state.stopLoading();
+    this.state.clearError();
+    this.storage.setToken(token);
+    this.state.authenticated();
+  }
+
+  private error(e: HttpErrorResponse) {
+    this.state.stopLoading();
+    this.state.setError(e.error);
+  }
+
+  private disconnect() {
+    this.storage.clear();
+    this.state.notAuthenticated();
   }
 }

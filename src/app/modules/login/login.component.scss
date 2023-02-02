@@ -1,0 +1,30 @@
+.tile-title {
+  background-color: #33C481;
+  background-image: url('/assets/logos/excel-file-logo.svg');
+  background-repeat: no-repeat;
+  background-size: 45%;
+  background-position: 125% 105%;
+
+  .title {
+    color: white;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+}
+
+.tile-login {
+  background-color: #F5F5F5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}

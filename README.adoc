@@ -283,6 +283,12 @@ TIP: Use `shareReplay`: https://www.learnrxjs.io/learn-rxjs/operators/multicasti
 
 NOTE: The authentication service of this project is mainly inspired by https://github.com/auth0/auth0-angular.
 
+=== Error handling
+
+* https://blog.angular-university.io/rxjs-error-handling/
+
+{back_to_top}
+
 === Architecture
 
 * https://dev-academy.com/angular-architecture-best-practices/

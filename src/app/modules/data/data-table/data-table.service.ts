@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Data } from '@shared/models';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { DataTableClient } from './data-table.client';
-import { DataTable } from './data-table.model';
 import { DataTableState } from './data-table.state';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class DataTableService {
 
   constructor(private client: DataTableClient, private state: DataTableState) {}
 
-  load(): Observable<DataTable[]> {
+  load(): Observable<Data[]> {
     this.loading();
     return this.client.read().pipe(
       catchError((e) => this.handleError(e)),
@@ -26,7 +26,7 @@ export class DataTableService {
     );
   }
 
-  delete(data: DataTable): Observable<null> {
+  delete(data: Data): Observable<null> {
     this.loading();
     return this.client.delete(data.id).pipe(
       catchError((e) => this.handleError(e)),
@@ -37,7 +37,7 @@ export class DataTableService {
     );
   }
 
-  create(formData: any): Observable<DataTable> {
+  create(formData: any): Observable<Data> {
     this.loading();
     return this.client.create(formData).pipe(
       catchError((e) => this.handleError(e)),
@@ -48,7 +48,7 @@ export class DataTableService {
     );
   }
 
-  update(id: number, formData: any): Observable<DataTable> {
+  update(id: number, formData: any): Observable<Data> {
     this.loading();
     return this.client.update(id, formData).pipe(
       catchError((e) => this.handleError(e)),

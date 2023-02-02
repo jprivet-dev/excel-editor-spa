@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '@core/toasts/toast.service';
+import { Data } from '@shared/models';
 import { emptyToNull } from '@shared/utils';
 import { Subscription } from 'rxjs';
-import { DataTable } from '../data-table/data-table.model';
 import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
@@ -21,7 +21,7 @@ import { DataTableService } from '../data-table/data-table.service';
 export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
-  @Input() data!: DataTable;
+  @Input() data!: Data;
   @Output() submitEvent = new EventEmitter();
   errorMessage: string = '';
   updateMode: boolean = false;

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '@core/toasts/toast.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Data } from '@shared/models';
 import { Subscription } from 'rxjs';
 import { DataModalComponent } from '../data-modal/data-modal.component';
-import { DataTable } from './data-table.model';
 import { DataTableService } from './data-table.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     return membres > 0 ? membres.toString() : '';
   }
 
-  delete(data: DataTable): void {
+  delete(data: Data): void {
     if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
       this.deleteSubscription = this.dataService.delete(data).subscribe(() => {
         this.toastService.success(
@@ -51,7 +51,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  update(data: DataTable): void {
+  update(data: Data): void {
     const modalRef = this.modalService.open(DataModalComponent);
     modalRef.componentInstance.data = data;
   }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataTable } from '../data-table/data-table.model';
+import { Data } from '@shared/models';
 
 @Component({
   selector: 'app-data-modal',
@@ -10,7 +10,7 @@ import { DataTable } from '../data-table/data-table.model';
 export class DataModalComponent implements OnInit {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
-  @Input() data!: DataTable;
+  @Input() data!: Data;
   updateMode: boolean = false;
 
   constructor(private activeModal: NgbActiveModal) {}

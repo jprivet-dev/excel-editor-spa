@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Data } from '@shared/models';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { DataTable } from './data-table.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,25 +9,25 @@ export class DataTableState {
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   readonly isLoading$ = this.isLoadingSubject.asObservable();
 
-  private dataSubject = new BehaviorSubject<DataTable[]>([]);
+  private dataSubject = new BehaviorSubject<Data[]>([]);
   readonly data$ = this.dataSubject.asObservable();
 
   private errorMessageSubject = new ReplaySubject<string | null>(1);
   readonly errorMessage$ = this.errorMessageSubject.asObservable();
 
-  setData(dataList: DataTable[]): void {
+  setData(dataList: Data[]): void {
     this.dataSubject.next(dataList);
   }
 
-  getData(): DataTable[] {
+  getData(): Data[] {
     return this.dataSubject.value;
   }
 
-  addData(data: DataTable): void {
+  addData(data: Data): void {
     this.setData([...this.getData(), data]);
   }
 
-  updateData(id: number, data: DataTable): void {
+  updateData(id: number, data: Data): void {
     this.setData(
       this.getData().map((current) => {
         return current.id === id ? { ...current, ...data } : current;
@@ -35,7 +35,7 @@ export class DataTableState {
     );
   }
 
-  deleteData(data: DataTable): void {
+  deleteData(data: Data): void {
     this.setData(this.getData().filter((current) => current.id !== data.id));
   }
 

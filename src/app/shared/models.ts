@@ -1,4 +1,4 @@
-export interface DataTable {
+export interface Data {
   id: number;
   nomDuGroupe: string;
   origine: string;

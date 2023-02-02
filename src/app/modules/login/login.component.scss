@@ -1,6 +1,10 @@
+.mat-card {
+  padding: 2rem;
+}
+
 .tile-title {
-  background-color: #33C481;
-  background-image: url('/assets/logos/excel-file-logo.svg');
+  background-color: #33c481;
+  background-image: url("/assets/logos/excel-file-logo.svg");
   background-repeat: no-repeat;
   background-size: 45%;
   background-position: 125% 105%;
@@ -12,16 +16,21 @@
 
   h1 {
     font-size: 5rem;
+    padding-bottom: 0.5rem;
   }
 
   h2 {
     font-size: 1.2rem;
     font-weight: 300;
+
+    a {
+      color: #185c37;
+    }
   }
 }
 
 .tile-login {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 form {

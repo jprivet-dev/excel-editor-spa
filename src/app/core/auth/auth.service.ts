@@ -83,24 +83,24 @@ export class AuthService {
     return throwError(e);
   }
 
-  private loading() {
+  private loading(): void {
     this.state.startLoading();
     this.state.clearError();
   }
 
-  private success(token: string) {
+  private success(token: string): void {
     this.state.stopLoading();
     this.state.clearError();
     this.storage.setToken(token);
     this.state.authenticated();
   }
 
-  private error(e: HttpErrorResponse) {
+  private error(e: HttpErrorResponse): void {
     this.state.stopLoading();
     this.state.setError(e.error);
   }
 
-  private disconnect() {
+  private disconnect(): void {
     this.storage.clear();
     this.state.notAuthenticated();
   }

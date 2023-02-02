@@ -12,7 +12,11 @@ import { DataTableService } from './data-table.service';
   styleUrls: ['./data-table.component.scss'],
 })
 export class DataTableComponent implements OnInit, OnDestroy {
+  readonly displayedColumns = ['nomDuGroupe'];
+
+  readonly isLoading$ = this.dataService.isLoading$;
   readonly data$ = this.dataService.data$;
+  readonly errorMessage$ = this.dataService.errorMessage$;
 
   private deleteSubscription: Subscription = new Subscription();
   private dataLoadSubscription: Subscription = new Subscription();

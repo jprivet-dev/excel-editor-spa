@@ -17,6 +17,9 @@ RUN apk update && apk add bash
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# Resolve "npm notice New major version of npm available! 8.19.3 -> 9.4.1" on up.
+RUN npm install -g npm@^9.4.1
+
 # Install global Angular CLI
 # @see https://stackoverflow.com/questions/44525746/global-angular-cli-version-greater-than-local-version
 # @see https://www.npmjs.com/package/@angular/cli

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SnackBarService } from '@core/snack-bar';
+import { SnackBarService } from '@shared/snack-bar';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
-import { SnackBarService } from '@core/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
+import { SnackBarService } from '@shared/snack-bar';
 import { Observable, Subscription, tap } from 'rxjs';
 import { DataDialogEditComponent } from '../data-dialog-edit/data-dialog-edit.component';
 import { DataTableService } from './data-table.service';

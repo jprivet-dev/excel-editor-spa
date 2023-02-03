@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService, ToastServiceStub } from '@core/toasts';
+import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
 import { DataTableComponent } from './data-table.component';
 import { DataTableService } from './data-table.service';
 import { DataTableServiceStub } from './unit-test.helper';
@@ -13,7 +13,7 @@ describe('DataTableComponent', () => {
       declarations: [DataTableComponent],
       providers: [
         { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: ToastService, useClass: ToastServiceStub },
+        { provide: SnackBarService, useClass: SnackbarServiceStub },
       ],
     }).compileComponents();
 

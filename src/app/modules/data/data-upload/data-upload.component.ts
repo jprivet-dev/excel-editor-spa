@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ToastService } from '@core/toasts';
+import { SnackBarService } from '@core/snack-bar';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
@@ -20,7 +20,7 @@ export class DataUploadComponent implements OnInit, OnDestroy {
   constructor(
     private uploadService: DataUploadService,
     private dataService: DataTableService,
-    private toastService: ToastService
+    private snackBar: SnackBarService
   ) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class DataUploadComponent implements OnInit, OnDestroy {
 
     this.uploadSubscription = this.uploadService.upload(file).subscribe(
       (response) => {
-        this.toastService.success(
+        this.snackBar.success(
           `Le fichier ${response.filename} a été téléchargé.`
         );
 

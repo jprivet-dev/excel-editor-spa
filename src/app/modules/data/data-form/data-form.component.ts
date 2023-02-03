@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ToastService } from '@core/toasts/toast.service';
+import { SnackBarService } from '@core/snack-bar';
 import { Data } from '@shared/models';
 import { emptyToNull } from '@shared/utils';
 import { Subscription } from 'rxjs';
@@ -43,7 +43,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataTableService,
-    private toastService: ToastService
+    private snackBar: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -104,9 +104,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           this.form.reset();
-          this.toastService.success(
-            `Le groupe "${data.nomDuGroupe}" a été créé.`
-          );
+          this.snackBar.success(`Le groupe "${data.nomDuGroupe}" a été créé.`);
           this.submitEvent.emit();
         },
         (error) => {
@@ -121,7 +119,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
       .subscribe(
         (data) => {
           this.form.reset();
-          this.toastService.success(
+          this.snackBar.success(
             `Le groupe "${data.nomDuGroupe}" a été mis à jour.`
           );
           this.submitEvent.emit();

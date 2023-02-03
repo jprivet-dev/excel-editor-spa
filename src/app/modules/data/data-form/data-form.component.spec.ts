@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ToastService, ToastServiceStub } from '@core/toasts';
+import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataTableServiceStub } from '../data-table/unit-test.helper';
 import { DataFormComponent } from './data-form.component';
@@ -15,7 +15,7 @@ describe('DataFormComponent', () => {
       declarations: [DataFormComponent],
       providers: [
         { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: ToastService, useClass: ToastServiceStub },
+        { provide: SnackBarService, useClass: SnackbarServiceStub },
       ],
     }).compileComponents();
 

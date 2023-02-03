@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService, ToastServiceStub } from '@core/toasts';
+import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataTableServiceStub } from '../data-table/unit-test.helper';
 import { DataUploadFormComponent } from './data-upload-form.component';
@@ -17,7 +17,7 @@ describe('DataUploadComponent', () => {
       providers: [
         { provide: DataUploadService, useClass: DataUploadServiceStub },
         { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: ToastService, useClass: ToastServiceStub },
+        { provide: SnackBarService, useClass: SnackbarServiceStub },
       ],
     }).compileComponents();
 

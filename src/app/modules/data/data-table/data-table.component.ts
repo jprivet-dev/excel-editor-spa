@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@core/auth';
-import { ToastService } from '@core/toasts/toast.service';
+import { SnackBarService } from '@core/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
@@ -22,7 +22,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private dataService: DataTableService,
-    private toastService: ToastService,
+    private snackBar: SnackBarService,
     private modalService: NgbModal
   ) {}
 
@@ -56,7 +56,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
       this.subscription.add(
         this.dataService.delete(data).subscribe(() => {
-          this.toastService.success(
+          this.snackBar.success(
             `Le groupe "${data.nomDuGroupe}" a été supprimé.`
           );
         })

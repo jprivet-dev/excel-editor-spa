@@ -1,5 +1,4 @@
 // @see https://stackoverflow.com/a/60758392/13480534
-import { Roles, User } from './auth.models';
 
 export function tokenIsExpired(token: string): boolean {
   const result = token.split('.');
@@ -11,8 +10,4 @@ export function tokenIsExpired(token: string): boolean {
   }
 
   return false;
-}
-
-export function hasRole(user: User, role: Roles): boolean {
-  return user.roles.includes(role as never);
 }

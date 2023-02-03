@@ -12,10 +12,17 @@ export class DataTableService {
   readonly isLoading$ = this.state.isLoading$;
   readonly data$ = this.state.data$;
   readonly errorMessage$ = this.state.errorMessage$;
+  readonly displayedColumns$ = this.state.displayedColumns$;
 
   constructor(private client: DataTableClient, private state: DataTableState) {}
 
   load(): Observable<Data[]> {
+    // TODO: find a better solution
+    // Clear all the data at the very first loading,
+    // so as not to see the old ones in case of
+    // a reconnection with another user.
+    this.state.clearData();
+
     this.loading();
     return this.client.read().pipe(
       catchError((e) => this.handleError(e)),
@@ -57,6 +64,14 @@ export class DataTableService {
         this.state.updateData(id, data);
       })
     );
+  }
+
+  displayedColumnsWithActions(): void {
+    this.state.displayedColumnsWithActions();
+  }
+
+  displayedColumnsWithoutActions(): void {
+    this.state.displayedColumnsWithoutActions();
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {

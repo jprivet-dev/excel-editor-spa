@@ -15,6 +15,18 @@ export class DataTableState {
   private errorMessageSubject = new ReplaySubject<string | null>(1);
   readonly errorMessage$ = this.errorMessageSubject.asObservable();
 
+  private displayedColumns: string[] = [
+    '#',
+    'nomDuGroupe',
+    'anneeDebut',
+    'anneeSeparation',
+    'presentation',
+    'actions',
+  ];
+
+  private displayedColumnsSubject = new BehaviorSubject<string[]>([]);
+  readonly displayedColumns$ = this.displayedColumnsSubject.asObservable();
+
   setData(dataList: Data[]): void {
     this.dataSubject.next(dataList);
   }
@@ -23,15 +35,19 @@ export class DataTableState {
     return this.dataSubject.value;
   }
 
+  clearData(): void {
+    return this.dataSubject.next([]);
+  }
+
   addData(data: Data): void {
     this.setData([...this.getData(), data]);
   }
 
   updateData(id: number, data: Data): void {
     this.setData(
-      this.getData().map((current) => {
-        return current.id === id ? { ...current, ...data } : current;
-      })
+      this.getData().map((current) =>
+        current.id === id ? { ...current, ...data } : current
+      )
     );
   }
 
@@ -53,5 +69,15 @@ export class DataTableState {
 
   clearErrorMessage(): void {
     this.errorMessageSubject.next(null);
+  }
+
+  displayedColumnsWithActions(): void {
+    this.displayedColumnsSubject.next(this.displayedColumns);
+  }
+
+  displayedColumnsWithoutActions(): void {
+    this.displayedColumnsSubject.next(
+      this.displayedColumns.filter((column) => column !== 'actions')
+    );
   }
 }

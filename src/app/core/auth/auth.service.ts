@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   catchError,
-  filter,
+  concatMap,
+  distinctUntilChanged,
   map,
   Observable,
   of,
   shareReplay,
-  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -24,13 +24,22 @@ import { tokenIsExpired } from './auth.utils';
 export class AuthService {
   readonly isLoading$ = this.state.isLoading$;
   readonly error$ = this.state.error$;
-  readonly isAuthenticated$ = this.state.isAuthenticated$;
-  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
+
+  readonly isAuthenticated$ = this.state.isAuthenticated$.pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+
+  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$.pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
 
   readonly user$ = this.isAuthenticated$.pipe(
-    switchMap((isAuthenticated) =>
+    concatMap((isAuthenticated) =>
       isAuthenticated ? this.client.getUser() : of(null)
     ),
+    distinctUntilChanged(),
     shareReplay(1)
   );
 
@@ -65,11 +74,10 @@ export class AuthService {
     this.router.navigate([URL.Login]);
   }
 
-  hasRole(role: Roles): Observable<boolean> {
+  isGranted(role: Roles): Observable<boolean> {
     return this.user$.pipe(
       map((user) => (user ? user.roles : [])),
-      map((roles: Roles[]) => roles.includes(role as never)),
-      filter((hasRole) => hasRole)
+      map((roles: Roles[]) => roles.includes(role as never))
     );
   }
 

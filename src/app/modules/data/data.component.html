@@ -1,7 +1,7 @@
 <ng-container *ngIf="isAuthenticated$ | async">
   <app-data-toolbar></app-data-toolbar>
 
-  <div class="container mt-3" *appIsGranted="'ROLE_ADMIN'">
+  <div class="table-wrapper mt-3" *appIsGranted="'ROLE_ADMIN'">
     <app-data-upload></app-data-upload>
   </div>
 

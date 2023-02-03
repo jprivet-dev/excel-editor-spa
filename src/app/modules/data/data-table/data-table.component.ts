@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '@core/auth';
 import { ToastService } from '@core/toasts/toast.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { DataModalComponent } from '../data-modal/data-modal.component';
 import { DataTableService } from './data-table.service';
 
@@ -12,24 +13,34 @@ import { DataTableService } from './data-table.service';
   styleUrls: ['./data-table.component.scss'],
 })
 export class DataTableComponent implements OnInit, OnDestroy {
-  readonly displayedColumns = ['nomDuGroupe'];
-
+  private subscription = new Subscription();
   readonly isLoading$ = this.dataService.isLoading$;
   readonly data$ = this.dataService.data$;
   readonly errorMessage$ = this.dataService.errorMessage$;
-
-  private deleteSubscription: Subscription = new Subscription();
-  private dataLoadSubscription: Subscription = new Subscription();
+  readonly displayedColumns$ = this.dataService.displayedColumns$;
 
   constructor(
+    private auth: AuthService,
     private dataService: DataTableService,
     private toastService: ToastService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit() {
-    // TODO: do not use subscription
-    this.dataLoadSubscription = this.dataService.load().subscribe();
+    this.subscription.add(this.dataService.load().subscribe());
+    this.subscription.add(this.iniDisplayedColumns().subscribe());
+  }
+
+  private iniDisplayedColumns(): Observable<boolean> {
+    return this.auth
+      .isGranted('ROLE_ADMIN')
+      .pipe(
+        tap((isGranted) =>
+          isGranted
+            ? this.dataService.displayedColumnsWithActions()
+            : this.dataService.displayedColumnsWithoutActions()
+        )
+      );
   }
 
   // TODO: to remove
@@ -43,11 +54,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   delete(data: Data): void {
     if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
-      this.deleteSubscription = this.dataService.delete(data).subscribe(() => {
-        this.toastService.success(
-          `Le groupe "${data.nomDuGroupe}" a été supprimé.`
-        );
-      });
+      this.subscription.add(
+        this.dataService.delete(data).subscribe(() => {
+          this.toastService.success(
+            `Le groupe "${data.nomDuGroupe}" a été supprimé.`
+          );
+        })
+      );
     }
   }
 
@@ -61,7 +74,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.deleteSubscription.unsubscribe();
-    this.dataLoadSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

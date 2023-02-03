@@ -24,8 +24,8 @@ export class IsGrantedDirective implements OnDestroy {
 
   @Input() set appIsGranted(role: Roles) {
     this.subscription = this.auth
-      .hasRole(role)
-      .pipe(tap((isGranted) => this.updateView()))
+      .isGranted(role)
+      .pipe(tap((isGranted) => isGranted && this.updateView()))
       .subscribe();
   }
 

@@ -308,6 +308,26 @@ https://angular.io/guide/styleguide#lift
 
 {back_to_top}
 
+== Troubleshooting
+
+=== [webpack-dev-server] Disconnected!
+
+I got the following console error on Chrome:
+
+```
+[webpack-dev-server] Disconnected! index.js:551
+[webpack-dev-server] Trying to reconnect...
+[webpack-dev-server] Disconnected! index.js:551
+[webpack-dev-server] Trying to reconnect...
+...
+```
+
+This is a problem when using SSL. See https://github.com/angular/angular-cli/issues/4839.
+
+WARNING: *TODO*: Find out how to validate the certificate and complete this chapter with the solution.
+
+{back_to_top}
+
 == Comments, suggestions?
 
 Feel free to make comments/suggestions to me in the {git_url_current}/issues[Git issues section].

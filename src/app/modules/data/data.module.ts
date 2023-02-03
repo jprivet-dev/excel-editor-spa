@@ -9,6 +9,7 @@ import { DataToolbarComponent } from './data-toolbar/data-toolbar.component';
 import { DataUploadFormComponent } from './data-upload/data-upload-form.component';
 import { DataUploadComponent } from './data-upload/data-upload.component';
 import { DataComponent } from './data.component';
+import { DataDialogUploadComponent } from './data-dialog-upload/data-dialog-upload.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DataComponent } from './data.component';
     DataToolbarComponent,
     DataUploadComponent,
     DataUploadFormComponent,
+    DataDialogUploadComponent,
   ],
   imports: [CommonModule, DataRoutingModule, SharedModule],
 })

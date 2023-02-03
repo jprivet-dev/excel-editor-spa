@@ -324,7 +324,51 @@ I got the following console error on Chrome:
 
 This is a problem when using SSL. See https://github.com/angular/angular-cli/issues/4839.
 
+NOTE: I restart the project. I no longer have the disconnection problem, but the certificate is still not valid.
+
 WARNING: *TODO*: Find out how to validate the certificate and complete this chapter with the solution.
+
+{back_to_top}
+
+=== Input type "file" isn't supported by matInput
+
+Whaaaaat !??
+
+```
+ERROR Error: Input type "file" isn't supported by matInput.
+```
+
+[TIP]
+====
+Workaround :
+
+* https://github.com/angular/components/issues/3262#issuecomment-309000588
+* https://stackoverflow.com/questions/52622061/how-to-use-input-type-file-in-angular-material
+
+```html
+<button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+<input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+```
+
+```typescript
+onFileSelected() {
+  const inputNode: any = document.querySelector('#file');
+
+  if (typeof (FileReader) !== 'undefined') {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      this.srcResult = e.target.result;
+    };
+
+    reader.readAsArrayBuffer(inputNode.files[0]);
+  }
+}
+```
+====
+
+
+
 
 {back_to_top}
 

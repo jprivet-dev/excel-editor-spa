@@ -28,7 +28,7 @@ export class DataUploadFormComponent {
     }
   }
 
-  onSubmit(): void {
+  submit(): void {
     this.reset();
     this.fileSelectedEvent.emit(this.file);
   }

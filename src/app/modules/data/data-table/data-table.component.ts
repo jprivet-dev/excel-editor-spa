@@ -45,15 +45,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
       );
   }
 
-  // TODO: to remove
-  year(date: string): string {
-    return date ? date : '';
-  }
-
-  membres(membres: number): string {
-    return membres > 0 ? membres.toString() : '';
-  }
-
   delete(data: Data): void {
     if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
       this.subscription.add(

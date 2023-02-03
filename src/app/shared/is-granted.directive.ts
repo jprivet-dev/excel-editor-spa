@@ -9,6 +9,7 @@ import {
 import { AuthService, Roles } from '@core/auth';
 import { Subscription, tap } from 'rxjs';
 
+// TODO: move it in core/auth, and use/test standalone property
 @Directive({
   selector: '[appIsGranted]',
 })

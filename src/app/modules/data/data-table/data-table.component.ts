@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
 import { SnackBarService } from '@core/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
-import { DataModalComponent } from '../data-modal/data-modal.component';
+import { DataDialogEditComponent } from '../data-dialog-edit/data-dialog-edit.component';
 import { DataTableService } from './data-table.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private dataService: DataTableService,
     private snackBar: SnackBarService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -65,12 +67,21 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   update(data: Data): void {
-    const modalRef = this.modalService.open(DataModalComponent);
-    modalRef.componentInstance.data = data;
+    this.dialog.open(DataDialogEditComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { id: data[of the excel element].id }
+      data: { id: data.id },
+    });
   }
 
-  open(): void {
-    const modalRef = this.modalService.open(DataModalComponent);
+  create(): void {
+    this.dialog.open(DataDialogEditComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { id: data[of the excel element].id }
+      data: { id: null },
+    });
   }
 
   ngOnDestroy(): void {

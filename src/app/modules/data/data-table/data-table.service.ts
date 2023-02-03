@@ -16,6 +16,10 @@ export class DataTableService {
 
   constructor(private client: DataTableClient, private state: DataTableState) {}
 
+  details(id: number): Observable<Data> {
+    return this.client.details(id);
+  }
+
   load(): Observable<Data[]> {
     // TODO: find a better solution
     // Clear all the data at the very first loading,

@@ -4,7 +4,7 @@
   <span class="mr">
     Bonjour {{ (user$ | async)?.username }}
   </span>
-  <button mat-mini-fab class="mr" title="Télécharger un fichier Excel">
+  <button mat-mini-fab class="mr" title="Télécharger un fichier Excel" *appIsGranted="'ROLE_ADMIN'">
     <mat-icon>upload</mat-icon>
   </button>
   <button mat-mini-fab class="mr" title="Se déconnecter" (click)="logout()">

@@ -12,6 +12,10 @@ export class DataTableClient {
 
   constructor(private http: HttpClient) {}
 
+  details(id: number): Observable<Data> {
+    return this.http.get<Data>(`${this.dataUrl}/${id}`);
+  }
+
   read(): Observable<Data[]> {
     return this.http.get<Data[]>(`${this.dataUrl}`);
   }

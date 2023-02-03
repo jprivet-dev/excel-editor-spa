@@ -1,21 +1,3 @@
-<div class="mb-2 text-end" *appIsGranted="'ROLE_ADMIN'">
-  <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-plus-circle-fill"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-      />
-    </svg>
-    Ajouter un groupe
-  </button>
-</div>
-
 <mat-error *ngIf="errorMessage$ | async as message">
   {{ message }}
 </mat-error>
@@ -28,12 +10,16 @@
     <table mat-table [dataSource]="data" class="mat-elevation-z8">
       <ng-container matColumnDef="#">
         <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+        <td mat-cell *matCellDef="let i = index">
+          <strong>{{ i + 1 }}</strong>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="nomDuGroupe">
         <th mat-header-cell *matHeaderCellDef>Nom du groupe</th>
-        <td mat-cell *matCellDef="let row">{{ row.nomDuGroupe }}</td>
+        <td mat-cell *matCellDef="let row">
+          <strong>{{ row.nomDuGroupe }}</strong>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="anneeDebut">
@@ -80,20 +66,13 @@
   </ng-container>
 </div>
 
-<div class="mb-2 text-end" *appIsGranted="'ROLE_ADMIN'">
-  <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-plus-circle-fill"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-      />
-    </svg>
-    Ajouter un groupe
-  </button>
-</div>
+<button
+  mat-fab
+  class="btn-create-new-group"
+  color="primary"
+  title="Ajouter un groupe"
+  (click)="create()"
+  *appIsGranted="'ROLE_ADMIN'"
+>
+  <mat-icon>add</mat-icon>
+</button>

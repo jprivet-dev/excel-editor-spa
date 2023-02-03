@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
@@ -10,7 +11,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SnackBarService } from '@core/snack-bar';
 import { Data } from '@shared/models';
 import { emptyToNull } from '@shared/utils';
-import { Subscription } from 'rxjs';
+import { catchError, Observable, Subscription, tap, throwError } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
@@ -21,12 +22,14 @@ import { DataTableService } from '../data-table/data-table.service';
 export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
 
+  @Input() id!: number;
   @Input() data!: Data;
-  @Output() submitEvent = new EventEmitter();
+  @Output() closeEvent = new EventEmitter();
+
   errorMessage: string = '';
-  updateMode: boolean = false;
-  private createSubscription: Subscription = new Subscription();
-  private updateSubscription: Subscription = new Subscription();
+  private subscriptionDetails!: Subscription;
+  private subscriptionCreate!: Subscription;
+  private subscriptionUpdate!: Subscription;
 
   form = this.formBuilder.group({
     nomDuGroupe: ['', [Validators.required]],
@@ -47,9 +50,11 @@ export class DataFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.data) {
-      this.updateMode = true;
-      this.form.patchValue(this.data);
+    if (this.id) {
+      this.subscriptionDetails = this.dataService
+        .details(this.id)
+        .pipe(tap((data) => this.form.patchValue(data)))
+        .subscribe();
     }
   }
 
@@ -57,80 +62,93 @@ export class DataFormComponent implements OnInit, OnDestroy {
     return this.form.get('nomDuGroupe');
   }
 
-  nomDuGroupeIsInvalid(): any {
-    return (
-      !this.nomDuGroupe?.valid &&
-      (this.nomDuGroupe?.dirty || this.nomDuGroupe?.touched)
-    );
+  nomDuGroupeErrorMessage(): string | void {
+    return this.nomDuGroupe.hasError('required')
+      ? 'Le nom du groupe est requis.'
+      : '';
   }
 
   get anneeDebut(): any {
     return this.form.get('anneeDebut');
   }
 
-  anneeDebutIsInvalid(): any {
-    return (
-      !this.anneeDebut?.valid &&
-      (this.anneeDebut?.dirty || this.anneeDebut?.touched)
-    );
+  anneeDebutErrorMessage(): string | void {
+    if (this.anneeDebut.hasError('required')) {
+      return "L'année de début est requise.";
+    }
+
+    return this.anneeDebut.hasError('pattern')
+      ? "L'année de début doit être valide (ex: 1998)."
+      : '';
   }
 
   get anneeSeparation(): any {
     return this.form.get('anneeSeparation');
   }
 
-  anneeSeparationIsInvalid(): any {
-    return (
-      !this.anneeSeparation?.valid &&
-      (this.anneeSeparation?.dirty || this.anneeSeparation?.touched)
-    );
+  anneeSeparationErrorMessage(): string | void {
+    if (this.anneeSeparation.hasError('required')) {
+      return "L'année de séparation est requise.";
+    }
+
+    return this.anneeSeparation.hasError('pattern')
+      ? "L'année de séparation doit être valide (ex: 1998)."
+      : '';
   }
 
   // TODO: Gérer la validation des autres champs comme 'nomDuGroupe'.
 
-  onSubmit(): void {
+  submit(): void {
     this.errorMessage = '';
-
-    if (this.updateMode) {
-      this.update();
-    } else {
-      this.create();
-    }
+    this.id ? this.update() : this.create();
   }
 
-  create() {
-    this.createSubscription = this.dataService
+  create(): void {
+    this.subscriptionCreate = this.dataService
       .create(emptyToNull(this.form.value))
-      .subscribe(
-        (data) => {
-          this.form.reset();
+      .pipe(
+        catchError((e) => this.handleError(e)),
+        tap((data) => {
+          this.close();
           this.snackBar.success(`Le groupe "${data.nomDuGroupe}" a été créé.`);
-          this.submitEvent.emit();
-        },
-        (error) => {
-          this.errorMessage = error.error.message;
-        }
-      );
+        })
+      )
+      .subscribe();
   }
 
-  update() {
-    this.updateSubscription = this.dataService
-      .update(this.data.id, emptyToNull(this.form.value))
-      .subscribe(
-        (data) => {
-          this.form.reset();
+  update(): void {
+    this.subscriptionUpdate = this.dataService
+      .update(this.id, emptyToNull(this.form.value))
+      .pipe(
+        catchError((e) => this.handleError(e)),
+        tap((data) => {
+          this.close();
           this.snackBar.success(
             `Le groupe "${data.nomDuGroupe}" a été mis à jour.`
           );
-          this.submitEvent.emit();
-        },
-        (error) => {
-          this.errorMessage = error.error.message;
-        }
-      );
+        })
+      )
+      .subscribe();
+  }
+
+  close(): void {
+    this.closeEvent.emit();
+  }
+
+  private handleError(e: HttpErrorResponse): Observable<any> {
+    this.errorMessage = e.error.message;
+    return throwError(e);
   }
 
   ngOnDestroy(): void {
-    this.createSubscription.unsubscribe();
+    if (this.subscriptionDetails) {
+      this.subscriptionDetails.unsubscribe();
+    }
+    if (this.subscriptionCreate) {
+      this.subscriptionCreate.unsubscribe();
+    }
+    if (this.subscriptionUpdate) {
+      this.subscriptionUpdate.unsubscribe();
+    }
   }
 }

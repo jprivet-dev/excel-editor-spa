@@ -33,6 +33,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.subscription.add(this.iniDisplayedColumns().subscribe());
   }
 
+  /**
+   * Choice of the table columns to display,
+   * according to the rights of the user.
+   */
   private iniDisplayedColumns(): Observable<boolean> {
     return this.auth
       .isGranted('ROLE_ADMIN')

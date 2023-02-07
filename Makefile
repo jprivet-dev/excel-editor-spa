@@ -2,6 +2,9 @@ MAKE_S 		= $(MAKE) -s
 USER_ID 	= $(shell id -u)
 GROUP_ID 	= $(shell id -g)
 
+# URLs
+URL_LOCALHOST = http://localhost:4200
+
 # Executables (local)
 HAS_DOCKER_COMP_PLUGIN := $(shell docker compose version 2> /dev/null)
 ifdef HAS_DOCKER_COMP_PLUGIN
@@ -44,6 +47,13 @@ help: ## Print self-documented Makefile
 				; \
 		}'
 	@echo
+
+.PHONY: info
+info: ## Print info & URLs
+	@echo "------------------------"
+	@echo "|   Excel Editor SPA   |"
+	@echo "------------------------"
+	@echo "LOCALHOST: $(URL_LOCALHOST)"
 
 ## — DOCKER 🐳 ————————————————————————————————————————————————————————————————
 

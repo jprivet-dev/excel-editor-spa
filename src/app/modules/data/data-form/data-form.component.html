@@ -61,8 +61,8 @@
     <textarea matInput formControlName="presentation" rows="4"></textarea>
   </mat-form-field>
 
-  <mat-card *ngIf="errorMessage">
-    <mat-error>{{ errorMessage }}</mat-error>
+  <mat-card *ngIf="errorDetail">
+    <mat-error>{{ errorDetail }}</mat-error>
   </mat-card>
 
   <div class="actions">

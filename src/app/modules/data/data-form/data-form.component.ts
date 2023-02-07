@@ -26,7 +26,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
   @Input() data!: Data;
   @Output() closeEvent = new EventEmitter();
 
-  errorMessage: string = '';
+  errorDetail: string = '';
   private subscriptionDetails!: Subscription;
   private subscriptionCreate!: Subscription;
   private subscriptionUpdate!: Subscription;
@@ -99,7 +99,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Gérer la validation des autres champs comme 'nomDuGroupe'.
 
   submit(): void {
-    this.errorMessage = '';
+    this.errorDetail = '';
     this.id ? this.update() : this.create();
   }
 
@@ -136,19 +136,13 @@ export class DataFormComponent implements OnInit, OnDestroy {
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {
-    this.errorMessage = e.error.message;
+    this.errorDetail = e.error.detail;
     return throwError(e);
   }
 
   ngOnDestroy(): void {
-    if (this.subscriptionDetails) {
-      this.subscriptionDetails.unsubscribe();
-    }
-    if (this.subscriptionCreate) {
-      this.subscriptionCreate.unsubscribe();
-    }
-    if (this.subscriptionUpdate) {
-      this.subscriptionUpdate.unsubscribe();
-    }
+    this.subscriptionDetails && this.subscriptionDetails.unsubscribe();
+    this.subscriptionCreate && this.subscriptionCreate.unsubscribe();
+    this.subscriptionUpdate && this.subscriptionUpdate.unsubscribe();
   }
 }

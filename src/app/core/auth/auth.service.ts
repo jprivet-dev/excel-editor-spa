@@ -45,7 +45,9 @@ export class AuthService {
 
   readonly token$ = this.isAuthenticated$.pipe(
     map((isAuthenticated) =>
-      isAuthenticated && this.isValidToken() ? this.storage.getToken() : null
+      isAuthenticated && this.isTokenNotExpired()
+        ? this.storage.getToken()
+        : null
     )
   );
 
@@ -55,7 +57,7 @@ export class AuthService {
     private storage: AuthStorage,
     private state: AuthState
   ) {
-    this.isValidToken() && this.state.authenticated();
+    this.isTokenNotExpired() && this.state.authenticated();
   }
 
   login(credentials: Credentials): Observable<string> {
@@ -81,7 +83,7 @@ export class AuthService {
     );
   }
 
-  private isValidToken(): boolean {
+  private isTokenNotExpired(): boolean {
     const token = this.storage.getToken();
     return token ? !tokenIsExpired(token) : false;
   }

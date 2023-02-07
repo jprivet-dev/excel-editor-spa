@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { consoleDevMode } from '../utils';
 import { URL } from './auth.models';
 import { AuthService } from './auth.service';
 
@@ -12,6 +13,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.auth.isAuthenticated$.pipe(
+      tap((isAuthenticated) =>
+        consoleDevMode.log('AuthGuard | isAuthenticated', isAuthenticated)
+      ),
       map(
         (isAuthenticated) =>
           isAuthenticated || this.router.createUrlTree([URL.Login])

@@ -18,7 +18,7 @@ endif::[]
 :back_to_top_label: ⬆ Back to top
 :back_to_top: <<{back_to_top_target},{back_to_top_label}>>
 
-:main_title: Excel Editor (Part 1/3 - SPA with Angular)
+:main_title: Excel Editor SPA
 :git_project_base: excel-editor
 :git_project_api: {git_project_base}-api
 :git_project_spa: {git_project_base}-spa
@@ -40,11 +40,13 @@ endif::[]
 
 // Releases
 :project_release: v0.0.0-beta.2
+:angular_release: 14.2.10
 
 [#{back_to_top_target}]
 = {main_title}
 
 image:https://badgen.net/badge/release/{project_release}/blue[Project release,link=https://github.com/jprivet-dev/excel-editor-api/releases/tag/{project_release}]
+image:https://badgen.net/badge/angular/{angular_release}/d93630[Angular release,link=https://github.com/angular/angular/releases/tag/{angular_release}]
 image:https://app.codacy.com/project/badge/Grade/b95abb50479e4198becce900e64885da["Codacy code quality", link="https://www.codacy.com/gh/jprivet-dev/excel-editor-spa/dashboard?utm_source=github.com&utm_medium=referral&utm_content=jprivet-dev/excel-editor-spa&utm_campaign=Badge_Grade"]
 image:https://app.codacy.com/project/badge/Coverage/b95abb50479e4198becce900e64885da["Codacy code quality", link="https://www.codacy.com/gh/jprivet-dev/excel-editor-spa/dashboard?utm_source=github.com&utm_medium=referral&utm_content=jprivet-dev/excel-editor-spa&utm_campaign=Badge_Coverage"]
 
@@ -58,14 +60,24 @@ with import and edition of Excel data.
 image::doc/img/excel-editor-architecture-diagram.png[]
 
 |===
-| Part 1/3 - SPA with https://angular.io/[Angular] | {git_url_spa}
-| Part 2/3 - API with https://symfony.com/[Symfony] | {git_url_api}
-| Part 3/3 - Debug with https://insomnia.rest/[Insomnia] | {git_url_insomnia}
+| Excel Editor SPA | {git_url_spa}
+| Excel Editor API | {git_url_api}
+| Excel Editor Insomnia | {git_url_insomnia}
 |===
 
 {back_to_top}
 
+== Prerequisites
+
+=== Docker Compose CLI
+
+IMPORTANT: Be sure to install the latest version of https://docs.docker.com/compose/install/compose-plugin/[Docker Compose CLI plugin].
+
+{back_to_top}
+
 == Installation
+
+WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {git_url_api}[Excel Editor API], an API made with Symfony.
 
 . `$ git clone {git_ssh_current}`.
 . `$ cd {git_project_current}`.
@@ -73,6 +85,20 @@ image::doc/img/excel-editor-architecture-diagram.png[]
 . `$ make start`: Create and start containers (alias: `$ make up`).
 . Open http://localhost:4200
 . `$ make stop`: Stop and remove containers, networks (alias: `$ make down`).
+
+TIP: See all available commands with `$ make`.
+
+
+{back_to_top}
+
+== Main technical constraints for the study
+
+* Use of the latest version of https://angular.io/[Angular].
+* No https://ngrx.io/[NgRx Store]: the objective is to study in depth https://blog.angular-university.io/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/[the observable data services and principles].
+* Only https://material.angular.io/[Angular Material UI]: no merge with https://ng-bootstrap.github.io/[Bootstrap], https://tailwindcss.com/[tailwindcss], or other CSS frameworks.
+* Use mainly the code generation commands (https://angular.io/cli/generate[ng generate]).
+* The project must be dockerized.
+* The project must have a consistent and correct code coverage.
 
 {back_to_top}
 

@@ -10,7 +10,12 @@
   {{ invalidMessage }}
 </mat-error>
 
-<button mat-stroked-button color="primary" class="btn-choose-file" (click)="fileUpload.click()">
+<button
+  mat-stroked-button
+  color="primary"
+  class="btn-choose-file"
+  (click)="fileUpload.click()"
+>
   <mat-icon>upload</mat-icon>
   <ng-container *ngIf="file; else noFile">{{ file.name }}</ng-container>
   <ng-template #noFile>Choisir un fichier Excel</ng-template>

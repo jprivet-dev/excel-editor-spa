@@ -8,9 +8,8 @@ describe('DataDialogEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataDialogEditComponent ]
-    })
-    .compileComponents();
+      declarations: [DataDialogEditComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DataDialogEditComponent);
     component = fixture.componentInstance;

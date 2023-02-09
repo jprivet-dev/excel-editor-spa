@@ -8,5 +8,6 @@ import { AuthService } from '@core/auth';
 })
 export class DataComponent {
   isAuthenticated$ = this.auth.isAuthenticated$;
+
   constructor(private auth: AuthService) {}
 }

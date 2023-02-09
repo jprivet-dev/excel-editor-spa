@@ -8,9 +8,8 @@ describe('DataDialogUploadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataDialogUploadComponent ]
-    })
-    .compileComponents();
+      declarations: [DataDialogUploadComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DataDialogUploadComponent);
     component = fixture.componentInstance;

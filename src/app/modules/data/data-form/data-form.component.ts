@@ -8,8 +8,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SnackBarService } from '@core/snack-bar';
 import { Data } from '@shared/models';
-import { SnackBarService } from '@shared/snack-bar';
 import { emptyToNull } from '@shared/utils';
 import { catchError, Observable, Subscription, tap, throwError } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';

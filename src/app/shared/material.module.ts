@@ -32,6 +32,7 @@ const modules = [
   MatTableModule,
   MatToolbarModule,
 ];
+
 @NgModule({
   imports: modules,
   exports: modules,

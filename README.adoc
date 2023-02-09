@@ -347,6 +347,7 @@ NOTE: The authentication service of this project is mainly inspired by https://g
 * https://www.intertech.com/angular-best-practice-rxjs-error-handling/
 * https://itnext.io/how-to-handle-your-run-time-errors-in-your-angular-application-8d72fefbf8a4
 * https://www.stacktracejs.com/
+* https://angular.io/guide/router-tutorial#adding-a-404-page
 
 {back_to_top}
 

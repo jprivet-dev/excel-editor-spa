@@ -18,24 +18,21 @@ import {
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-const modules = [
-  MatButtonModule,
-  MatCardModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSnackBarModule,
-  MatTableModule,
-  MatToolbarModule,
-];
-
 @NgModule({
-  imports: modules,
-  exports: modules,
+  exports: [
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatToolbarModule,
+  ],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,

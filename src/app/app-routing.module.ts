@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, NotAuthGuard } from '@core/auth';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'data', pathMatch: 'full' },
@@ -16,7 +17,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('@modules/login/login.module').then((m) => m.LoginModule),
   },
-  { path: '**', redirectTo: 'data' },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

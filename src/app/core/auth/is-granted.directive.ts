@@ -6,12 +6,13 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { AuthService, Roles } from '@core/auth';
 import { Subscription, tap } from 'rxjs';
+import { Roles } from './auth.models';
+import { AuthService } from './auth.service';
 
-// TODO: move it in core/auth, and use/test standalone property
 @Directive({
   selector: '[appIsGranted]',
+  standalone: true,
 })
 export class IsGrantedDirective implements OnDestroy {
   private subscription!: Subscription;

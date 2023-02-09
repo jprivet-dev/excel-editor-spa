@@ -242,6 +242,20 @@ The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Inst
 
 == Resources & Inspiration
 
+=== Standalone components
+
+[NOTE]
+====
+* https://angular.io/guide/standalone-components
+====
+
+This project does not yet use completely the standalone components (introduced in Angular 14).
+
+TIP: Generate a standalone component: +
+`$ ng g c myComponent --standalone`
+
+{back_to_top}
+
 === Container & Presentational Components
 
 * https://blog.angular-university.io/angular-component-design-how-to-avoid-custom-event-bubbling-and-extraneous-properties-in-the-local-component-tree/

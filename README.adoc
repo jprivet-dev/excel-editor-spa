@@ -349,6 +349,192 @@ NOTE: The authentication service of this project is mainly inspired by https://g
 * https://www.stacktracejs.com/
 * https://angular.io/guide/router-tutorial#adding-a-404-page
 
+==== Error on login
+
+.API response
+```json
+{
+    "code":401,
+    "message":"Invalid credentials."
+}
+```
+
+.Angular HttpErrorResponse
+```json
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 401,
+    "statusText": "OK",
+    "url": "https://localhost/api/login_check",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/login_check: 401 OK",
+    "error": {
+        "code": 401,
+        "message": "Invalid credentials."
+    }
+}
+```
+
+.Normalized error
+```json
+{
+    "status": 401,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/login_check: 401 OK",
+    "url": "https://localhost/api/login_check",
+    "detail": "Invalid credentials."
+}
+```
+
+{back_to_top}
+
+==== Error on add an existing group
+
+.API response
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc2616#section-10",
+    "title": "An error occurred",
+    "status": 400,
+    "detail": "Object(App\\Entity\\Data).nomDuGroupe:\n    The music group \"Nirvana\" already exists. (code 23bd9dbf-6b9b-41cd-a99e-4844bcf3077f)\n",
+    "class": "Symfony\\Component\\HttpKernel\\Exception\\HttpException",
+    "trace": ['...']
+}
+```
+
+.Angular HttpErrorResponse
+```json
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 400,
+    "statusText": "OK",
+    "url": "https://localhost/api/data",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/data: 400 OK",
+    "error": {
+        "type": "https://tools.ietf.org/html/rfc2616#section-10",
+        "title": "An error occurred",
+        "status": 400,
+        "detail": "Object(App\\Entity\\Data).nomDuGroupe:\n    The music group \"Nirvana\" already exists. (code 23bd9dbf-6b9b-41cd-a99e-4844bcf3077f)\n",
+        "class": "Symfony\\Component\\HttpKernel\\Exception\\HttpException",
+        "trace": ['...']
+    }
+}
+```
+
+.Normalized error
+```json
+{
+    "status": 400,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/data: 400 OK",
+    "url": "https://localhost/api/data",
+    "detail": "Object(App\\Entity\\Data).nomDuGroupe:\n    The music group \"Nirvana\" already exists. (code 23bd9dbf-6b9b-41cd-a99e-4844bcf3077f)\n",
+    "exception": "HttpException"
+}
+```
+
+{back_to_top}
+
+==== Error if the user is not allowed to delete a group
+
+.API response
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc2616#section-10",
+    "title": "An error occurred",
+    "status": 403,
+    "detail": "You do not have sufficient rights to delete a music group.",
+    "class": "Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException",
+    "trace": ['...']
+}
+```
+
+.Angular HttpErrorResponse
+```json
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 403,
+    "statusText": "OK",
+    "url": "https://localhost/api/data/78",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/data/78: 403 OK",
+    "error": {
+        "type": "https://tools.ietf.org/html/rfc2616#section-10",
+        "title": "An error occurred",
+        "status": 403,
+        "detail": "You do not have sufficient rights to delete a music group.",
+        "class": "Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException",
+        "trace": ['...']
+    }
+}
+```
+
+.Normalized error
+```json
+{
+    "status": 403,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for https://localhost/api/data/78: 403 OK",
+    "url": "https://localhost/api/data/78",
+    "detail": "You do not have sufficient rights to delete a music group.",
+    "exception": "AccessDeniedHttpException"
+}
+```
+
+{back_to_top}
+
+==== Throw a simple new Error in a page
+
+.With
+```js
+throw new Error('Parameter is not a number!');
+```
+
+.JavaScript Error
+```
+Error: Uncaught (in promise): Error: Parameter is not a number!
+Error: Parameter is not a number!
+    at new PageNotFoundComponent (page-not-found.component.ts:14:11)
+    at NodeInjectorFactory.PageNotFoundComponent_Factory [as factory] (page-not-found.component.ts:15:4)
+    at getNodeInjectable (core.mjs:3523:44)
+    at instantiateRootComponent (core.mjs:12592:23)
+    at createRootComponent (core.mjs:14035:23)
+    at ComponentFactory.create (core.mjs:13912:17)
+    at ViewContainerRef.createComponent (core.mjs:23230:47)
+    at RouterOutlet.activateWith (router.mjs:2569:39)
+    at ActivateRoutes.activateRoutes (router.mjs:3003:40)
+    at router.mjs:2952:18
+    at resolvePromise (zone.js:1211:31)
+    at resolvePromise (zone.js:1165:17)
+    at zone.js:1278:17
+    at _ZoneDelegate.invokeTask (zone.js:406:31)
+    at Object.onInvokeTask (core.mjs:26261:33)
+    at _ZoneDelegate.invokeTask (zone.js:405:60)
+    at Zone.runTask (zone.js:178:47)
+    at drainMicroTaskQueue (zone.js:585:35)
+```
+
+.Normalized error
+```json
+{
+    "name": "Error",
+    "message": "Uncaught (in promise): Error: Parameter is not a number!\nError: Parameter is not a number!\n    at new PageNotFoundComponent (http://localhost:4200/main.js:892:15)\n    at NodeInjectorFactory.PageNotFoundComponent_Factory [as factory] (http://localhost:4200/main.js:895:81)\n    at getNodeInjectable (http://localhost:4200/vendor.js:52246:38)\n    at instantiateRootComponent (http://localhost:4200/vendor.js:62953:21)\n    at createRootComponent (http://localhost:4200/vendor.js:64667:21)\n    at ComponentFactory.create (http://localhost:4200/vendor.js:64517:19)\n    at ViewContainerRef.createComponent (http://localhost:4200/vendor.js:75063:43)\n    at RouterOutlet.activateWith (http://localhost:4200/vendor.js:113096:33)\n    at ActivateRoutes.activateRoutes (http://localhost:4200/vendor.js:113679:28)\n    at http://localhost:4200/vendor.js:113625:12"
+}
+```
+
 {back_to_top}
 
 === Architecture

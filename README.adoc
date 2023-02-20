@@ -96,11 +96,17 @@ WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {
 . `$ cd {git_project_current}`.
 . `$ make build`: Build (the first time) or rebuild fresh images if necessary.
 . `$ make start`: Create and start containers (alias: `$ make up`).
-. Open http://localhost:4200
-. `$ make stop`: Stop and remove containers, networks (alias: `$ make down`).
+. Open your browser on http://localhost:4200
 
-TIP: See all available commands with `$ make`.
+TIP: For the following times, you will only need the `$ make start` command to launch the project.
 
+image::doc/img/login-page.png[]
+
+[TIP]
+====
+* `$ make stop`: Stop and remove containers, networks (alias: `$ make down`).
+* `$ make`: See all available commands with.
+====
 
 {back_to_top}
 

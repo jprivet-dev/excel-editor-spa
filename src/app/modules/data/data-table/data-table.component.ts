@@ -5,7 +5,7 @@ import { SnackBarService } from '@core/snack-bar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
-import { DataDialogEditComponent } from '../data-dialog-edit/data-dialog-edit.component';
+import { DataDialogEditComponent } from '../data-dialog-edit';
 import { DataTableService } from './data-table.service';
 
 @Component({

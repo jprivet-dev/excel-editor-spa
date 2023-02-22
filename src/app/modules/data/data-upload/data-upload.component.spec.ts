@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
-import { DataUploadComponent } from '@modules/data/data-upload/data-upload.component';
-import { DataUploadFormComponent } from '@modules/data/data-upload/data-upload-form.component';
-import { DataUploadService } from '@modules/data/data-upload/data-upload.service';
-import { DataUploadServiceStub } from '@modules/data/data-upload/data-upload-testing.helper';
-import { DataTableService } from '@modules/data/data-table/data-table.service';
-import { DataTableServiceStub } from '@modules/data/data-table/data-table-testing.helper';
+import { DataUploadComponent } from './data-upload.component';
+import { DataUploadFormComponent } from './data-upload-form.component';
+import { DataUploadService } from './data-upload.service';
+import { DataUploadServiceStub } from './data-upload-testing.helper';
+import { DataTableService } from '../data-table/data-table.service';
+import { DataTableServiceStub } from '../data-table';
 
 describe('DataUploadComponent', () => {
   let component: DataUploadComponent;

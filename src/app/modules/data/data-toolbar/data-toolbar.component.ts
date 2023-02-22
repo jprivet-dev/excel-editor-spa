@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
-import { DataDialogUploadComponent } from '../data-dialog-upload/data-dialog-upload.component';
+import { DataDialogUploadComponent } from '../data-dialog-upload';
 
 @Component({
   selector: 'app-data-toolbar',

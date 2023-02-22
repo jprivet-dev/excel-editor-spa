@@ -158,7 +158,7 @@ IMPORTANT: The following configuration are provided for *PHPStorm 2022.3.1*
 
 ==== Configure a remote Node.js interpreter [[configure-a-remote-node-js-interpreter]]
 
-. Go in *Settings > Languages & Frameworks > Node.js*.
+. Go in *Settings (Ctrl+Alt+S) > Languages & Frameworks > Node.js*.
 . In *Node interpreter*, click on *...* and *Add Remote...*.
 . In the *Configure Node.js Remote Interpreter* window, choose *excel-editor-spa-node:latest* and click on *OK*.
 . In the *Settings* window, click on *OK*.
@@ -175,13 +175,22 @@ NOTE: More information on https://www.jetbrains.com/help/phpstorm/eslint.html
 
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
-Configure in *Settings > Languages & Frameworks > JavaScript > Code Quality Tools > ESLint* :
+Configure in *Settings (Ctrl+Alt+S) > Languages & Frameworks > JavaScript > Code Quality Tools > ESLint* :
 
 image::doc/img/phpstorm-settings-eslint.png[]
 
 After the configuration, you can see the ESLint alerts in your code. For example:
 
 image::doc/img/phpstorm-settings-eslint-error.png[]
+
+[WARNING]
+====
+If you have this error: *ESLint: Can't run process: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: \"node\": executable file not found in $PATH: unknown*:
+
+image::doc/img/phpstorm-settings-eslint-fail-path-unknown.png[]
+
+Is that the Node.js interpreter is badly configured. See <<configure-a-remote-node-js-interpreter>>.
+====
 
 {back_to_top}
 
@@ -191,7 +200,7 @@ NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
 
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
-Configure in *Settings > Languages & Frameworks > JavaScript > Prettier* :
+Configure in *Settings (Ctrl+Alt+S)> Languages & Frameworks > JavaScript > Prettier* :
 
 image::doc/img/phpstorm-settings-prettier.png[]
 
@@ -208,7 +217,7 @@ image::doc/img/phpstorm-settings-prettier-contextual-menu.png[]
 
 TIP: It's possible to reformat on save.
 
-To reformat on save, Go in *Settings > Languages & Frameworks > JavaScript > Prettier*, and check *On save* option:
+To reformat on save, Go in *Settings (Ctrl+Alt+S)> Languages & Frameworks > JavaScript > Prettier*, and check *On save* option:
 
 image::doc/img/phpstorm-settings-prettier-on-save.png[]
 

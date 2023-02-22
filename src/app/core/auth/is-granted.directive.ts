@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
 })
 export class IsGrantedDirective implements OnDestroy {
   private subscription!: Subscription;
-  private viewRef: EmbeddedViewRef<any> | null = null;
+  private embeddedViewRef: EmbeddedViewRef<any> | null = null;
 
   constructor(
     private viewContainerRef: ViewContainerRef,
@@ -27,19 +27,17 @@ export class IsGrantedDirective implements OnDestroy {
   @Input() set appIsGranted(role: Roles) {
     this.subscription = this.auth
       .isGranted(role)
-      .pipe(tap((isGranted) => isGranted && this.updateView()))
+      .pipe(tap((isGranted) => this.updateView(isGranted)))
       .subscribe();
   }
 
-  private updateView() {
-    if (this.viewRef) {
-      return;
-    }
-
-    this.viewContainerRef.clear();
-
-    if (this.templateRef) {
-      this.viewRef = this.viewContainerRef.createEmbeddedView(this.templateRef);
+  private updateView(isGranted: boolean) {
+    if (isGranted && !this.embeddedViewRef) {
+      this.embeddedViewRef = this.viewContainerRef.createEmbeddedView(
+        this.templateRef
+      );
+    } else if (!isGranted && this.embeddedViewRef) {
+      this.viewContainerRef.clear();
     }
   }
 

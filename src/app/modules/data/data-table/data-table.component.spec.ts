@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
 import { DataTableComponent } from './data-table.component';
 import { DataTableService } from './data-table.service';
-import { DataTableServiceStub } from './unit-test.helper';
+import { DataTableServiceStub } from './data-table-testing.helper';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent;

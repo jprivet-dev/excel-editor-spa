@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
 import { DataTableService } from '../data-table/data-table.service';
-import { DataTableServiceStub } from '../data-table/unit-test.helper';
 import { DataFormComponent } from './data-form.component';
+import { DataTableServiceStub } from '@modules/data/data-table/data-table-testing.helper';
 
 describe('DataFormComponent', () => {
   let component: DataFormComponent;

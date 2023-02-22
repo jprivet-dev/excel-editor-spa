@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { NotAuthGuard } from './not-auth.guard';
-import { AuthServiceStub } from './unit-test.helper';
+import { AuthServiceStub } from './auth-testing.helper';
 
 describe('NotAuthGuard', () => {
   let auth: AuthService;

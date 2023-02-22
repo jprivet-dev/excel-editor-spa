@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { AuthServiceStub } from './unit-test.helper';
+import { AuthServiceStub } from './auth-testing.helper';
 
 describe('AuthGuard', () => {
   let auth: AuthService;

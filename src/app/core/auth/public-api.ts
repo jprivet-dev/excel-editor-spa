@@ -1,3 +1,4 @@
+export * from './auth-testing.helper';
 export * from './auth.guard';
 export * from './auth.models';
 export * from './auth.service';
@@ -6,4 +7,3 @@ export * from './auth.utils';
 export * from './is-granted.directive';
 export * from './jwt.interceptor';
 export * from './not-auth.guard';
-export * from './unit-test.helper';

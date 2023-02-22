@@ -17,7 +17,7 @@ function createFixture(template: string): ComponentFixture<TestComponent> {
   return fixture;
 }
 
-const user: User = {
+const admin: User = {
   email: 'admin@email.com',
   username: 'Admin',
   roles: ['ROLE_ADMIN'],
@@ -25,7 +25,7 @@ const user: User = {
 
 @Injectable()
 class MockAuthService extends AuthService {
-  override user$ = of(user);
+  override user$ = of(admin);
 }
 
 describe('IsGrantedDirective', () => {

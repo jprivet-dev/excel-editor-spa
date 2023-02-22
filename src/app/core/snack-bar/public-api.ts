@@ -1,2 +1,2 @@
+export * from './snack-bar-testing.helper';
 export * from './snack-bar.service';
-export * from './unit-test.helper';

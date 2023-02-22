@@ -171,8 +171,6 @@ image::doc/img/phpstorm-settings-node.png[]
 
 ==== Configure ESLint
 
-NOTE: More information on https://www.jetbrains.com/help/phpstorm/eslint.html
-
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
 Configure in *Settings (Ctrl+Alt+S) > Languages & Frameworks > JavaScript > Code Quality Tools > ESLint* :
@@ -192,17 +190,19 @@ image::doc/img/phpstorm-settings-eslint-fail-path-unknown.png[]
 Is that the Node.js interpreter is badly configured. See <<configure-a-remote-node-js-interpreter>>.
 ====
 
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/eslint.html
+
 {back_to_top}
 
 ==== Configure Prettier
-
-NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
 
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
 Configure in *Settings (Ctrl+Alt+S)> Languages & Frameworks > JavaScript > Prettier* :
 
 image::doc/img/phpstorm-settings-prettier.png[]
+
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
 
 {back_to_top}
 
@@ -233,14 +233,6 @@ TIP: I also use the *Optimize import* option. This removes unused imports and or
 
 === Code coverage
 
-[NOTE]
-====
-* https://github.com/codacy/codacy-coverage-reporter
-* https://github.com/karma-runner/karma-coverage
-====
-
-TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
-
 Duplicate `CODACY_PROJECT_TOKEN.sh`:
 
 ```
@@ -253,21 +245,29 @@ The file `scripts/CODACY_PROJECT_TOKEN.sh` is ignored by *Git* and imported by `
 
 The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Instanbul*) and uploads the coverage reports on *Codacy*.
 
+[NOTE]
+====
+* https://github.com/codacy/codacy-coverage-reporter
+* https://github.com/karma-runner/karma-coverage
+====
+
+TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
+
 {back_to_top}
 
 == Resources & Inspiration
 
 === Standalone components
 
-[NOTE]
-====
-* https://angular.io/guide/standalone-components
-====
-
 This project does not yet use completely the standalone components (introduced in Angular 14).
 
 TIP: Generate a standalone component: +
 `$ ng g c myComponent --standalone`
+
+[NOTE]
+====
+* https://angular.io/guide/standalone-components
+====
 
 {back_to_top}
 

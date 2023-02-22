@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataToolbarComponent } from './data-toolbar.component';
+import { provideAuthServiceStub } from '@core/auth';
+import { MaterialModule } from '@shared/material.module';
 
 describe('DataToolbarComponent', () => {
   let component: DataToolbarComponent;
@@ -9,6 +11,8 @@ describe('DataToolbarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DataToolbarComponent],
+      imports: [MaterialModule],
+      providers: [provideAuthServiceStub],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataToolbarComponent);

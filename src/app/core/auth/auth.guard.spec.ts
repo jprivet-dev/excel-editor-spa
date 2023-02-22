@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { AuthServiceStub } from './auth-testing.helper';
+import { provideAuthServiceStub } from './auth-testing.helper';
 
 describe('AuthGuard', () => {
   let auth: AuthService;
@@ -10,7 +10,7 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: AuthService, useClass: AuthServiceStub }],
+      providers: [provideAuthServiceStub],
       imports: [RouterTestingModule],
     });
 

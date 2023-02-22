@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
 import { SnackBarService } from '@core/snack-bar';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
 import { DataDialogEditComponent } from '../data-dialog-edit';
@@ -24,7 +23,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private dataService: DataTableService,
     private snackBar: SnackBarService,
-    private modalService: NgbModal,
     public dialog: MatDialog
   ) {}
 

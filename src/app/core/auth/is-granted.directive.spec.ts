@@ -1,10 +1,9 @@
 import { IsGrantedDirective } from './is-granted.directive';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Component, Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { AuthService, User } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { provideMockAuthService } from './auth-testing.helper';
 
 @Component({ selector: 'app-test-component', template: '' })
 class TestComponent {}
@@ -17,17 +16,6 @@ function createFixture(template: string): ComponentFixture<TestComponent> {
   return fixture;
 }
 
-const admin: User = {
-  email: 'admin@email.com',
-  username: 'Admin',
-  roles: ['ROLE_ADMIN'],
-};
-
-@Injectable()
-class MockAuthService extends AuthService {
-  override user$ = of(admin);
-}
-
 describe('IsGrantedDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
 
@@ -35,12 +23,7 @@ describe('IsGrantedDirective', () => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
       imports: [HttpClientTestingModule, IsGrantedDirective],
-      providers: [
-        {
-          provide: AuthService,
-          useClass: MockAuthService,
-        },
-      ],
+      providers: [provideMockAuthService],
     });
   });
 

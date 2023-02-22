@@ -6,3 +6,8 @@ export class DataTableServiceStub implements Partial<DataTableService> {
     return of();
   }
 }
+
+export const provideDataTableServiceStub = {
+  provide: DataTableService,
+  useClass: DataTableServiceStub,
+};

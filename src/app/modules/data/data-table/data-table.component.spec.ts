@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SnackBarService, SnackbarServiceStub } from '@core/snack-bar';
+import { provideSnackbarServiceStub } from '@core/snack-bar';
 import { DataTableComponent } from './data-table.component';
-import { DataTableService } from './data-table.service';
-import { DataTableServiceStub } from './data-table-testing.helper';
+import { provideDataTableServiceStub } from './data-table-testing.helper';
+import { provideMockAuthService } from '@core/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent;
@@ -11,9 +13,12 @@ describe('DataTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DataTableComponent],
+      imports: [HttpClientTestingModule],
       providers: [
-        { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: SnackBarService, useClass: SnackbarServiceStub },
+        provideMockAuthService,
+        provideDataTableServiceStub,
+        provideSnackbarServiceStub,
+        { provide: MatDialog, useValue: {} },
       ],
     }).compileComponents();
 

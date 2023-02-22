@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DataDialogUploadComponent } from './data-dialog-upload.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('DataDialogUploadComponent', () => {
   let component: DataDialogUploadComponent;
@@ -9,6 +9,7 @@ describe('DataDialogUploadComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DataDialogUploadComponent],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataDialogUploadComponent);

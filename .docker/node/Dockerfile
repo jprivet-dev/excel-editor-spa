@@ -2,7 +2,7 @@
 # and should not be used for production.
 # @see https://nodejs.org/en/about/releases
 # @see https://hub.docker.com/_/node/tags?name=alpine
-FROM node:18.13-alpine AS app_node
+FROM node:18.14-alpine AS app_node
 
 # @see https://ievgen.de/2020/11/06/running-angular-unit-tests-in-docker-container/
 # @see https://stackoverflow.com/questions/51658212/run-angular-tests-scripts-from-docker

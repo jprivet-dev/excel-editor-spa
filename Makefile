@@ -21,6 +21,7 @@ NODE_CONT = $(DOCKER_COMP) exec node
 # Executables
 NPM		= $(NODE_CONT) npm
 NG 		= $(NODE_CONT) ng
+NPX		= $(NODE_CONT) npx
 
 ## — ✨ 🚀 THE ANGULAR DOCKER MAKEFILE 🚀 ✨ ——————————————————————————————————
 
@@ -109,19 +110,6 @@ ng: ## Run ng, pass the parameter "c=" to run a given command (example: make ng 
 	@$(eval c ?=)
 	$(NG) $(c)
 
-.PHONY: lint
-lint: ## Run ng lint
-	$(NG) lint
-
-.PHONY: test
-test: ## Run ng test, pass the parameter "c=" to run a given command (example: make test c="--include=src/app/core/auth/auth.service.spec.ts")
-	@$(eval c ?=)
-	$(NG) test $(c)
-
-.PHONY: coverage
-coverage: ## Generate a coverage report
-	$(NG) test --no-watch --code-coverage
-
 ##
 
 .PHONY: latest_cli
@@ -134,3 +122,29 @@ bash: ## Connect to the Node container (current user).
 
 bash@root: ## Connect to the Node container (root).
 	$(DOCKER_COMP) exec --user 0 node bash
+
+## — TEST & QUALITY ✅ ————————————————————————————————————————————————————————
+
+.PHONY: test
+test: ## Run ng test, pass the parameter "c=" to run a given command (example: make test c="--include=src/app/core/auth/auth.service.spec.ts")
+	@$(eval c ?=)
+	$(NG) test $(c)
+
+.PHONY: lint
+lint: ## Run ng lint
+	$(NG) lint
+
+.PHONY: eslint
+eslint: ## Run npx eslint
+	$(NPX) eslint "*"
+
+.PHONY: stylelint
+stylelint: ## Run npx stylelint
+	$(NPX) stylelint "src/{**/*,*}.{css,scss}"
+
+.PHONY: check
+check: lint eslint stylelint ## Run lint, eslint & stylelint
+
+.PHONY: coverage
+coverage: ## Generate a coverage report
+	$(NG) test --no-watch --code-coverage

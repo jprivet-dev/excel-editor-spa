@@ -5,6 +5,7 @@ import { provideDataTableServiceStub } from './data-table-testing.helper';
 import { provideMockAuthService } from '@core/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent;
@@ -20,6 +21,7 @@ describe('DataTableComponent', () => {
         provideSnackbarServiceStub,
         { provide: MatDialog, useValue: {} },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataTableComponent);

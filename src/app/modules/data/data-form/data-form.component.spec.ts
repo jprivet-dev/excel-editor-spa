@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { provideSnackbarServiceStub } from '@core/snack-bar';
 import { DataFormComponent } from './data-form.component';
 import { provideDataTableServiceStub } from '@modules/data/data-table/data-table-testing.helper';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DataFormComponent', () => {
   let component: DataFormComponent;
@@ -13,6 +14,7 @@ describe('DataFormComponent', () => {
       imports: [ReactiveFormsModule],
       declarations: [DataFormComponent],
       providers: [provideDataTableServiceStub, provideSnackbarServiceStub],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataFormComponent);

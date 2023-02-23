@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataDialogUploadComponent } from './data-dialog-upload.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DataDialogUploadComponent', () => {
   let component: DataDialogUploadComponent;
@@ -10,6 +11,7 @@ describe('DataDialogUploadComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DataDialogUploadComponent],
       providers: [{ provide: MatDialogRef, useValue: {} }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataDialogUploadComponent);

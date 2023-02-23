@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   node:
-    build: ./.docker/node/
+    build: .
     volumes:
       - .:/usr/src/app
       - /usr/node_modules

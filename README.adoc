@@ -118,6 +118,7 @@ image::doc/img/login-page.png[]
 * Use mainly the code generation commands (https://angular.io/cli/generate[ng generate]).
 * The project must be dockerized.
 * The project must have a consistent and correct code coverage.
+* The data imported from the excel file are in French: this force us to dissociate the specific language of the data (in French) from the "technical" language of the framework (in English).
 
 {back_to_top}
 
@@ -150,13 +151,88 @@ That project (API & SPA) use the `camelCase` format for the property names of JS
 
 {back_to_top}
 
+== Codacy configuration
+
+=== Code coverage
+
+Duplicate `CODACY_PROJECT_TOKEN.sh`:
+
+```
+$ cp scripts/CODACY_PROJECT_TOKEN.sh.dist scripts/CODACY_PROJECT_TOKEN.sh
+```
+
+And define the API token `CODACY_PROJECT_TOKEN` (see {codacy_project_settings_coverage}).
+
+The file `scripts/CODACY_PROJECT_TOKEN.sh` is ignored by *Git* and imported by `scripts/reporter.sh`.
+
+The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Instanbul*) and uploads the coverage reports on *Codacy*.
+
+[NOTE]
+====
+* https://github.com/codacy/codacy-coverage-reporter
+* https://github.com/karma-runner/karma-coverage
+====
+
+TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
+
+{back_to_top}
+
+=== ESLint
+
+Codacy scans the ESLint configuration in the `.eslintrc.json` file in this repository root.
+
+TIP: PHPStorm can also use ESLint. See <<phpstorm-configure-eslint>>.
+
+[NOTE]
+====
+More information on:
+
+* https://eslint.org/
+* https://app.codacy.com/p/497934/patterns/list?engine=f8b29663-2cb2-498d-b923-a10c6a8c05cd
+* https://docs.codacy.com/repositories-configure/configuring-code-patterns/
+====
+
+{back_to_top}
+
+=== Stylelint
+
+Codacy scans the Stylelint configuration in the `.stylelintrc` file in this repository root.
+
+We need to install `stylelint-config-standard-scss`:
+
+```
+$ npm install --save-dev stylelint stylelint-config-standard-scss
+```
+
+And create a `.stylelintrc.json` configuration file:
+
+```json
+{
+  "extends": "stylelint-config-standard-scss"
+}
+```
+
+Use the `$ make stylelint` command to execute Stylelint on the `src` folder.
+
+TIP: PHPStorm can also use Stylelint. See <<phpstorm-configure-stylelint>>.
+
+[NOTE]
+====
+More information on:
+
+* https://app.codacy.com/p/497934/patterns/list?engine=1f03328a-086e-459e-bfa3-73e56f01020f
+* https://docs.codacy.com/repositories-configure/configuring-code-patterns/
+* https://stylelint.io/user-guide/configure/
+* https://stylelint.io/user-guide/get-started/
+====
+
+{back_to_top}
+
 == PHPStorm configuration
 
 IMPORTANT: The following configuration are provided for *PHPStorm 2022.3.1*
 
-=== Eslint & Prettier
-
-==== Configure a remote Node.js interpreter [[configure-a-remote-node-js-interpreter]]
+=== Configure a remote Node.js interpreter [[configure-a-remote-node-js-interpreter]]
 
 . Go in *Settings (Ctrl+Alt+S) > Languages & Frameworks > Node.js*.
 . In *Node interpreter*, click on *...* and *Add Remote...*.
@@ -169,7 +245,7 @@ image::doc/img/phpstorm-settings-node.png[]
 
 {back_to_top}
 
-==== Configure ESLint
+=== Configure ESLint [[phpstorm-configure-eslint]]
 
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
@@ -194,19 +270,13 @@ NOTE: More information on https://www.jetbrains.com/help/phpstorm/eslint.html
 
 {back_to_top}
 
-==== Configure Prettier
+=== Configure Prettier & Reformat files
 
 CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
 Configure in *Settings (Ctrl+Alt+S)> Languages & Frameworks > JavaScript > Prettier* :
 
 image::doc/img/phpstorm-settings-prettier.png[]
-
-NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
-
-{back_to_top}
-
-==== Reformat with Prettier
 
 After the configuration, you can reformat your code :
 
@@ -227,31 +297,31 @@ image::doc/img/phpstorm-settings-tools-actions-on-save.png[]
 
 TIP: I also use the *Optimize import* option. This removes unused imports and organizes import statements in the current file. See https://www.jetbrains.com/help/phpstorm/creating-and-optimizing-imports.html#optimize-imports.
 
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/prettier.html
+
 {back_to_top}
 
-== Codacy configuration
+=== Configure Stylelint [[phpstorm-configure-stylelint]]
 
-=== Code coverage
+CAUTION: Before you start: <<configure-a-remote-node-js-interpreter>>.
 
-Duplicate `CODACY_PROJECT_TOKEN.sh`:
+Configure in *Settings (Ctrl+Alt+S)> Languages & Frameworks > JavaScript > Prettier* :
 
-```
-$ cp scripts/CODACY_PROJECT_TOKEN.sh.dist scripts/CODACY_PROJECT_TOKEN.sh
-```
+image::doc/img/phpstorm-settings-stylelint.png[]
 
-And define the API token `CODACY_PROJECT_TOKEN` (see {codacy_project_settings_coverage}).
-
-The file `scripts/CODACY_PROJECT_TOKEN.sh` is ignored by *Git* and imported by `scripts/reporter.sh`.
-
-The file `scripts/reporter.sh` generates code coverage (a `lcov.info` with *Instanbul*) and uploads the coverage reports on *Codacy*.
-
-[NOTE]
+[IMPORTANT]
 ====
-* https://github.com/codacy/codacy-coverage-reporter
-* https://github.com/karma-runner/karma-coverage
+For the moment I have an error in PHPStorm with a missing module. I tried to install https://www.npmjs.com/package/v8-compile-cache[v8-compile-cache], but nothing works:
+
+image::doc/img/phpstorm-settings-stylelint-error-module.png[]
+
+
+However, everything works with the `$ make stylelint` command. +
+Search still in progress...
 ====
 
-TIP: Karma: generate code coverage using https://istanbul.js.org/[Istanbul].
+
+NOTE: More information on https://www.jetbrains.com/help/phpstorm/using-stylelint-code-quality-tool.html
 
 {back_to_top}
 

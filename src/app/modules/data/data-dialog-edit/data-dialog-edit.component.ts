@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-data-dialog-edit',
   templateUrl: './data-dialog-edit.component.html',
-  styleUrls: ['./data-dialog-edit.component.scss'],
 })
 export class DataDialogEditComponent {
   constructor(

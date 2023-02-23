@@ -11,7 +11,8 @@ else
 	DOCKER_COMP_BASE="docker-compose"
 fi
 
+alias node="${DOCKER_COMP_BASE} exec --user 1000:1000 node node"
 alias npm="${DOCKER_COMP_BASE} exec --user 1000:1000 node npm"
 alias ng="${DOCKER_COMP_BASE} exec --user 1000:1000 node ng"
 
-echo -e '\033[1;42m Aliases loaded: npm, ng \033[0m'
+echo -e '\033[1;42m Aliases loaded: node, npm, ng \033[0m'

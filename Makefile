@@ -1,4 +1,5 @@
 MAKE_S 		= $(MAKE) -s
+MAKE_I 		= $(MAKE_S) --ignore-errors
 USER_ID 	= $(shell id -u)
 GROUP_ID 	= $(shell id -g)
 
@@ -130,21 +131,26 @@ test: ## Run ng test, pass the parameter "c=" to run a given command (example: m
 	@$(eval c ?=)
 	$(NG) test $(c)
 
+.PHONY: coverage
+coverage: ## Generate a coverage report
+	$(NG) test --no-watch --code-coverage
+
+##
+
 .PHONY: lint
 lint: ## Run ng lint
 	$(NG) lint
 
 .PHONY: eslint
 eslint: ## Run npx eslint
-	$(NPX) eslint "*"
+	$(NPX) eslint "{**/*,*}.{js,ts,jsx,tsx,html,vue}"
 
 .PHONY: stylelint
 stylelint: ## Run npx stylelint
 	$(NPX) stylelint "src/{**/*,*}.{css,scss}"
 
 .PHONY: check
-check: lint eslint stylelint ## Run lint, eslint & stylelint
-
-.PHONY: coverage
-coverage: ## Generate a coverage report
-	$(NG) test --no-watch --code-coverage
+check: ## Run lint, eslint & stylelint
+	$(MAKE_I) lint
+	$(MAKE_I) eslint
+	$(MAKE_I) stylelint

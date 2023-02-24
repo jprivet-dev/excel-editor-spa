@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Data } from '@shared/models';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { consoleDevMode } from '@core/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ export class DataTableState {
 
   private dataSubject = new BehaviorSubject<Data[]>([]);
   readonly data$ = this.dataSubject.asObservable();
+
+  private hasDataSubject = new BehaviorSubject<boolean>(false);
+  readonly hasData$ = this.hasDataSubject.asObservable();
 
   private errorMessageSubject = new ReplaySubject<string | null>(1);
   readonly errorMessage$ = this.errorMessageSubject.asObservable();
@@ -28,7 +32,9 @@ export class DataTableState {
   readonly displayedColumns$ = this.displayedColumnsSubject.asObservable();
 
   setData(dataList: Data[]): void {
+    consoleDevMode.log('DataTableState | setData() | dataList', dataList);
     this.dataSubject.next(dataList);
+    this.hasDataSubject.next(dataList.length > 0);
   }
 
   getData(): Data[] {

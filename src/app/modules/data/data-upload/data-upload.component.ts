@@ -4,6 +4,7 @@ import { SnackBarService } from '@core/snack-bar';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
+import { consoleDevMode } from '@core/utils';
 
 @Component({
   selector: 'app-data-upload',
@@ -31,8 +32,12 @@ export class DataUploadComponent implements OnInit, OnDestroy {
 
     this.uploadSubscription = this.uploadService.upload(file).subscribe(
       (response) => {
+        consoleDevMode.log(
+          'DataUploadComponent | onFileSelected() | response',
+          response
+        );
         this.snackBar.success(
-          `Le fichier ${response.filename} a été téléchargé.`
+          `Le fichier ${response.file.filename} a été téléchargé.`
         );
 
         this.loadData();

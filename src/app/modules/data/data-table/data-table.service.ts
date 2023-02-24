@@ -11,6 +11,7 @@ import { DataTableState } from './data-table.state';
 export class DataTableService {
   readonly isLoading$ = this.state.isLoading$;
   readonly data$ = this.state.data$;
+  readonly hasData$ = this.state.hasData$;
   readonly errorMessage$ = this.state.errorMessage$;
   readonly displayedColumns$ = this.state.displayedColumns$;
 

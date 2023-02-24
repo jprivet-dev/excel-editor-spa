@@ -1,5 +1,13 @@
 export interface DataUpload {
-  id: number;
-  filename: string;
-  createAt: string;
+  alreadyExist: string[];
+  alreadyExistCount: number;
+  imported: string[];
+  importedCount: number;
+
+  file: {
+    id: number;
+    filename: string;
+    createdAt: string;
+    completePath: string;
+  };
 }

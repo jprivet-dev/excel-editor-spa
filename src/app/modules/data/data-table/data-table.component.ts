@@ -6,6 +6,7 @@ import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
 import { DataDialogEditComponent } from '../data-dialog-edit';
 import { DataTableService } from './data-table.service';
+import { DataDialogUploadComponent } from '../data-dialog-upload';
 
 @Component({
   selector: 'app-data-table',
@@ -16,6 +17,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   readonly isLoading$ = this.dataService.isLoading$;
   readonly data$ = this.dataService.data$;
+  readonly hasData$ = this.dataService.hasData$;
   readonly errorMessage$ = this.dataService.errorMessage$;
   readonly displayedColumns$ = this.dataService.displayedColumns$;
 
@@ -75,6 +77,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
       // data[of the dialog]: { id: data[of the excel element].id }
       data: { id: null },
     });
+  }
+
+  upload(): void {
+    this.dialog.open(DataDialogUploadComponent);
   }
 
   ngOnDestroy(): void {

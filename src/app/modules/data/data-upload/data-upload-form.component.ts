@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -14,8 +13,9 @@ import {
 })
 export class DataUploadFormComponent {
   @ViewChild('fileUpload') fileUpload!: ElementRef;
-  @Input() invalidMessage: string | null = null;
   @Output() fileSelectedEvent = new EventEmitter<File>();
+  @Output() submitEvent = new EventEmitter<File>();
+
   disabled: boolean = true;
   file!: File;
 
@@ -25,12 +25,13 @@ export class DataUploadFormComponent {
 
     if (target.files) {
       this.file = target.files[0];
+      this.fileSelectedEvent.emit(this.file);
     }
   }
 
   submit(): void {
     this.reset();
-    this.fileSelectedEvent.emit(this.file);
+    this.submitEvent.emit(this.file);
   }
 
   private reset() {

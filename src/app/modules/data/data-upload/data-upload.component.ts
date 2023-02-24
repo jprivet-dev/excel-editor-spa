@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
 import { consoleDevMode } from '@core/utils';
@@ -11,12 +11,10 @@ import { DataUpload } from './data-upload.model';
   templateUrl: './data-upload.component.html',
 })
 export class DataUploadComponent implements OnDestroy {
-  private invalidMessageSubject = new BehaviorSubject<string | null>(null);
-  readonly invalidMessage$ = this.invalidMessageSubject.asObservable();
-
   private uploadSubscription: Subscription = new Subscription();
   private dataLoadSubscription: Subscription = new Subscription();
 
+  public invalidMessage: string | null = null;
   public results: DataUpload | null = null;
 
   constructor(
@@ -25,27 +23,33 @@ export class DataUploadComponent implements OnDestroy {
   ) {}
 
   onFileSelected(file: File): void {
-    this.invalidMessageSubject.next(null);
+    this.invalidMessage = null;
+  }
 
-    this.uploadSubscription = this.uploadService.upload(file).subscribe(
-      (response) => {
-        consoleDevMode.log(
-          'DataUploadComponent | onFileSelected() | response',
-          response
-        );
+  onSubmit(file: File): void {
+    this.uploadSubscription = this.uploadService
+      .upload(file)
+      .pipe(
+        tap(
+          (response) => {
+            consoleDevMode.log(
+              'DataUploadComponent | onFileSelected() | response',
+              response
+            );
 
-        this.results = response;
+            this.results = response;
 
-        this.loadData();
-      },
-      (error: HttpErrorResponse) => {
-        this.invalidMessageSubject.next(error.error.message);
-      }
-    );
+            this.loadData();
+          },
+          (error: HttpErrorResponse) => {
+            this.invalidMessage = error.error.detail;
+          }
+        )
+      )
+      .subscribe();
   }
 
   private loadData() {
-    // TODO: do not use subscription
     this.dataLoadSubscription = this.dataService.load().subscribe();
   }
 

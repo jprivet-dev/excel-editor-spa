@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
-import { SnackBarService } from '@core/snack-bar';
 import { Data } from '@shared/models';
 import { Observable, Subscription, tap } from 'rxjs';
 import { DataDialogEditComponent } from '../data-dialog-edit';
 import { DataTableService } from './data-table.service';
 import { DataDialogUploadComponent } from '../data-dialog-upload';
+import { DataDialogDeleteComponent } from '../data-dialog-delete';
 
 @Component({
   selector: 'app-data-table',
@@ -24,7 +24,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private dataService: DataTableService,
-    private snackBar: SnackBarService,
     public dialog: MatDialog
   ) {}
 
@@ -50,15 +49,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   delete(data: Data): void {
-    if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
-      this.subscription.add(
-        this.dataService.delete(data).subscribe(() => {
-          this.snackBar.success(
-            `Le groupe "${data.nomDuGroupe}" a été supprimé.`
-          );
-        })
-      );
-    }
+    this.dialog.open(DataDialogDeleteComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { data[of the excel element] }
+      data: { data },
+    });
   }
 
   update(data: Data): void {

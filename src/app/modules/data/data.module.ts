@@ -9,17 +9,19 @@ import { DataTableComponent } from './data-table';
 import { DataToolbarComponent } from './data-toolbar';
 import { DataUploadComponent, DataUploadFormComponent } from './data-upload';
 import { DataComponent } from './data.component';
+import { DataDialogDeleteComponent } from './data-dialog-delete';
 
 @NgModule({
   declarations: [
     DataComponent,
+    DataDialogDeleteComponent,
     DataDialogEditComponent,
+    DataDialogUploadComponent,
     DataFormComponent,
     DataTableComponent,
     DataToolbarComponent,
     DataUploadComponent,
     DataUploadFormComponent,
-    DataDialogUploadComponent,
   ],
   imports: [CommonModule, SharedModule, DataRoutingModule],
 })

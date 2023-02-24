@@ -641,12 +641,20 @@ Error: Parameter is not a number!
 
 === Architecture
 
+==== Best pratices
+
 * https://dev-academy.com/angular-architecture-best-practices/
 * https://www.simform.com/blog/angular-best-practices/
 * https://medium.com/dev-jam/5-tips-best-practices-to-organize-your-angular-project-e900db08702e
 https://angular.io/guide/styleguide#lift
 * https://stackoverflow.com/questions/70924931/angular-structure-best-practices-coremodule
 * https://michelestieven.medium.com/organizing-angular-applications-f0510761d65a
+
+==== public-api.ts
+
+* https://tomastrajan.medium.com/the-best-way-to-architect-your-angular-libraries-87959301d3d3
+* https://angular.io/guide/creating-libraries
+* Using public_api.ts in libraries instead of piling everything in index.ts: https://github.com/nrwl/nx/issues/155
 
 {back_to_top}
 

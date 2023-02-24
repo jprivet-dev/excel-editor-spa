@@ -20,10 +20,10 @@ import { DataTableService } from '../data-table/data-table.service';
   styleUrls: ['./data-form.component.scss'],
 })
 export class DataFormComponent implements OnInit, OnDestroy {
-  // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
+  // TODO: Here we have a hybrid smart/presentational component.
+  //  Think about a cleaner approach between the modal and the form.
 
-  @Input() id!: number;
-  @Input() data!: Data;
+  @Input() data: Data | null = null;
   @Output() closeEvent = new EventEmitter();
 
   errorDetail: string = '';
@@ -50,9 +50,9 @@ export class DataFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.id) {
+    if (this.data) {
       this.subscriptionDetails = this.dataService
-        .details(this.id)
+        .details(this.data.id)
         .pipe(tap((data) => this.form.patchValue(data)))
         .subscribe();
     }
@@ -100,7 +100,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
 
   submit(): void {
     this.errorDetail = '';
-    this.id ? this.update() : this.create();
+    this.data ? this.update(this.data) : this.create();
   }
 
   create(): void {
@@ -116,9 +116,9 @@ export class DataFormComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  update(): void {
+  update(data: Data): void {
     this.subscriptionUpdate = this.dataService
-      .update(this.id, emptyToNull(this.form.value))
+      .update(data.id, emptyToNull(this.form.value))
       .pipe(
         catchError((e) => this.handleError(e)),
         tap((data) => {

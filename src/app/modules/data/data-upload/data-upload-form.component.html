@@ -13,7 +13,6 @@
   class="btn-choose-file"
   (click)="fileUpload.click()"
 >
-  <mat-icon>upload</mat-icon>
   <ng-container *ngIf="file; else noFile">{{ file.name }}</ng-container>
   <ng-template #noFile>Choisir un fichier Excel</ng-template>
 </button>
@@ -26,5 +25,6 @@
   [disabled]="disabled"
   (click)="submit()"
 >
+  <mat-icon>upload</mat-icon>
   Télécharger
 </button>

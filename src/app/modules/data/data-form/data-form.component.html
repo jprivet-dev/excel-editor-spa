@@ -73,8 +73,8 @@
       (click)="submit()"
       [disabled]="!(form.valid && form.dirty)"
     >
-      <span *ngIf="id">Modifier le groupe</span>
-      <span *ngIf="!id">Ajouter un groupe</span>
+      <span *ngIf="data">Modifier le groupe</span>
+      <span *ngIf="!data">Ajouter un groupe</span>
     </button>
   </div>
 </form>

@@ -62,7 +62,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
       // Beware of the confusion between the "dialog" data
       // and the "excel" data which have the same name.
       // data[of the dialog]: { id: data[of the excel element].id }
-      data: { id: data.id },
+      data: { data },
     });
   }
 
@@ -71,7 +71,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
       // Beware of the confusion between the "dialog" data
       // and the "excel" data which have the same name.
       // data[of the dialog]: { id: data[of the excel element].id }
-      data: { id: null },
+      data: { data: null },
     });
   }
 

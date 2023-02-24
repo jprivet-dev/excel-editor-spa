@@ -17,16 +17,20 @@ import {
 } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   exports: [
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,

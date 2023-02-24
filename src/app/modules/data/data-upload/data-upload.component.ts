@@ -1,31 +1,28 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SnackBarService } from '@core/snack-bar';
+import { Component, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
 import { consoleDevMode } from '@core/utils';
+import { DataUpload } from './data-upload.model';
 
 @Component({
   selector: 'app-data-upload',
   templateUrl: './data-upload.component.html',
 })
-export class DataUploadComponent implements OnInit, OnDestroy {
+export class DataUploadComponent implements OnDestroy {
   private invalidMessageSubject = new BehaviorSubject<string | null>(null);
   readonly invalidMessage$ = this.invalidMessageSubject.asObservable();
 
   private uploadSubscription: Subscription = new Subscription();
   private dataLoadSubscription: Subscription = new Subscription();
 
+  public results: DataUpload | null = null;
+
   constructor(
     private uploadService: DataUploadService,
-    private dataService: DataTableService,
-    private snackBar: SnackBarService
+    private dataService: DataTableService
   ) {}
-
-  ngOnInit() {
-    this.loadData();
-  }
 
   onFileSelected(file: File): void {
     this.invalidMessageSubject.next(null);
@@ -36,9 +33,8 @@ export class DataUploadComponent implements OnInit, OnDestroy {
           'DataUploadComponent | onFileSelected() | response',
           response
         );
-        this.snackBar.success(
-          `Le fichier ${response.file.filename} a été téléchargé.`
-        );
+
+        this.results = response;
 
         this.loadData();
       },

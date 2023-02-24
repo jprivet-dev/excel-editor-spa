@@ -2,3 +2,26 @@
   [invalidMessage]="invalidMessage$ | async"
   (fileSelectedEvent)="onFileSelected($event)"
 ></app-data-upload-form>
+
+<mat-list *ngIf="results">
+  <mat-list-item>
+    <span>
+      Fichier
+      <span class="pink">{{ results.file.filename }}</span> téléchargé
+    </span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <span>
+      Nouveaux groupes (importés) :
+      <span class="pink">{{ results.importedCount }}</span>
+    </span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <span>
+      Groupes déjà existants (non importés) :
+      <span class="pink">{{ results.alreadyExistCount }}</span>
+    </span>
+  </mat-list-item>
+</mat-list>

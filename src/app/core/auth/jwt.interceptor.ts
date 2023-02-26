@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
-import { consoleDevMode } from '../utils';
 import { AuthService } from './auth.service';
 
 /**
@@ -28,8 +27,8 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return this.auth.token$.pipe(
       switchMap((token) => {
-        consoleDevMode.log(
-          'JwtInterceptor | token',
+        console.log(
+          'JwtInterceptor | intercept() | token',
           typeof token === 'string' ? token.substring(0, 10) + '...' : token
         );
 

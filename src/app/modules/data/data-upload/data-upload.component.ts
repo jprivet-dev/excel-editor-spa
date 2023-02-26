@@ -3,7 +3,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
-import { consoleDevMode } from '@core/utils';
 import { DataUpload } from './data-upload.model';
 
 @Component({
@@ -32,7 +31,7 @@ export class DataUploadComponent implements OnDestroy {
       .pipe(
         tap(
           (response) => {
-            consoleDevMode.log(
+            console.log(
               'DataUploadComponent | onFileSelected() | response',
               response
             );

@@ -398,6 +398,16 @@ This project uses simple stores with Observable Data Services, instead of @ngrx/
 
 {back_to_top}
 
+=== Angular Resolvers
+
+* https://indepth.dev/tutorials/angular/indepth-guide-how-to-implement-resolver-in-angular
+* https://www.tektutorialshub.com/angular/angular-resolve-guard/
+* https://devtobecurious.fr/ameliorer-vos-routes-avec-le-resolver-dans-angular-pour-un-meilleur-chargement/
+* https://openclassrooms.com/fr/courses/7471281-perfectionnez-vous-sur-angular/7717976-resolvez-les-donnees
+* https://angular.fr/routing/resolver.html
+
+{back_to_top}
+
 === Angular Service Layers
 
 ==== When to Use a Store And Why?

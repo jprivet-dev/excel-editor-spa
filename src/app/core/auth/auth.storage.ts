@@ -9,6 +9,7 @@ export class AuthStorage {
   constructor() {}
 
   getToken(): string {
+    console.log('AuthStorage | getToken()');
     return localStorage.getItem(this.ID_TOKEN) as string;
   }
 

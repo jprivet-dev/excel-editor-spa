@@ -19,7 +19,7 @@ export class UserResolver implements Resolve<User | null> {
   ): Observable<User | null> {
     console.log('UserResolver | resolve() | Pending...');
     return this.auth.user$.pipe(
-      tap((user) => console.log('UserResolver | resolve | user', user))
+      tap((user) => console.log('UserResolver | resolve () | user', user))
     );
   }
 }

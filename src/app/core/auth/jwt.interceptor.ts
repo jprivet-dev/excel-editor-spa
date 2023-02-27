@@ -7,7 +7,7 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 /**
@@ -26,11 +26,16 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return this.auth.token$.pipe(
-      switchMap((token) => {
+      tap((token) =>
         console.log(
           'JwtInterceptor | intercept() | token',
           typeof token === 'string' ? token.substring(0, 10) + '...' : token
-        );
+        )
+      ),
+      switchMap((token) => {
+        if (token === null) {
+          return next.handle(request);
+        }
 
         const clone = request.clone({
           setHeaders: {

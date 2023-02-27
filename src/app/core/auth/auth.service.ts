@@ -25,20 +25,15 @@ export class AuthService {
   readonly isLoading$ = this.state.isLoading$;
   readonly error$ = this.state.error$;
 
-  readonly isAuthenticated$ = this.state.isAuthenticated$.pipe(
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
+  readonly isAuthenticated$ = this.state.isAuthenticated$;
 
-  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$.pipe(
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
+  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
 
   readonly user$ = this.isAuthenticated$.pipe(
-    concatMap((isAuthenticated) =>
-      isAuthenticated ? this.client.getUser() : of(null)
-    ),
+    concatMap((isAuthenticated) => {
+      console.log('AuthService | isAuthenticated', isAuthenticated);
+      return isAuthenticated ? this.client.getUser() : of(null);
+    }),
     distinctUntilChanged(),
     shareReplay(1)
   );
@@ -56,9 +51,7 @@ export class AuthService {
     private client: AuthClient,
     private storage: AuthStorage,
     private state: AuthState
-  ) {
-    this.isTokenNotExpired() && this.state.authenticated();
-  }
+  ) {}
 
   login(credentials: Credentials): Observable<string> {
     this.loading();

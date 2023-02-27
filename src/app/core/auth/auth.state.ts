@@ -26,10 +26,12 @@ export class AuthState {
   }
 
   authenticated(): void {
+    console.log('****** AuthState | authenticated()');
     this.isAuthenticatedSubject.next(true);
   }
 
   notAuthenticated(): void {
+    console.log('***** AuthState | notAuthenticated()');
     this.isAuthenticatedSubject.next(false);
   }
 

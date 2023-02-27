@@ -42,6 +42,6 @@ export class IsGrantedDirective implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
   }
 }

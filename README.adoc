@@ -687,11 +687,22 @@ https://angular.io/guide/styleguide#lift
 
 {back_to_top}
 
+=== Skeleton Loading
+
+* https://www.npmjs.com/package/ngx-skeleton-loader
+* https://codepen.io/fadzrinmadu/pen/jOBLRzm
+
+{back_to_top}
+
 == Troubleshooting
 
 === [webpack-dev-server] Disconnected!
 
-I got the following console error on Chrome:
+When I use *Slow 3G* network conditions:
+
+image::doc/img/chrome-devtools-network-conditions.png[]
+
+I got the following console error on *Chrome*:
 
 ```
 [webpack-dev-server] Disconnected! index.js:551
@@ -703,9 +714,7 @@ I got the following console error on Chrome:
 
 This is a problem when using SSL. See https://github.com/angular/angular-cli/issues/4839.
 
-NOTE: I restart the project. I no longer have the disconnection problem, but the certificate is still not valid.
-
-WARNING: *TODO*: Find out how to validate the certificate and complete this chapter with the solution.
+NOTE: No problem with *Fast 3G*.
 
 {back_to_top}
 

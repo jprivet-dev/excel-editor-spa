@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,6 +12,7 @@ import {
   selector: 'app-data-upload-form',
   templateUrl: './data-upload-form.component.html',
   styleUrls: ['./data-upload-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataUploadFormComponent {
   @ViewChild('fileUpload') fileUpload!: ElementRef;

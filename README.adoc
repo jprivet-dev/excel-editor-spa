@@ -391,6 +391,12 @@ This project uses simple stores with Observable Data Services, instead of @ngrx/
 
 {back_to_top}
 
+=== OnPush Change Detection
+
+* https://blog.angular-university.io/onpush-change-detection-how-it-works/
+
+{back_to_top}
+
 === Design Patterns in Angular
 
 * https://dev.to/armandotrue/design-patterns-in-angular-part-i-3ld7
@@ -672,6 +678,12 @@ https://angular.io/guide/styleguide#lift
 
 * Installation: https://material.angular.io/guide/getting-started
 * Material Symbols: https://fonts.google.com/icons
+
+{back_to_top}
+
+=== Dev Tools
+
+* https://angular.io/guide/devtools
 
 {back_to_top}
 

@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
-import { AuthService } from '@core/auth';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataComponent {
-  isAuthenticated$ = this.auth.isAuthenticated$;
-
-  constructor(private auth: AuthService) {}
-}
+export class DataComponent {}

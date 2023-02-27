@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
 import { Data } from '@shared/models';
@@ -12,13 +17,13 @@ import { DataDialogDeleteComponent } from '../data-dialog-delete';
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   readonly isLoading$ = this.dataService.isLoading$;
   readonly data$ = this.dataService.data$;
   readonly hasData$ = this.dataService.hasData$;
-  readonly errorMessage$ = this.dataService.errorMessage$;
   readonly displayedColumns$ = this.dataService.displayedColumns$;
 
   constructor(
@@ -80,6 +85,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
   }
 }

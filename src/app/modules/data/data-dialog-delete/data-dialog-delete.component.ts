@@ -1,4 +1,9 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnDestroy,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Data } from '@shared/models';
 import { DataTableService } from '../data-table/data-table.service';
@@ -8,6 +13,7 @@ import { SnackBarService } from '@core/snack-bar';
 @Component({
   selector: 'app-data-dialog-delete',
   templateUrl: './data-dialog-delete.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataDialogDeleteComponent implements OnDestroy {
   private subscription = new Subscription();
@@ -35,6 +41,6 @@ export class DataDialogDeleteComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
   }
 }

@@ -67,7 +67,7 @@ export class DataUploadComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.uploadSubscription.unsubscribe();
-    this.dataLoadSubscription.unsubscribe();
+    this.uploadSubscription && this.uploadSubscription.unsubscribe();
+    this.dataLoadSubscription && this.dataLoadSubscription.unsubscribe();
   }
 }

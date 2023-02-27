@@ -51,7 +51,10 @@ export class AuthService {
     private client: AuthClient,
     private storage: AuthStorage,
     private state: AuthState
-  ) {}
+  ) {
+    // Checks that a token exists and forces authentication when the page is fully reloaded.
+    this.isTokenNotExpired() && this.state.authenticated();
+  }
 
   login(credentials: Credentials): Observable<string> {
     this.loading();

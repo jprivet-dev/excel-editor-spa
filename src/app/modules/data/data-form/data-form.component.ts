@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -11,13 +12,21 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SnackBarService } from '@core/snack-bar';
 import { Data } from '@shared/models';
 import { emptyToNull } from '@shared/utils';
-import { catchError, Observable, Subscription, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  Subscription,
+  tap,
+  throwError,
+} from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
   selector: 'app-data-form',
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Here we have a hybrid smart/presentational component.
@@ -26,7 +35,9 @@ export class DataFormComponent implements OnInit, OnDestroy {
   @Input() data: Data | null = null;
   @Output() closeEvent = new EventEmitter();
 
-  errorDetail: string = '';
+  private errorDetailSubject = new BehaviorSubject<string>('');
+  errorDetail$ = this.errorDetailSubject.asObservable();
+
   private subscriptionDetails!: Subscription;
   private subscriptionCreate!: Subscription;
   private subscriptionUpdate!: Subscription;
@@ -99,7 +110,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
   // TODO: Gérer la validation des autres champs comme 'nomDuGroupe'.
 
   submit(): void {
-    this.errorDetail = '';
+    this.errorDetailSubject.next('');
     this.data ? this.update(this.data) : this.create();
   }
 
@@ -136,7 +147,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {
-    this.errorDetail = e.error.detail;
+    this.errorDetailSubject.next(e.error.detail);
     return throwError(e);
   }
 

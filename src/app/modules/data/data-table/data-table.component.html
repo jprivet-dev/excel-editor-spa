@@ -1,7 +1,3 @@
-<mat-error *ngIf="errorMessage$ | async as message">
-  {{ message }}
-</mat-error>
-
 <div class="table-wrapper">
   <div class="table-loading-shade" *ngIf="isLoading$ | async">
     <mat-spinner diameter="30"></mat-spinner>

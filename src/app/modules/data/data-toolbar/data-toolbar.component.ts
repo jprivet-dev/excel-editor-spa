@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@core/auth';
 import { DataDialogUploadComponent } from '../data-dialog-upload';
@@ -7,6 +7,7 @@ import { DataDialogUploadComponent } from '../data-dialog-upload';
   selector: 'app-data-toolbar',
   templateUrl: './data-toolbar.component.html',
   styleUrls: ['./data-toolbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataToolbarComponent {
   readonly user$ = this.auth.user$;

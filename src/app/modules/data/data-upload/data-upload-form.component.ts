@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -15,6 +16,7 @@ export class DataUploadFormComponent {
   @ViewChild('fileUpload') fileUpload!: ElementRef;
   @Output() fileSelectedEvent = new EventEmitter<File>();
   @Output() submitEvent = new EventEmitter<File>();
+  @Input() uploadInProgress: boolean | null = true;
 
   disabled: boolean = true;
   file!: File;

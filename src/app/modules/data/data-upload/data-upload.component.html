@@ -1,6 +1,7 @@
 <app-data-upload-form
   (fileSelectedEvent)="onFileSelected($event)"
   (submitEvent)="onSubmit($event)"
+  [uploadInProgress]="updloadInProgress$ | async"
 ></app-data-upload-form>
 
 <mat-list *ngIf="results">

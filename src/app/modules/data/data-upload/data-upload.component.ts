@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 import { DataUploadService } from './data-upload.service';
 import { DataUpload } from './data-upload.model';
@@ -10,6 +10,9 @@ import { DataUpload } from './data-upload.model';
   templateUrl: './data-upload.component.html',
 })
 export class DataUploadComponent implements OnDestroy {
+  private updloadInProgressSubject = new BehaviorSubject<boolean>(false);
+  updloadInProgress$ = this.updloadInProgressSubject.asObservable();
+
   private uploadSubscription: Subscription = new Subscription();
   private dataLoadSubscription: Subscription = new Subscription();
 
@@ -23,9 +26,12 @@ export class DataUploadComponent implements OnDestroy {
 
   onFileSelected(file: File): void {
     this.invalidMessage = null;
+    this.results = null;
   }
 
   onSubmit(file: File): void {
+    this.uploadStart();
+
     this.uploadSubscription = this.uploadService
       .upload(file)
       .pipe(
@@ -36,11 +42,15 @@ export class DataUploadComponent implements OnDestroy {
               response
             );
 
+            this.uploadStop();
             this.results = response;
 
-            this.loadData();
+            if (response.importedCount > 0) {
+              this.dataLoadSubscription = this.dataService.load().subscribe();
+            }
           },
           (error: HttpErrorResponse) => {
+            this.uploadStop();
             this.invalidMessage = error.error.detail;
           }
         )
@@ -48,8 +58,12 @@ export class DataUploadComponent implements OnDestroy {
       .subscribe();
   }
 
-  private loadData() {
-    this.dataLoadSubscription = this.dataService.load().subscribe();
+  private uploadStart(): void {
+    this.updloadInProgressSubject.next(true);
+  }
+
+  private uploadStop(): void {
+    this.updloadInProgressSubject.next(false);
   }
 
   ngOnDestroy(): void {

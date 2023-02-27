@@ -22,9 +22,12 @@
   color="primary"
   class="btn-upload"
   title="Télécharger le fichier Excel"
-  [disabled]="disabled"
+  [disabled]="disabled || uploadInProgress"
   (click)="submit()"
 >
+  <div class="spinner-container" *ngIf="uploadInProgress">
+    <mat-spinner diameter="24"></mat-spinner>
+  </div>
   <mat-icon>upload</mat-icon>
   Télécharger
 </button>

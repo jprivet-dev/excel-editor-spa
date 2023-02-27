@@ -3,9 +3,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
 import { JwtInterceptor } from './auth';
 import { GlobalErrorHandler } from './error';
+import { ProgressBarModule } from './progress-bar/progress-bar.module';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ProgressBarModule],
   providers: [
     {
       provide: ErrorHandler,
@@ -17,6 +18,7 @@ import { GlobalErrorHandler } from './error';
       multi: true,
     },
   ],
+  exports: [ProgressBarModule],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

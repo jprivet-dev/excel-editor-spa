@@ -9,6 +9,6 @@
 <div mat-dialog-content>
   <app-data-form
     [data]="dialogData.data"
-    [mat-dialog-close]="true"
+    (closeEvent)="close()"
   ></app-data-form>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Data } from '@shared/models';
 
 @Component({
@@ -8,6 +8,11 @@ import { Data } from '@shared/models';
 })
 export class DataDialogEditComponent {
   constructor(
+    public dialogRef: MatDialogRef<DataDialogEditComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: { data: Data | null }
   ) {}
+
+  close(): void {
+    this.dialogRef.close();
+  }
 }

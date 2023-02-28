@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Token } from './auth.models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +11,11 @@ export class AuthStorage {
     return localStorage.getItem(this.ID_TOKEN) as string;
   }
 
-  setToken(token: string): void {
-    localStorage.setItem(this.ID_TOKEN, token);
+  setToken(token: Token): void {
+    !token ? this.removeToken() : localStorage.setItem(this.ID_TOKEN, token);
   }
 
-  removeToken(): void {
+  private removeToken(): void {
     localStorage.removeItem(this.ID_TOKEN);
   }
 }

@@ -14,8 +14,9 @@ export class AuthState {
   readonly user$ = this.userSubject.asObservable();
 
   private tokenSubject = new BehaviorSubject<Token>(null);
+  readonly token$ = this.tokenSubject.asObservable();
 
-  readonly isAuthenticated$ = this.user$.pipe(map((user) => user !== null));
+  readonly isAuthenticated$ = this.token$.pipe(map((token) => !!token));
   readonly isNotAuthenticated$ = this.isAuthenticated$.pipe(
     map((isAuthenticated) => !isAuthenticated)
   );
@@ -34,30 +35,28 @@ export class AuthState {
   }
 
   setToken(token: Token): void {
-    if (token) {
-      this.storage.setToken(token);
-      this.tokenSubject.next(token);
-    } else {
-      this.storage.removeToken();
-      this.tokenSubject.next(null);
-    }
+    this.storage.setToken(token);
+    this.tokenSubject.next(token);
   }
 
   getToken(): Token {
     return this.tokenSubject.getValue();
   }
 
-  removeToken(): void {
-    this.storage.removeToken();
-    this.tokenSubject.next('');
+  retrieveToken(): void {
+    this.setToken(this.storage.getToken());
   }
 
-  setUser(user: User): void {
+  setUser(user: User | null): void {
     this.userSubject.next(user);
   }
 
-  removeUser(): void {
-    this.userSubject.next(null);
+  getUser(): User | null {
+    return this.userSubject.getValue();
+  }
+
+  isUserExist(): boolean {
+    return this.userSubject.getValue() !== null;
   }
 
   setError(error: Error): void {
@@ -69,7 +68,7 @@ export class AuthState {
   }
 
   logout(): void {
-    this.removeToken();
-    this.removeUser();
+    this.setToken(null);
+    this.setUser(null);
   }
 }

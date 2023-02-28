@@ -1,7 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, concatMap, map, Observable, tap, throwError } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  map,
+  Observable,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { AuthClient } from './auth.client';
 import { Credentials, Roles, Token, URL, User } from './auth.models';
 import { AuthState } from './auth.state';
@@ -12,33 +20,31 @@ import { AuthState } from './auth.state';
 export class AuthService {
   readonly isLoading$ = this.state.isLoading$;
   readonly error$ = this.state.error$;
-  readonly user$ = this.state.user$;
   readonly isAuthenticated$ = this.state.isAuthenticated$;
   readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
+
+  readonly user$ = this.state.token$.pipe(
+    concatMap((token) => (token ? this.retrieveUser() : of(null)))
+  );
 
   constructor(
     private router: Router,
     private client: AuthClient,
     private state: AuthState
   ) {
-    // Checks that a token exists and forces authentication when the page is fully reloaded.
-    //this.isTokenValid() && this.state.authenticated();
+    this.state.retrieveToken();
   }
 
-  login(credentials: Credentials): Observable<User> {
+  login(credentials: Credentials): Observable<Token> {
     this.state.clearError();
     this.state.startLoading();
 
     // STEP 1: Check the credentials
     // STEP 2: Get and store the token
-    // STEP 4: Get and store the user
-    // STEP 5: Go on homepage
+    // STEP 3: Go on homepage
     return this.client.login(credentials).pipe(
       catchError((e) => this.handleError(e)),
       tap((token) => this.state.setToken(token)),
-      concatMap(() => this.client.getUser()),
-      catchError((e) => this.handleError(e)),
-      tap((user) => this.state.setUser(user)),
       tap(() => this.router.navigate([URL.Home]))
     );
   }
@@ -57,6 +63,14 @@ export class AuthService {
       map((user) => (user ? user.roles : [])),
       map((roles: Roles[]) => roles.includes(role as never))
     );
+  }
+
+  private retrieveUser(): Observable<User | null> {
+    // If the user is already stored in the SPA, get it,
+    // otherwise retrieve the user from the API and store it.
+    return this.state.isUserExist()
+      ? of(this.state.getUser())
+      : this.client.getUser().pipe(tap((user) => this.state.setUser(user)));
   }
 
   private handleError(e: HttpErrorResponse): Observable<any> {

@@ -1,26 +1,33 @@
-<div class="row mb-4">
-  <div class="col-9">
-    <input
-      class="form-control"
-      type="file"
-      id="fileUpload"
-      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      #fileUpload
-      [class.is-invalid]="invalidMessage"
-      (change)="onFileSelected($event)"
-    />
-    <div id="fileUploadFeedback" class="invalid-feedback">
-      {{ invalidMessage }}
-    </div>
+<input
+  hidden
+  type="file"
+  id="fileUpload"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  #fileUpload
+  (change)="onFileSelected($event)"
+/>
+
+<button
+  mat-stroked-button
+  color="primary"
+  class="btn-choose-file"
+  (click)="fileUpload.click()"
+>
+  <ng-container *ngIf="file; else noFile">{{ file.name }}</ng-container>
+  <ng-template #noFile>Choisir un fichier Excel</ng-template>
+</button>
+
+<button
+  mat-flat-button
+  color="primary"
+  class="btn-upload"
+  title="Télécharger le fichier Excel"
+  [disabled]="disabled || uploadInProgress"
+  (click)="submit()"
+>
+  <div class="spinner-container" *ngIf="uploadInProgress">
+    <mat-spinner diameter="24"></mat-spinner>
   </div>
-  <div class="col-3">
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="disabled"
-      (click)="onSubmit()"
-    >
-      Télécharger le fichier Excel
-    </button>
-  </div>
-</div>
+  <mat-icon>upload</mat-icon>
+  Télécharger
+</button>

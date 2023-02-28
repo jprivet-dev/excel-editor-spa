@@ -1,109 +1,98 @@
-<div class="mb-2 text-end">
-  <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-plus-circle-fill"
-      viewBox="0 0 16 16"
+<div class="table-wrapper">
+  <div class="table-loading-shade" *ngIf="isLoading$ | async">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+  <ng-container *ngIf="hasData$ | async; else noData">
+    <table
+      mat-table
+      *ngIf="data$ | async as data"
+      [dataSource]="data"
+      class="mat-elevation-z8"
     >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-      />
-    </svg>
-    Ajouter un groupe
-  </button>
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let i = index">
+          <strong>{{ i + 1 }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomDuGroupe">
+        <th mat-header-cell *matHeaderCellDef>Nom du groupe</th>
+        <td mat-cell *matCellDef="let row">
+          <strong>{{ row.nomDuGroupe }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="anneeDebut">
+        <th mat-header-cell *matHeaderCellDef>Année début</th>
+        <td mat-cell *matCellDef="let row">{{ row.anneeDebut }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="anneeSeparation">
+        <th mat-header-cell *matHeaderCellDef>Année séparation</th>
+        <td mat-cell *matCellDef="let row">{{ row.anneeSeparation }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="presentation">
+        <th mat-header-cell *matHeaderCellDef>Présentation</th>
+        <td mat-cell *matCellDef="let row">{{ row.presentation }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="actions-container">
+            <button
+              mat-mini-fab
+              color="primary"
+              title="Modifier '{{ row.nomDuGroupe }}'"
+              (click)="update(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              title="Supprimer '{{ row.nomDuGroupe }}'"
+              (click)="delete(row)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns$ | async"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns$ | async"></tr>
+    </table>
+  </ng-container>
+  <ng-template #noData>
+    <mat-card>
+      <mat-card-content>
+        <span class="mr">Aucune donnée !</span>
+        <button
+          mat-raised-button
+          class="ml"
+          title="Télécharger un fichier Excel"
+          *appIsGranted="'ROLE_ADMIN'"
+          (click)="upload()"
+        >
+          <mat-icon>upload</mat-icon>
+          Télécharger
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
 </div>
 
-<table class="table table-striped" style="font-size: 0.8rem">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nom du groupe</th>
-      <th scope="col">Origine</th>
-      <th scope="col">Ville</th>
-      <th scope="col">Année début</th>
-      <th scope="col">Année séparation</th>
-      <th scope="col">Fondateurs</th>
-      <th scope="col">Membres</th>
-      <th scope="col">Courant musical</th>
-      <th scope="col">Présentation</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let d of data$ | async; index as i">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ d.nomDuGroupe }}</td>
-      <td>{{ d.origine }}</td>
-      <td>{{ d.ville }}</td>
-      <td>{{ year(d.anneeDebut) }}</td>
-      <td>{{ year(d.anneeSeparation) }}</td>
-      <td>{{ d.fondateurs }}</td>
-      <td>{{ membres(d.membres) }}</td>
-      <td>{{ d.courantMusical }}</td>
-      <td>{{ d.presentation }}</td>
-      <td>
-        <div class="d-flex">
-          <button
-            type="button"
-            class="btn btn-primary btn-sm me-2"
-            title="Modifier"
-            (click)="update(d)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-pencil-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"
-              />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
-            title="Supprimer"
-            (click)="delete(d)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-trash-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
-              />
-            </svg>
-          </button>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="mb-2 text-end">
-  <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-plus-circle-fill"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-      />
-    </svg>
-    Ajouter un groupe
+<ng-container *ngIf="hasData$ | async">
+  <button
+    mat-fab
+    class="btn-create-new-group"
+    color="primary"
+    title="Ajouter un groupe"
+    (click)="create()"
+    *appIsGranted="'ROLE_ADMIN'"
+  >
+    <mat-icon>add</mat-icon>
   </button>
-</div>
+</ng-container>

@@ -1,0 +1,33 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #f8f9fa;
+
+  .container {
+    width: auto;
+    display: flex;
+    padding: 1rem 2rem;
+    margin-right: auto;
+    margin-left: auto;
+    border-top: 1px solid #dee2e6;
+
+    span {
+      color: rgba(0 0 0 / 54%);
+    }
+
+    a {
+      color: rgba(0 0 0 / 54%);
+      text-decoration: none;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+
+      &:hover,
+      &:focus {
+        color: #0a58caff;
+        text-decoration: underline;
+      }
+    }
+  }
+}

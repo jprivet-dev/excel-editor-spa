@@ -1,6 +1,10 @@
 MAKE_S 		= $(MAKE) -s
+MAKE_I 		= $(MAKE_S) --ignore-errors
 USER_ID 	= $(shell id -u)
 GROUP_ID 	= $(shell id -g)
+
+# URLs
+URL_LOCALHOST = http://localhost:4200
 
 # Executables (local)
 HAS_DOCKER_COMP_PLUGIN := $(shell docker compose version 2> /dev/null)
@@ -18,6 +22,7 @@ NODE_CONT = $(DOCKER_COMP) exec node
 # Executables
 NPM		= $(NODE_CONT) npm
 NG 		= $(NODE_CONT) ng
+NPX		= $(NODE_CONT) npx
 
 ## — ✨ 🚀 THE ANGULAR DOCKER MAKEFILE 🚀 ✨ ——————————————————————————————————
 
@@ -45,10 +50,17 @@ help: ## Print self-documented Makefile
 		}'
 	@echo
 
+.PHONY: info
+info: ## Print info & URLs
+	@echo "------------------------"
+	@echo "|   Excel Editor SPA   |"
+	@echo "------------------------"
+	@echo "LOCALHOST: $(URL_LOCALHOST)"
+
 ## — DOCKER 🐳 ————————————————————————————————————————————————————————————————
 
 .PHONY: build
-build: ## Build the first time or rebuild fresh images if necessary
+build: ## Build (the first time) or rebuild fresh images if necessary
 	$(DOCKER_COMP) build --pull --no-cache
 
 .PHONY: up
@@ -70,7 +82,7 @@ logs: ## Show live logs
 ##
 
 .PHONY: install
-install: build up ## Build & Start
+install: build up ## Full installation (to the very first cloning of the project)
 
 .PHONY: start
 start: up ## 'up' alias
@@ -99,19 +111,6 @@ ng: ## Run ng, pass the parameter "c=" to run a given command (example: make ng 
 	@$(eval c ?=)
 	$(NG) $(c)
 
-.PHONY: lint
-lint: ## Run ng lint
-	$(NG) lint
-
-.PHONY: test
-test: ## Run ng test, pass the parameter "c=" to run a given command (example: make test c="--include=src/app/core/auth/auth.service.spec.ts")
-	@$(eval c ?=)
-	$(NG) test $(c)
-
-.PHONY: coverage
-coverage: ## Generate a coverage report
-	$(NG) test --no-watch --code-coverage
-
 ##
 
 .PHONY: latest_cli
@@ -124,3 +123,39 @@ bash: ## Connect to the Node container (current user).
 
 bash@root: ## Connect to the Node container (root).
 	$(DOCKER_COMP) exec --user 0 node bash
+
+## — TEST & QUALITY ✅ ————————————————————————————————————————————————————————
+
+.PHONY: test
+test: ## Run ng test, pass the parameter "c=" to run a given command (example: make test c="--include=src/app/core/auth/auth.service.spec.ts")
+	@$(eval c ?=)
+	$(NG) test $(c)
+
+.PHONY: testf
+testf: ## Run ng test, pass the parameter "f=" to run a given file (example: make test f="src/app/core/auth/auth.service.spec.ts")
+	@$(eval f ?=)
+	$(NG) test --include=$(f)
+
+.PHONY: coverage
+coverage: ## Generate a coverage report (lcov.info)
+	$(NG) test --no-watch --code-coverage
+
+##
+
+.PHONY: lint
+lint: ## Run ng lint
+	$(NG) lint
+
+.PHONY: eslint
+eslint: ## Run npx eslint
+	$(NPX) eslint "{**/*,*}.{js,ts,jsx,tsx,html,vue}"
+
+.PHONY: stylelint
+stylelint: ## Run npx stylelint
+	$(NPX) stylelint "src/{**/*,*}.{css,scss}"
+
+.PHONY: check
+check: ## Run lint, eslint & stylelint
+	$(MAKE_I) lint
+	$(MAKE_I) eslint
+	$(MAKE_I) stylelint

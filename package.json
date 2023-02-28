@@ -12,17 +12,17 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.0.0",
+    "@angular/cdk": "^13.0.0",
     "@angular/common": "^14.0.0",
     "@angular/compiler": "^14.0.0",
     "@angular/core": "^14.0.0",
     "@angular/forms": "^14.0.0",
     "@angular/localize": "^14.0.0",
+    "@angular/material": "^13.0.0",
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
-    "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -48,6 +48,8 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "karma-verbose-reporter": "^0.0.8",
     "prettier": "2.7.1",
+    "stylelint": "^15.2.0",
+    "stylelint-config-standard-scss": "^7.0.1",
     "typescript": "~4.7.2"
   }
 }

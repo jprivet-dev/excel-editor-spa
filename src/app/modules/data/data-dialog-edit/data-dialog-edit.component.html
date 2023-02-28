@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+  <span *ngIf="dialogData.data">
+    Modifier le groupe "{{ dialogData.data.nomDuGroupe }}"
+  </span>
+  <span *ngIf="!dialogData.data"> Ajouter un groupe </span>
+</h1>
+<div mat-dialog-content>
+  <app-data-form
+    [data]="dialogData.data"
+    (closeEvent)="close()"
+  ></app-data-form>
+</div>

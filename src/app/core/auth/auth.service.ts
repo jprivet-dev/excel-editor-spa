@@ -1,69 +1,81 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@environments/environment';
-import { Observable, shareReplay, tap } from 'rxjs';
-import { URL, User } from './models';
+import {
+  catchError,
+  concatMap,
+  map,
+  Observable,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
+import { AuthClient } from './auth.client';
+import { Credentials, Roles, Token, URL, User } from './auth.models';
+import { AuthState } from './auth.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private ID_TOKEN = 'id_token';
+  readonly isLoading$ = this.state.isLoading$;
+  readonly error$ = this.state.error$;
+  readonly isAuthenticated$ = this.state.isAuthenticated$;
+  readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  readonly user$ = this.state.token$.pipe(
+    concatMap((token) => (token ? this.retrieveUser() : of(null)))
+  );
 
-  login(username: string, password: string): Observable<User> {
-    return this.http
-      .post<User>(`${environment.apiUrl}/login_check`, {
-        username,
-        password,
-      })
-      .pipe(
-        tap((user) => {
-          this.setToken(user);
-          this.router.navigate([URL.Domain]);
-        }),
-        shareReplay()
-      );
+  constructor(
+    private router: Router,
+    private client: AuthClient,
+    private state: AuthState
+  ) {
+    this.state.retrieveToken(); // Checks that a token is already exists when the page is fully reloaded.
   }
 
-  private setToken(user: User): void {
-    localStorage.setItem(this.ID_TOKEN, user.token);
-  }
+  login(credentials: Credentials): Observable<Token> {
+    this.state.clearError();
+    this.state.startLoading();
 
-  private removeToken(): void {
-    localStorage.removeItem(this.ID_TOKEN);
-  }
-
-  // @see https://stackoverflow.com/a/60758392/13480534
-  private isExpired(token: string): boolean {
-    const result = token.split('.');
-
-    if (result.length === 3) {
-      const exp = JSON.parse(atob(result[1])).exp;
-      const now = Math.floor(new Date().getTime() / 1000);
-      return now >= exp;
-    }
-
-    return false;
+    // STEP 1: Check the credentials
+    // STEP 2: Get and store the token
+    // STEP 3: Go on homepage
+    return this.client.login(credentials).pipe(
+      catchError((e) => this.handleError(e)),
+      tap((token) => this.state.setToken(token)),
+      tap(() => this.router.navigate([URL.Home]))
+    );
   }
 
   logout(): void {
-    this.removeToken();
+    this.state.logout();
     this.router.navigate([URL.Login]);
   }
 
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    return token ? !this.isExpired(token) : false;
+  getToken(): Token {
+    return this.state.getToken();
   }
 
-  isLoggedOut(): boolean {
-    return !this.isLoggedIn();
+  isGranted(role: Roles): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => (user ? user.roles : [])),
+      map((roles: Roles[]) => roles.includes(role as never))
+    );
   }
 
-  getToken(): string {
-    return localStorage.getItem(this.ID_TOKEN) as string;
+  private retrieveUser(): Observable<User | null> {
+    // If the user is already stored in the SPA, get it,
+    // otherwise retrieve the user from the API and store it.
+    return this.state.isUserExist()
+      ? of(this.state.getUser())
+      : this.client.getUser().pipe(tap((user) => this.state.setUser(user)));
+  }
+
+  private handleError(e: HttpErrorResponse): Observable<any> {
+    this.state.stopLoading();
+    this.state.setError(e.error);
+    return throwError(e);
   }
 }

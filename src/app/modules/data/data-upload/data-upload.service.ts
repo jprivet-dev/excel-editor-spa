@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { DataUpload } from './data-upload.model';
 
 @Injectable({
@@ -14,6 +14,8 @@ export class DataUploadService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<DataUpload>(`${environment.apiUrl}/upload`, formData);
+    return this.http
+      .post<DataUpload>(`${environment.apiUrl}/upload`, formData)
+      .pipe(catchError((error: any) => throwError(error)));
   }
 }

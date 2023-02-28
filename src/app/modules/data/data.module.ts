@@ -1,23 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { DataFormComponent } from './data-form/data-form.component';
-import { DataModalComponent } from './data-modal/data-modal.component';
+import { DataDialogEditComponent } from './data-dialog-edit';
+import { DataDialogUploadComponent } from './data-dialog-upload';
+import { DataFormComponent } from './data-form';
 import { DataRoutingModule } from './data-routing.module';
-import { DataTableComponent } from './data-table/data-table.component';
-import { DataUploadFormComponent } from './data-upload/data-upload-form.component';
-import { DataUploadComponent } from './data-upload/data-upload.component';
+import { DataTableComponent } from './data-table';
+import { DataToolbarComponent } from './data-toolbar';
+import { DataUploadComponent, DataUploadFormComponent } from './data-upload';
 import { DataComponent } from './data.component';
+import { DataDialogDeleteComponent } from './data-dialog-delete';
 
 @NgModule({
   declarations: [
     DataComponent,
+    DataDialogDeleteComponent,
+    DataDialogEditComponent,
+    DataDialogUploadComponent,
+    DataFormComponent,
+    DataTableComponent,
+    DataToolbarComponent,
     DataUploadComponent,
     DataUploadFormComponent,
-    DataTableComponent,
-    DataFormComponent,
-    DataModalComponent,
   ],
-  imports: [CommonModule, DataRoutingModule, SharedModule],
+  imports: [CommonModule, SharedModule, DataRoutingModule],
 })
 export class DataModule {}

@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -7,26 +9,38 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ToastService } from '@core/toasts/toast.service';
+import { SnackBarService } from '@core/snack-bar';
+import { Data } from '@shared/models';
 import { emptyToNull } from '@shared/utils';
-import { Subscription } from 'rxjs';
-import { DataTable } from '../data-table/data-table.model';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  Subscription,
+  tap,
+  throwError,
+} from 'rxjs';
 import { DataTableService } from '../data-table/data-table.service';
 
 @Component({
   selector: 'app-data-form',
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataFormComponent implements OnInit, OnDestroy {
-  // TODO: Nous avons là un composant hybride smart/presentational. Réfléchir à une approche plus propre entre la modal et le formulaire.
+  // TODO: Here we have a hybrid smart/presentational component.
+  //  Think about a cleaner approach between the modal and the form.
 
-  @Input() data!: DataTable;
-  @Output() submitEvent = new EventEmitter();
-  errorMessage: string = '';
-  updateMode: boolean = false;
-  private createSubscription: Subscription = new Subscription();
-  private updateSubscription: Subscription = new Subscription();
+  @Input() data: Data | null = null;
+  @Output() closeEvent = new EventEmitter();
+
+  private errorDetailSubject = new BehaviorSubject<string>('');
+  errorDetail$ = this.errorDetailSubject.asObservable();
+
+  private subscriptionDetails!: Subscription;
+  private subscriptionCreate!: Subscription;
+  private subscriptionUpdate!: Subscription;
 
   form = this.formBuilder.group({
     nomDuGroupe: ['', [Validators.required]],
@@ -43,13 +57,14 @@ export class DataFormComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataTableService,
-    private toastService: ToastService
+    private snackBar: SnackBarService
   ) {}
 
   ngOnInit(): void {
     if (this.data) {
-      this.updateMode = true;
-      this.form.patchValue(this.data);
+      this.subscriptionDetails = this.dataService
+        .details(this.data.id)
+        .subscribe((data) => this.form.patchValue(data));
     }
   }
 
@@ -57,82 +72,87 @@ export class DataFormComponent implements OnInit, OnDestroy {
     return this.form.get('nomDuGroupe');
   }
 
-  nomDuGroupeIsInvalid(): any {
-    return (
-      !this.nomDuGroupe?.valid &&
-      (this.nomDuGroupe?.dirty || this.nomDuGroupe?.touched)
-    );
+  nomDuGroupeErrorMessage(): string | void {
+    return this.nomDuGroupe.hasError('required')
+      ? 'Le nom du groupe est requis.'
+      : '';
   }
 
   get anneeDebut(): any {
     return this.form.get('anneeDebut');
   }
 
-  anneeDebutIsInvalid(): any {
-    return (
-      !this.anneeDebut?.valid &&
-      (this.anneeDebut?.dirty || this.anneeDebut?.touched)
-    );
+  anneeDebutErrorMessage(): string | void {
+    if (this.anneeDebut.hasError('required')) {
+      return "L'année de début est requise.";
+    }
+
+    return this.anneeDebut.hasError('pattern')
+      ? "L'année de début doit être valide (ex: 1998)."
+      : '';
   }
 
   get anneeSeparation(): any {
     return this.form.get('anneeSeparation');
   }
 
-  anneeSeparationIsInvalid(): any {
-    return (
-      !this.anneeSeparation?.valid &&
-      (this.anneeSeparation?.dirty || this.anneeSeparation?.touched)
-    );
+  anneeSeparationErrorMessage(): string | void {
+    if (this.anneeSeparation.hasError('required')) {
+      return "L'année de séparation est requise.";
+    }
+
+    return this.anneeSeparation.hasError('pattern')
+      ? "L'année de séparation doit être valide (ex: 1998)."
+      : '';
   }
 
   // TODO: Gérer la validation des autres champs comme 'nomDuGroupe'.
 
-  onSubmit(): void {
-    this.errorMessage = '';
-
-    if (this.updateMode) {
-      this.update();
-    } else {
-      this.create();
-    }
+  submit(): void {
+    this.errorDetailSubject.next('');
+    this.data ? this.update(this.data) : this.create();
   }
 
-  create() {
-    this.createSubscription = this.dataService
+  create(): void {
+    this.subscriptionCreate = this.dataService
       .create(emptyToNull(this.form.value))
-      .subscribe(
-        (data) => {
-          this.form.reset();
-          this.toastService.success(
-            `Le groupe "${data.nomDuGroupe}" a été créé.`
-          );
-          this.submitEvent.emit();
-        },
-        (error) => {
-          this.errorMessage = error.error.message;
-        }
-      );
+      .pipe(
+        catchError((e) => this.handleError(e)),
+        tap((data) => {
+          this.close();
+          this.snackBar.success(`Le groupe "${data.nomDuGroupe}" a été créé.`);
+        })
+      )
+      .subscribe();
   }
 
-  update() {
-    this.updateSubscription = this.dataService
-      .update(this.data.id, emptyToNull(this.form.value))
-      .subscribe(
-        (data) => {
-          this.form.reset();
-          this.toastService.success(
+  update(data: Data): void {
+    this.subscriptionUpdate = this.dataService
+      .update(data.id, emptyToNull(this.form.value))
+      .pipe(
+        catchError((e) => this.handleError(e)),
+        tap((data) => {
+          this.close();
+          this.snackBar.success(
             `Le groupe "${data.nomDuGroupe}" a été mis à jour.`
           );
-          this.submitEvent.emit();
-        },
-        (error) => {
-          this.errorMessage = error.error.message;
-        }
-      );
+        })
+      )
+      .subscribe();
+  }
+
+  close(): void {
+    this.closeEvent.emit();
+  }
+
+  private handleError(e: HttpErrorResponse): Observable<any> {
+    this.errorDetailSubject.next(e.error.detail);
+    return throwError(e);
   }
 
   ngOnDestroy(): void {
-    this.createSubscription.unsubscribe();
+    this.subscriptionDetails && this.subscriptionDetails.unsubscribe();
+    this.subscriptionCreate && this.subscriptionCreate.unsubscribe();
+    this.subscriptionUpdate && this.subscriptionUpdate.unsubscribe();
   }
 }

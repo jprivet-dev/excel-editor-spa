@@ -1,19 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService } from '@core/toasts';
-import { Observable, of } from 'rxjs';
-import { DataTable } from '../data-table/data-table.model';
-import { DataTableService } from '../data-table/data-table.service';
-import { DataUploadFormComponent } from './data-upload-form.component';
+import { provideSnackbarServiceStub } from '@core/snack-bar';
 import { DataUploadComponent } from './data-upload.component';
+import { DataUploadFormComponent } from './data-upload-form.component';
 import { DataUploadService } from './data-upload.service';
-
-class DataUploadServiceStub implements Partial<DataUploadService> {}
-class DataTableServiceStub implements Partial<DataTableService> {
-  load(): Observable<DataTable[]> {
-    return of([]);
-  }
-}
-class ToastServiceStub implements Partial<ToastService> {}
+import { DataUploadServiceStub } from './data-upload-testing.helper';
+import { provideDataTableServiceStub } from '../data-table';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DataUploadComponent', () => {
   let component: DataUploadComponent;
@@ -24,9 +16,10 @@ describe('DataUploadComponent', () => {
       declarations: [DataUploadComponent, DataUploadFormComponent],
       providers: [
         { provide: DataUploadService, useClass: DataUploadServiceStub },
-        { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: ToastService, useClass: ToastServiceStub },
+        provideDataTableServiceStub,
+        provideSnackbarServiceStub,
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataUploadComponent);

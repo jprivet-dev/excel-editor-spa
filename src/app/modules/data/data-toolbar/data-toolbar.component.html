@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <span>Excel Editor</span>
+  <span class="spacer"></span>
+  <span class="ml">
+    <mat-icon>account_circle</mat-icon>
+    {{ (user$ | async)?.username }}
+  </span>
+  <button
+    mat-raised-button
+    class="ml"
+    title="Télécharger un fichier Excel"
+    *appIsGranted="'ROLE_ADMIN'"
+    (click)="upload()"
+  >
+    <mat-icon>upload</mat-icon>
+    Télécharger
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    class="ml"
+    title="Se déconnecter"
+    (click)="logout()"
+  >
+    <mat-icon>logout</mat-icon>
+    Déconnexion
+  </button>
+</mat-toolbar>

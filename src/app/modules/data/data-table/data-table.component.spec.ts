@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastService } from '@core/toasts';
+import { provideSnackbarServiceStub } from '@core/snack-bar';
 import { DataTableComponent } from './data-table.component';
-import { DataTableService } from './data-table.service';
-
-class DataTableServiceStub implements Partial<DataTableService> {}
-class ToastServiceStub implements Partial<ToastService> {}
+import { provideDataTableServiceStub } from './data-table-testing.helper';
+import { provideMockAuthService } from '@core/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent;
@@ -13,10 +14,14 @@ describe('DataTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DataTableComponent],
+      imports: [HttpClientTestingModule],
       providers: [
-        { provide: DataTableService, useClass: DataTableServiceStub },
-        { provide: ToastService, useClass: ToastServiceStub },
+        provideMockAuthService,
+        provideDataTableServiceStub,
+        provideSnackbarServiceStub,
+        { provide: MatDialog, useValue: {} },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DataTableComponent);

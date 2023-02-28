@@ -1,54 +1,90 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ToastService } from '@core/toasts/toast.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
-import { DataModalComponent } from '../data-modal/data-modal.component';
-import { DataTable } from './data-table.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '@core/auth';
+import { Data } from '@shared/models';
+import { Observable, Subscription, tap } from 'rxjs';
+import { DataDialogEditComponent } from '../data-dialog-edit';
 import { DataTableService } from './data-table.service';
+import { DataDialogUploadComponent } from '../data-dialog-upload';
+import { DataDialogDeleteComponent } from '../data-dialog-delete';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataTableComponent implements OnDestroy {
+export class DataTableComponent implements OnInit, OnDestroy {
+  private subscription = new Subscription();
+  readonly isLoading$ = this.dataService.isLoading$;
   readonly data$ = this.dataService.data$;
-  private deleteSubscription: Subscription = new Subscription();
+  readonly hasData$ = this.dataService.hasData$;
+  readonly displayedColumns$ = this.dataService.displayedColumns$;
 
   constructor(
+    private auth: AuthService,
     private dataService: DataTableService,
-    private toastService: ToastService,
-    private modalService: NgbModal
+    public dialog: MatDialog
   ) {}
 
-  year(date: string): string {
-    return date ? date : '';
+  ngOnInit() {
+    this.subscription.add(this.dataService.load().subscribe());
+    this.subscription.add(this.iniDisplayedColumns().subscribe());
   }
 
-  membres(membres: number): string {
-    return membres > 0 ? membres.toString() : '';
+  /**
+   * Choice of the table columns to display,
+   * according to the rights of the user.
+   */
+  private iniDisplayedColumns(): Observable<boolean> {
+    return this.auth
+      .isGranted('ROLE_ADMIN')
+      .pipe(
+        tap((isGranted) =>
+          isGranted
+            ? this.dataService.displayedColumnsWithActions()
+            : this.dataService.displayedColumnsWithoutActions()
+        )
+      );
   }
 
-  delete(data: DataTable): void {
-    if (confirm(`Souhaitez-vous supprimer le groupe "${data.nomDuGroupe}" ?`)) {
-      this.deleteSubscription = this.dataService.delete(data).subscribe(() => {
-        this.toastService.success(
-          `Le groupe "${data.nomDuGroupe}" a été supprimé.`
-        );
-      });
-    }
+  delete(data: Data): void {
+    this.dialog.open(DataDialogDeleteComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { data[of the excel element] }
+      data: { data },
+    });
   }
 
-  update(data: DataTable): void {
-    const modalRef = this.modalService.open(DataModalComponent);
-    modalRef.componentInstance.data = data;
+  update(data: Data): void {
+    this.dialog.open(DataDialogEditComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { id: data[of the excel element].id }
+      data: { data },
+    });
   }
 
-  open(): void {
-    const modalRef = this.modalService.open(DataModalComponent);
+  create(): void {
+    this.dialog.open(DataDialogEditComponent, {
+      // Beware of the confusion between the "dialog" data
+      // and the "excel" data which have the same name.
+      // data[of the dialog]: { id: data[of the excel element].id }
+      data: { data: null },
+    });
+  }
+
+  upload(): void {
+    this.dialog.open(DataDialogUploadComponent);
   }
 
   ngOnDestroy(): void {
-    this.deleteSubscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
   }
 }

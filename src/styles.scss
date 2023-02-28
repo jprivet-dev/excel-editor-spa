@@ -1,9 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
 
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-label.required:after {
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+label.required::after {
   content: " *";
   color: red;
+}
+
+.mb {
+  margin-bottom: 1rem;
+}
+
+.mr {
+  margin-right: 1rem;
+}
+
+.ms-auto {
+  margin-left: auto !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.pink {
+  color: #ff4081;
+}
+
+.danger {
+  color: #f44336;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.mat-icon {
+  vertical-align: text-top;
 }

@@ -1,15 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastsComponent } from './toasts';
-
-const components = [ToastsComponent];
-const modules = [NgbToastModule, NgbModule];
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
+import { JwtInterceptor } from './auth';
+import { GlobalErrorHandler } from './error';
+import { ProgressBarModule } from './progress-bar';
 
 @NgModule({
-  declarations: [...components],
-  imports: [CommonModule, ...modules],
-  exports: [...components, ...modules],
+  imports: [CommonModule, ProgressBarModule],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
+  exports: [ProgressBarModule],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e +o pipefail
+# Bug in Konsole (KDE): this line closes the current tab on an error in the script.
+#set -e +o pipefail
 
 # Usage:
 # $ . scripts/reporter.sh
@@ -33,7 +34,7 @@ fi
 printf "> API token CODACY_PROJECT_TOKEN = %s\n" "${CODACY_PROJECT_TOKEN}"
 printf "> Generate code coverage:\n"
 
-make lcov
+make coverage
 
 if [ ! -f ${COVERAGE_FILE} ]; then
   printf "ERROR! The file '%s' does not exist.\n" "${COVERAGE_FILE}"

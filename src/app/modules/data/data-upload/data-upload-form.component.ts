@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,11 +12,14 @@ import {
   selector: 'app-data-upload-form',
   templateUrl: './data-upload-form.component.html',
   styleUrls: ['./data-upload-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataUploadFormComponent {
   @ViewChild('fileUpload') fileUpload!: ElementRef;
-  @Input() invalidMessage: string | null = null;
   @Output() fileSelectedEvent = new EventEmitter<File>();
+  @Output() submitEvent = new EventEmitter<File>();
+  @Input() uploadInProgress: boolean | null = true;
+
   disabled: boolean = true;
   file!: File;
 
@@ -25,12 +29,13 @@ export class DataUploadFormComponent {
 
     if (target.files) {
       this.file = target.files[0];
+      this.fileSelectedEvent.emit(this.file);
     }
   }
 
-  onSubmit(): void {
+  submit(): void {
     this.reset();
-    this.fileSelectedEvent.emit(this.file);
+    this.submitEvent.emit(this.file);
   }
 
   private reset() {

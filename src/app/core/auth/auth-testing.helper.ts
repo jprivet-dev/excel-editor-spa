@@ -19,6 +19,7 @@ const admin: User = {
 @Injectable()
 class MockAuthService extends AuthService {
   override user$ = of(admin);
+  override isLoading$ = of(false);
 }
 
 export const provideMockAuthService = {

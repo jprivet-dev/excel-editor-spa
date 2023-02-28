@@ -3,7 +3,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
 import { JwtInterceptor } from './auth';
 import { GlobalErrorHandler } from './error';
-import { ProgressBarModule } from './progress-bar/progress-bar.module';
+import { ProgressBarModule } from './progress-bar';
 
 @NgModule({
   imports: [CommonModule, ProgressBarModule],

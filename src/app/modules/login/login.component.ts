@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@core/auth';
 import { Subscription } from 'rxjs';
-import { ProgressBarService } from '@core/progress-bar/progress-bar.service';
+import { ProgressBarService } from '@core/progress-bar';
 
 @Component({
   selector: 'app-login',

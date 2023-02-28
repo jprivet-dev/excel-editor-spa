@@ -16,6 +16,8 @@ export interface User {
 export type Roles = 'ROLE_USER' | 'ROLE_ADMIN';
 
 export enum URL {
-  Domain = '/',
+  Home = '/',
   Login = '/login',
 }
+
+export type Token = string | null;

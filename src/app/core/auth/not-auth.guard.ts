@@ -17,7 +17,7 @@ export class NotAuthGuard implements CanActivate {
       ),
       map(
         (isNotAuthenticated) =>
-          isNotAuthenticated || this.router.createUrlTree([URL.Domain])
+          isNotAuthenticated || this.router.createUrlTree([URL.Home])
       )
     );
   }

@@ -1,6 +1,8 @@
-// @see https://stackoverflow.com/a/60758392/13480534
+import { Token } from './auth.models';
+import { toEmpty } from '@shared/utils';
 
-export function tokenIsExpired(token: string): boolean {
+// @see https://stackoverflow.com/a/60758392/13480534
+export const isTokenExpired = (token: string): boolean => {
   const result = token.split('.');
 
   if (result.length === 3) {
@@ -10,4 +12,8 @@ export function tokenIsExpired(token: string): boolean {
   }
 
   return false;
-}
+};
+
+export const isTokenValid = (token: Token): boolean => {
+  return isTokenExpired(toEmpty(token));
+};

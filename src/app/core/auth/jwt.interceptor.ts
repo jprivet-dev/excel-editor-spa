@@ -7,7 +7,7 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, concatMap, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 /**
@@ -25,29 +25,21 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.auth.token$.pipe(
-      tap((token) =>
-        console.log(
-          'JwtInterceptor | intercept() | token',
-          typeof token === 'string' ? token.substring(0, 10) + '...' : token
-        )
-      ),
-      concatMap((token) => {
-        if (token === null) {
-          return next.handle(request);
-        }
+    const token = this.auth.getToken();
 
-        const clone = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    if (!token) {
+      return next.handle(request);
+    }
 
-        return next
-          .handle(clone)
-          .pipe(catchError((error: any) => this.handleError(error)));
-      })
-    );
+    const clone = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return next
+      .handle(clone)
+      .pipe(catchError((error: any) => this.handleError(error)));
   }
 
   private handleError(error: any): Observable<never> {

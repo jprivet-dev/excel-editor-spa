@@ -6,10 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthStorage {
   private ID_TOKEN = 'id_token';
 
-  constructor() {}
-
   getToken(): string {
-    console.log('AuthStorage | getToken()');
     return localStorage.getItem(this.ID_TOKEN) as string;
   }
 
@@ -19,9 +16,5 @@ export class AuthStorage {
 
   removeToken(): void {
     localStorage.removeItem(this.ID_TOKEN);
-  }
-
-  clear(): void {
-    this.removeToken();
   }
 }

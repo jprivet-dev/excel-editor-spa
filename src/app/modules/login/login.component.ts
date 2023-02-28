@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@core/auth';
-import { Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProgressBarService } from '@core/progress-bar/progress-bar.service';
 
 @Component({
@@ -21,13 +21,9 @@ export class LoginComponent implements OnDestroy {
     private auth: AuthService,
     private progressBar: ProgressBarService
   ) {
-    this.progressBarSubscription = this.auth.isLoading$
-      .pipe(
-        tap((isLoading) =>
-          isLoading ? this.progressBar.start() : this.progressBar.stop()
-        )
-      )
-      .subscribe();
+    this.progressBarSubscription = this.auth.isLoading$.subscribe((isLoading) =>
+      isLoading ? this.progressBar.start() : this.progressBar.stop()
+    );
 
     this.form = this.fb.group({
       username: ['', Validators.required],

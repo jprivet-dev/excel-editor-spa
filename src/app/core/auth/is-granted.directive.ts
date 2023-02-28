@@ -6,7 +6,7 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Roles } from './auth.models';
 import { AuthService } from './auth.service';
 
@@ -27,8 +27,7 @@ export class IsGrantedDirective implements OnDestroy {
   @Input() set appIsGranted(role: Roles) {
     this.subscription = this.auth
       .isGranted(role)
-      .pipe(tap((isGranted) => this.updateView(isGranted)))
-      .subscribe();
+      .subscribe((isGranted) => this.updateView(isGranted));
   }
 
   private updateView(isGranted: boolean) {

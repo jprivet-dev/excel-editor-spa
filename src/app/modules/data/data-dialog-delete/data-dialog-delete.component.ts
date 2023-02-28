@@ -7,7 +7,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Data } from '@shared/models';
 import { DataTableService } from '../data-table/data-table.service';
-import { Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SnackBarService } from '@core/snack-bar';
 
 @Component({
@@ -27,17 +27,10 @@ export class DataDialogDeleteComponent implements OnDestroy {
 
   delete(): void {
     const data = this.dialogData.data;
-    this.subscription = this.dataService
-      .delete(data)
-      .pipe(
-        tap(() => {
-          this.dialogRef.close();
-          this.snackBar.success(
-            `Le groupe "${data.nomDuGroupe}" a été supprimé.`
-          );
-        })
-      )
-      .subscribe();
+    this.subscription = this.dataService.delete(data).subscribe(() => {
+      this.dialogRef.close();
+      this.snackBar.success(`Le groupe "${data.nomDuGroupe}" a été supprimé.`);
+    });
   }
 
   ngOnDestroy() {

@@ -64,8 +64,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
     if (this.data) {
       this.subscriptionDetails = this.dataService
         .details(this.data.id)
-        .pipe(tap((data) => this.form.patchValue(data)))
-        .subscribe();
+        .subscribe((data) => this.form.patchValue(data));
     }
   }
 

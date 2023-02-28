@@ -131,7 +131,7 @@ if [ "${CODACY_PROJECT_TOKEN}" == "" ]; then
   return
 fi
 
-echo "> API token CODACY_PROJECT_TOKEN = ${CODACY_PROJECT_TOKEN}"
+echo "API token CODACY_PROJECT_TOKEN = ${CODACY_PROJECT_TOKEN}"
 
 ((step++))
 echo

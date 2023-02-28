@@ -29,21 +29,23 @@ export class AuthService {
 
   readonly isNotAuthenticated$ = this.state.isNotAuthenticated$;
 
-  readonly user$ = this.isAuthenticated$.pipe(
-    concatMap((isAuthenticated) => {
-      console.log('AuthService | isAuthenticated', isAuthenticated);
-      return isAuthenticated ? this.client.getUser() : of(null);
-    }),
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
-
   readonly token$ = this.isAuthenticated$.pipe(
     map((isAuthenticated) =>
       isAuthenticated && this.isTokenNotExpired()
         ? this.storage.getToken()
         : null
-    )
+    ),
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+
+  readonly user$ = this.token$.pipe(
+    concatMap((token) => {
+      console.log('AuthService | isAuthenticated', token);
+      return token ? this.client.getUser() : of(null);
+    }),
+    distinctUntilChanged(),
+    shareReplay(1)
   );
 
   constructor(

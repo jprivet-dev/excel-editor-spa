@@ -32,7 +32,7 @@ export class AuthService {
     private client: AuthClient,
     private state: AuthState
   ) {
-    this.state.retrieveToken();
+    this.state.retrieveToken(); // Checks that a token is already exists when the page is fully reloaded.
   }
 
   login(credentials: Credentials): Observable<Token> {

@@ -129,25 +129,45 @@ image::doc/img/screenshot-login-page.png[]
 
 image::doc/img/screenshot-admin-data-empty.png[]
 
-==== Upload
+{back_to_top}
+
+==== Upload (choose a file)
 
 image::doc/img/screenshot-admin-data-dialog-upload.png[]
 
+{back_to_top}
+
+==== Upload (results)
+
 image::doc/img/screenshot-admin-data-dialog-upload-results.png[]
 
-==== With data
+{back_to_top}
+
+==== Table with data
 
 image::doc/img/screenshot-admin-data.png[]
 
-==== Edit & Delete
+{back_to_top}
+
+==== Edit
 
 image::doc/img/screenshot-admin-data-dialog-edit.png[]
 
+{back_to_top}
+
+==== Delete
+
 image::doc/img/screenshot-admin-data-dialog-delete.png[]
 
-=== User
+{back_to_top}
 
-==== With data
+==== Create
+
+image::doc/img/screenshot-admin-data-dialog-create.png[]
+
+{back_to_top}
+
+=== User
 
 image::doc/img/screenshot-user-data.png[]
 

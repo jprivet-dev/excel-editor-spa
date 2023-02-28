@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  padding-bottom: 10rem;
+}
+
 .table-wrapper {
   position: relative;
   min-height: 300px;
@@ -10,7 +15,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgb(0 0 0 / 10%);
+  background: rgb(0 0 0 / 5%);
   z-index: 1;
   display: flex;
   align-items: center;
@@ -42,6 +47,6 @@ td.mat-footer-cell {
 
 .btn-create-new-group {
   position: fixed;
-  bottom: 1rem;
+  bottom: 5rem;
   right: 1rem;
 }

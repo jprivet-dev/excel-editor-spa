@@ -131,6 +131,11 @@ test: ## Run ng test, pass the parameter "c=" to run a given command (example: m
 	@$(eval c ?=)
 	$(NG) test $(c)
 
+.PHONY: testf
+testf: ## Run ng test, pass the parameter "f=" to run a given file (example: make test f="src/app/core/auth/auth.service.spec.ts")
+	@$(eval f ?=)
+	$(NG) test --include=$(f)
+
 .PHONY: coverage
 coverage: ## Generate a coverage report (lcov.info)
 	$(NG) test --no-watch --code-coverage

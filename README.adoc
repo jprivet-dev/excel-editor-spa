@@ -436,6 +436,12 @@ You’ll know when you need Flux. If you aren’t sure if you need it, you don�
 
 {back_to_top}
 
+=== RxJs Mapping Operators
+
+* https://blog.angular-university.io/rxjs-higher-order-mapping/
+
+{back_to_top}
+
 === HTTP request & Cache
 
 * https://blog.angulartraining.com/how-to-cache-the-result-of-an-http-request-with-angular-f9aebd33ab3
@@ -681,7 +687,7 @@ https://angular.io/guide/styleguide#lift
 
 {back_to_top}
 
-=== Dev Tools
+=== Angular Dev Tools
 
 * https://angular.io/guide/devtools
 

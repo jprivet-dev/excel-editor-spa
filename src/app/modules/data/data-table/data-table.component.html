@@ -68,17 +68,17 @@
   <ng-template #noData>
     <mat-card>
       <mat-card-content>
-          <span class="mr">Aucune donnée !</span>
-          <button
-            mat-raised-button
-            class="ml"
-            title="Télécharger un fichier Excel"
-            *appIsGranted="'ROLE_ADMIN'"
-            (click)="upload()"
-          >
-            <mat-icon>upload</mat-icon>
-            Télécharger
-          </button>
+        <span class="mr">Aucune donnée !</span>
+        <button
+          mat-raised-button
+          class="ml"
+          title="Télécharger un fichier Excel"
+          *appIsGranted="'ROLE_ADMIN'"
+          (click)="upload()"
+        >
+          <mat-icon>upload</mat-icon>
+          Télécharger
+        </button>
       </mat-card-content>
     </mat-card>
   </ng-template>

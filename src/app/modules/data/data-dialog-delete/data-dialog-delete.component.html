@@ -1,9 +1,10 @@
 <mat-dialog-content>
   <p>
-    Souhaitez-vous supprimer le groupe <strong>{{ dialogData.data.nomDuGroupe }}</strong> ?
+    Souhaitez-vous supprimer le groupe
+    <strong>{{ dialogData.data.nomDuGroupe }}</strong> ?
   </p>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-flat-button [mat-dialog-close]="true">Non</button>
-  <button mat-flat-button color="primary" (click)="delete()" >Oui</button>
+  <button mat-flat-button color="primary" (click)="delete()">Oui</button>
 </mat-dialog-actions>

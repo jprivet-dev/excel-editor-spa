@@ -125,7 +125,7 @@ image::doc/img/screenshot-login-page.png[]
 
 {back_to_top}
 
-=== Admin (Read, upload, edit & delete)
+=== Admin (Upload, Read, Write & delete)
 
 ==== No data
 
@@ -145,27 +145,27 @@ image::doc/img/screenshot-admin-data-dialog-upload-results.png[]
 
 {back_to_top}
 
-==== Table with data
+==== Read (table with data)
 
 image::doc/img/screenshot-admin-data.png[]
 
 {back_to_top}
 
-==== Edit
+==== Write (edit)
 
 image::doc/img/screenshot-admin-data-dialog-edit.png[]
+
+{back_to_top}
+
+==== Write (create)
+
+image::doc/img/screenshot-admin-data-dialog-create.png[]
 
 {back_to_top}
 
 ==== Delete
 
 image::doc/img/screenshot-admin-data-dialog-delete.png[]
-
-{back_to_top}
-
-==== Create
-
-image::doc/img/screenshot-admin-data-dialog-create.png[]
 
 {back_to_top}
 

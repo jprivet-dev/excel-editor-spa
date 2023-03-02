@@ -68,7 +68,7 @@ export class AuthService {
   private retrieveUser(): Observable<User | null> {
     // If the user is already stored in the SPA, get it,
     // otherwise retrieve the user from the API and store it.
-    return this.state.isUserExist()
+    return this.state.userExists()
       ? of(this.state.getUser())
       : this.client.getUser().pipe(tap((user) => this.state.setUser(user)));
   }

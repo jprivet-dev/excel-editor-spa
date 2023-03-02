@@ -123,7 +123,9 @@ WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {
 
 image::doc/img/screenshot-login-page.png[]
 
-=== Admin (Upload, edit & delete)
+{back_to_top}
+
+=== Admin (Read, upload, edit & delete)
 
 ==== No data
 
@@ -167,9 +169,15 @@ image::doc/img/screenshot-admin-data-dialog-create.png[]
 
 {back_to_top}
 
-=== User
+=== User (Read only)
 
 image::doc/img/screenshot-user-data.png[]
+
+{back_to_top}
+
+=== Loading (Progress bar & Spinner)
+
+image::doc/img/screenshot-anim.gif[]
 
 {back_to_top}
 

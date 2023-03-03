@@ -40,7 +40,7 @@ endif::[]
 :codacy_project_settings_coverage: https://app.codacy.com/gh/{git_username}/{git_project_spa}/settings/coverage
 
 // Releases
-:project_release: v1.0.0
+:project_release: v1.1.0
 :angular_release: 14.2.10
 
 [#{back_to_top_target}]

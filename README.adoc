@@ -93,8 +93,6 @@ IMPORTANT: Be sure to install the latest version of https://docs.docker.com/comp
 
 === To the very first cloning of the project
 
-WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {git_url_api}[Excel Editor API], an API made with Symfony.
-
 . `$ git clone {git_ssh_current}`.
 . `$ cd {git_project_current}`.
 . `$ make install`: This command will execute the following commands:
@@ -102,7 +100,7 @@ WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {
 ** `$ make start`: Create and start containers (alias: `$ make up`).
 . Open your browser on http://localhost:4200.
 
-image::doc/img/login-page.png[]
+WARNING: To use {git_url_spa}[Excel Editor SPA], you will need to install also {git_url_api}[Excel Editor API], an API made with Symfony.
 
 {back_to_top}
 
@@ -116,6 +114,70 @@ image::doc/img/login-page.png[]
 * `$ make stop`: Stop and remove containers, networks (alias: `$ make down`).
 * `$ make`: See all available make commands.
 ====
+
+{back_to_top}
+
+== Screenshots
+
+=== Login page
+
+image::doc/img/screenshot-login-page.png[]
+
+{back_to_top}
+
+=== Admin (Upload, Read, Write & delete)
+
+==== No data
+
+image::doc/img/screenshot-admin-data-empty.png[]
+
+{back_to_top}
+
+==== Upload (choose a file)
+
+image::doc/img/screenshot-admin-data-dialog-upload.png[]
+
+{back_to_top}
+
+==== Upload (results)
+
+image::doc/img/screenshot-admin-data-dialog-upload-results.png[]
+
+{back_to_top}
+
+==== Read (table with data)
+
+image::doc/img/screenshot-admin-data.png[]
+
+{back_to_top}
+
+==== Write (edit)
+
+image::doc/img/screenshot-admin-data-dialog-edit.png[]
+
+{back_to_top}
+
+==== Write (create)
+
+image::doc/img/screenshot-admin-data-dialog-create.png[]
+
+{back_to_top}
+
+==== Delete
+
+image::doc/img/screenshot-admin-data-dialog-delete.png[]
+
+{back_to_top}
+
+=== User (Read only)
+
+image::doc/img/screenshot-user-data.png[]
+
+{back_to_top}
+
+=== Loading (Progress bar & Spinner)
+
+image::doc/img/screenshot-anim.gif[]
 
 {back_to_top}
 

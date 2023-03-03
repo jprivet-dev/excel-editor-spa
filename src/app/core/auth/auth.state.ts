@@ -55,7 +55,7 @@ export class AuthState {
     return this.userSubject.getValue();
   }
 
-  isUserExist(): boolean {
+  userExists(): boolean {
     return this.userSubject.getValue() !== null;
   }
 
